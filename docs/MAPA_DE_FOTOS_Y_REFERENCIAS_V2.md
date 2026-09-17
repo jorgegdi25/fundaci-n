@@ -1,0 +1,109 @@
+# Mapa de fotografías y referencias · Estructura web 2026 v2
+
+Revisión: 16 de septiembre de 2026. Este mapa documenta la selección del cliente para llevarla al diseño. No modifica el Word, el Excel ni las fotografías originales.
+
+## 1. Alcance de la comprobación
+
+Se extrajeron los hipervínculos reales del DOCX, incluidos los ocultos tras nombres como “AULAS E INFRAESTRUCTURA”. Hay **22 enlaces únicos a imágenes** y algunos se reutilizan en más de una sección. Se revisó visualmente el material local, incluidos banners, fotografías de Amazonas, capturas y logos. Se verificaron los nombres y se vieron **diez originales en el visor de Google Drive**.
+
+El conector devolvió archivo no encontrado para doce enlaces; eso no permite concluir que el archivo haya sido borrado. Once tienen un archivo local correspondiente por nombre o ubicación. La equivalencia con el remoto queda pendiente cuando no fue posible abrirlo. La imagen de reconstrucción de El Cairo sí mostró “Necesitas acceso” en el navegador. No se enviaron solicitudes de acceso.
+
+Los originales remotos se inspeccionaron en el visor; no se incorporaron todavía a una carpeta de producción. Los enlaces de Drive son trazabilidad editorial, no las URLs definitivas que debe cargar la web.
+
+## 2. Matriz de las 22 referencias de imagen
+
+“Local revisado” indica que se vio el archivo de la carpeta suministrada. “Drive revisado” indica que se vio el original enlazado por v2 en el visor. Ninguno de esos estados sustituye la comprobación final de encuadres del diseño.
+
+| Nº | Uso indicado en v2 | Archivo y enlace fuente | Estado y observación visual |
+| --- | --- | --- | --- |
+| 1 | Inicio · banner principal | [Enlace del Word](https://drive.google.com/file/d/1H9X7CNvsMp5iW67TPwLO4ipIhO6y_Yok/view?usp=drive_link) · [BANNER PRINCIPAÑ.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/BANNER PRINCIPAÑ.jpg>) | Local revisado (5184 × 3456). Dos personas con indumentaria blanca en exterior. Foto local horizontal; mantener a las personas completas en móvil. |
+| 2 | Inicio y El Cairo · banner | [Enlace del Word](https://drive.google.com/file/d/1YEew1Igfckr8uBNoj6G96KZpRgDDWeuf/view?usp=drive_link) · [El Cairo Home banner.png](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/El Cairo Home banner.png>) | Local revisado (2501 × 1745). Composición de calle con daños y calle de fachadas de colores. También está en PROYECTOS/TERREMOTO CAIRO. |
+| 3 | Inicio · Sierra Nevada | [Enlace del Word](https://drive.google.com/file/d/1qOGO6g4tjCVkQ1DYV3r_THLOFcmUJ-Sx/view?usp=drive_link) · [Sierra Nevada Home Banner.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/Sierra Nevada Home Banner.jpg>) | Local revisado (5184 × 3456). Grupo junto a una roca. Coincide visualmente con IMG_6613.jpg; no se compararon hashes. |
+| 4 | Inicio · Amazonas | [Enlace del Word](https://drive.google.com/file/d/1VL-CRUtcRBjEf-Ife7lqVLk4RFJfU3cY/view?usp=drive_link) · [Amazonas Home Banner.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/Amazonas Home Banner.jpg>) | Local revisado (2048 × 1365). Foto grupal horizontal elegida para la tarjeta del inicio. |
+| 5 | Inicio · Mhuysqa | [Enlace del Word](https://drive.google.com/file/d/1qr2QedO8js1O8AeXb0QhobwUOyXWUSqb/view?usp=drive_link) · [Mhuysqa Muisca Home Banner.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/Mhuysqa Muisca Home Banner.jpg>) | Local revisado (5184 × 3456). Encuentro al aire libre. Es la selección del inicio; el banner interno tiene otro archivo. |
+| 6 | Inicio · testimonio Nelly Guzman | [Enlace del Word](https://drive.google.com/file/d/1xFjbEviNdv54Dfe2j5QQb_KQsJ2Jr8o6/view?usp=sharing) · `IMG_4254.jpg` | Drive revisado. Tres personas junto a una corriente de agua. No recortar como retrato individual sin revisar la composición. |
+| 7 | El Cairo · reconstrucción sostenible | [Enlace del Word](https://drive.google.com/file/d/1B_CYfBpaZgUJePFfQmU8gccBycRELwVT/view?usp=drive_link) | Acceso pendiente. PENDIENTE: el navegador muestra “Necesitas acceso”; no se encontró original local correspondiente. |
+| 8 | El Cairo · App Móvil y Pedagogía | [Enlace del Word](https://drive.google.com/file/d/1JEqs8Bj0EKtnrt6w75PabUa1ikpDPFpO/view?usp=drive_link) · [diseño de la app sección 1.png](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/PROYECTOS/TERREMOTO CAIRO/diseño de la app sección 1.png>) | Local revisado (946 × 537). Captura del diseño de una app, 946 × 537. Conservar su legibilidad; no tratarla como foto de fondo. |
+| 9 | Sierra Nevada · banner interno | [Enlace del Word](https://drive.google.com/file/d/1F_9phkhr__KN2ioZWgaggJeeFGRz7tkl/view?usp=drive_link) · [Sierra Nevada Home Banner.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/HOME/Sierra Nevada Home Banner.jpg>) · `IMG_6613.jpg` | Local revisado (5184 × 3456); Drive revisado. Grupo junto a una roca, horizontal. Misma composición visible que la foto local del inicio. |
+| 10 | Sierra Nevada · protección ambiental | [Enlace del Word](https://drive.google.com/file/d/1kXYYYpHEBIDJbGdwH7TcDEEPEVhnTtUI/view?usp=sharing) · `IMG_4744.jpg` | Drive revisado. Grupo junto al agua y vegetación. Fotografía horizontal. |
+| 11 | Sierra Nevada · educación; Transparencia · miniatura de video | [Enlace del Word](https://drive.google.com/file/d/1ANG4W3GHpl5T40hgt6EL9289Io8XPpmG/view?usp=sharing) · `IMG_5120.jpg` | Drive revisado. Actividad comunitaria en círculo, vista desde arriba. El Word usa expresamente el mismo archivo en ambos lugares. |
+| 12 | Sierra Nevada · saberes de la mujer Kogui | [Enlace del Word](https://drive.google.com/file/d/1xyTq3LyPt0jB4irYdPyBmGjAQAFuWznm/view?usp=sharing) · `IMG_4477.jpg` | Drive revisado. Mujer tejiendo junto a un árbol. VERTICAL: conservar manos, tejido y contexto. |
+| 13 | Sierra Nevada · movilidad de autoridades | [Enlace del Word](https://drive.google.com/file/d/1PzPDs4_586fL_qzEog6CN3O7k2fMSqbf/view?usp=sharing) · `IMG_4473.jpg` | Drive revisado. Persona sentada junto a un árbol. VERTICAL: adaptar la tarjeta a la foto sin convertirla en banner panorámico. |
+| 14 | Amazonas · banner interno | [Enlace del Word](https://drive.google.com/file/d/19SXbkWFsB6Zoz4W10IjI5FROcurwRqjj/view?usp=drive_link) · [BANNER PRINCIPAL.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/BANNER PRINCIPAL.jpg>) | Local revisado (2048 × 1365). Foto horizontal en la carpeta MISION AMAZONAS. Distinta asignación del banner de la tarjeta de inicio. |
+| 15 | Amazonas · aulas e infraestructura | [Enlace del Word](https://drive.google.com/file/d/127egjJ3s0VTpkjy_9kgEYzFnQ03V_TI2/view?usp=drive_link) · [AULAS E INFRAESTRUCTURA.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/AULAS E INFRAESTRUCTURA.jpg>) | Local revisado (2048 × 1365). Trabajo en infraestructura. Fotografía horizontal. |
+| 16 | Amazonas · espacios de juego | [Enlace del Word](https://drive.google.com/file/d/1SjqomMpsSMNUjET_FQBC80GyzI4Z3Lmp/view?usp=drive_link) · [ESPACIOS DE JUEGO.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/ESPACIOS DE JUEGO.jpg>) | Local revisado (2048 × 1365). Niñez en espacio exterior escolar. Fotografía horizontal. |
+| 17 | Amazonas · talleres creativos | [Enlace del Word](https://drive.google.com/file/d/1IDSdJJ3xZwMsRzJZHab8ZeFOqKJcbHyM/view?usp=drive_link) · [TALLERES CREATIVOS.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/TALLERES CREATIVOS.jpg>) | Local revisado (2048 × 1365). Grupo mostrando trabajos/carteles. Fotografía horizontal. |
+| 18 | Mhuysqa · banner interno | [Enlace del Word](https://drive.google.com/file/d/13WUcNXpRnd5u5zEsN85xQZW4OHdBXPvN/view?usp=drive_link) · `IMG_9129.jpg` | Drive revisado. Encuentro en jardín, con personas sentadas y mujeres de pie al fondo. Horizontal. |
+| 19 | Mhuysqa · cantos al agua | [Enlace del Word](https://drive.google.com/file/d/193EYtwYcr1dMVbQlGhsDMAGpJeh43b85/view?usp=sharing) · `a44210a8-55d0-470e-9716-a8a125bd6d71.jpg` | Drive revisado. Dos personas frente a una laguna; logo incorporado en la esquina inferior izquierda. Mantenerlo al encuadrar. |
+| 20 | Mhuysqa · medicina herbal y tejido | [Enlace del Word](https://drive.google.com/file/d/1keTBW_ZgiNDG0uDVsoy0dWW9u0mEd7dZ/view?usp=sharing) · `IMG_9259.jpg` | Drive revisado. Grupo de mujeres sentadas en exterior. Conservar el contexto del encuentro. |
+| 21 | Mhuysqa · centro regenerativo Apulo | [Enlace del Word](https://drive.google.com/file/d/1T5ePpLathB2Z4JfhQJFhV6knW0oDTfjh/view?usp=sharing) · `IMG_9008.jpg` | Drive revisado. Retrato VERTICAL de una mujer con micrófono. La imagen asignada muestra a una persona, no una fachada del centro. |
+| 22 | Transparencia · respeto por la raíz | [Enlace del Word](https://drive.google.com/file/d/1hG_PsMGUoDohdw80DUyQBd7x6WVlrV-l/view?usp=drive_link) · [permisos kogui.jpg](</Users/jorgegonzalezmejia/Desktop/fundacion-alma-arcoiris/FOTOS Y VIDEOS/impacto y transparencia/permisos kogui.jpg>) | Local revisado (5184 × 3456). Grupo junto a una roca. Es el recurso asignado al bloque de la cita del Mamo. |
+
+## 3. Imágenes adicionales, logos y encuadres
+
+- **MINGAS Y COMUNIDAD (El Cairo):** v2 la nombra pero no incluye un enlace específico. No se localizó un archivo con ese nombre. Debe identificarse sin sustituirlo silenciosamente por material de otro territorio.
+- **Kogui foto.jpg:** existe en la carpeta de transparencia y fue revisada; muestra paisaje de páramo con una persona. Es distinta de `IMG_5120.jpg`, que el Word exige para la miniatura del Short. No intercambiarlas solo por estar en la misma carpeta temática.
+- **IMG_4089 (1).jpg:** está en MISION AMAZONAS como recurso adicional; no tiene una asignación explícita con ese nombre en v2. No desplaza los cuatro archivos ya asignados a esa página.
+- **Logos:** hay recursos de Google, Canva, ElevenLabs, Contablemente, La Semilla, Aldeñjina, Santuario, Mujer Potencia y Potencia Humana. Comprobar variantes al maquetar. El menú ubica Alianzas y Patrocinios dentro de Conócenos. En El Cairo hay además un comentario específico que pide reconocer las organizaciones aliadas del proyecto y añadir sus logos; no asumir que todo logo general corresponde a esa alianza.
+- **Marca:** conservar proporciones y área de protección; no recolorear logos de aliados para forzar la paleta. El manual identifica morado #534A8F, dorado #C7A31B y All Round Gothic.
+- **Tratamiento:** crear versiones web optimizadas sin reemplazar las imágenes originales seleccionadas. Varias fotos locales pesan entre 1 y 5 MB y algunos originales remotos superan 10 MB. Los banners tienen margen de resolución; los retratos verticales requieren tarjetas compatibles con su orientación. No colocar texto esencial sobre rostros o manos.
+
+## 4. Videos y comportamiento
+
+| Lugar | Recurso identificado | Comportamiento de v2 / estado |
+| --- | --- | --- |
+| Inicio · portada | Opción de video en bucle o fotografía asignada | No hay una URL específica de video de portada en ese bloque. La fotografía sí está localizada. |
+| El Cairo · prueba social | “Levantando a El Cairo: Reconstrucción Comunitaria tras el Terremoto” | Miniatura y ventana emergente. El bloque da el título, pero falta la URL concreta. |
+| Sierra · prueba social | “Volver al Corazón – Misión Sierra Nevada 2026”, detrás de cámaras Shota | El Excel C3 identifica el [video detrás de cámaras Shotta](https://youtu.be/QrTNcRNwD2s). Es la coincidencia documental localizada; comprobar su selección final al cargar contenido. |
+| Amazonas · prueba social | [Un viaje al Amazonas que cambió nuestras vidas](https://youtu.be/vd6Iwo2xobA) | Enlace explícito del Word y del Excel. Miniatura con play que abre reproductor en ventana emergente. |
+| Mhuysqa · prueba social | “El Resurgir del Canto Mhuysqa: Sabiduría de la Abuela Blanca Nelly Rativá” | El bloque da título pero no URL concreta. |
+| Transparencia · resultados | [Short de permisos y territorio](https://youtube.com/shorts/xxoat0t-AQM) | Miniatura **IMG_5120.jpg** con play sutil. Al hacer clic abre ventana emergente o canal, según las opciones de v2. |
+
+Esta revisión identifica enlaces y asignaciones; no certifica haber reproducido completos todos los videos. La verificación audiovisual y de subtítulos ES/EN forma parte de la carga final.
+
+## 5. Qué aporta el cuadro de control Excel
+
+`Fotografias Fundacion - Cuadro de control.xlsx`, hoja **Hoja1**, rango con contenido **A1:C12**: once actividades/proyectos con álbumes y, cuando aplica, videos. Se leyó sin modificarlo.
+
+| Fila | Actividad o proyecto | Recursos inventariados |
+| --- | --- | --- |
+| 2 | Amazonas 2025 | Álbum y documental. |
+| 3 | Sierra Nevada 2026 | Álbum y cinco enlaces de video escritos en C3. |
+| 4 | Sagrado Corazón | Álbum y video. |
+| 5 | Activación Solar Cusco 2024 | Álbum. |
+| 6 | Siecha 2026 | Álbum y video. |
+| 7 | Páramo Grande, agosto 2026 | Álbum. |
+| 8 | Sueva | Álbum. |
+| 9 | Mingas Jardín Colibrí | Álbum y video. |
+| 10 | Equipo | Álbum. |
+| 11 | Hermandad 2025 | Álbum y video. |
+| 12 | EFIS | Álbum. |
+
+**Detalle que debe corregirse en B3:** la URL escrita es [carpeta 1oEM5apW…](https://drive.google.com/drive/folders/1oEM5apW1cS55mosjUouYygUGTa6HddhR), pero el hipervínculo real apunta a [carpeta 1H3RBc5c…](https://drive.google.com/drive/folders/1H3RBc5c_jGzrDbw8yjLxppQ3-q-eRG8h). No se eligió una sobre la otra ni se modificó la celda. Esto afecta la futura importación del álbum general, no las fotos individuales ya señaladas en v2.
+
+C3 contiene cinco URLs en su texto, aunque el hipervínculo de la celda solo abre la primera: permisos, detrás de cámaras Shotta, ONG La Semilla, pagamento y Mamo. Una importación que lea únicamente la propiedad del hipervínculo perdería cuatro recursos.
+
+Los álbumes son material adicional para reportes, equipo, actividades y comunidad. No se afirma haber inspeccionado cada foto de los once álbumes: la revisión visual priorizó las imágenes expresamente seleccionadas para el sitio y los originales locales.
+
+## 6. Referencias y decisiones de diseño
+
+| Referencia | Aplicación específica del Word | Observación de la revisión |
+| --- | --- | --- |
+| [El Puente](https://www.foundationelpuente.org/) | Portada y presentación | Fotografía dominante, mensaje visible y lectura institucional. La colocación de la frase de Alma Arcoíris se toma de v2. |
+| [The Shield](https://theshield.earth/) | Menú visual de proyectos o slide | Hoy redirige a [Rising Earth Fund](https://risingearth.fund/). Se vieron tarjetas fotográficas grandes con título y territorio; la referencia actual podría diferir de la vista por el cliente. |
+| [Amazon Research](https://amazonresearch.org/) | Encabezado y formulario integrado de proyectos | Se vio la tarjeta de donación sobre el hero, frecuencia única/mensual, importes, moneda y otro valor. Solo se revisó el primer paso visible. |
+| [Ayuda en Acción: memorias](https://ayudaenaccion.org/memorias-y-cuentas-anuales/) | Archivo histórico | Organización de memorias/cuentas, resultados y descargas. v2 pide específicamente pestañas o acordeones por vigencia. |
+| [Ayuda en Acción: dona](https://ayudaenaccion.org/dona/) | Referencia complementaria compartida por Jorge | Claridad al aportar y al explicar el destino del dinero. |
+
+Las referencias orientan componentes concretos. La identidad de Alma Arcoíris, las fotos seleccionadas y el orden editorial de v2 se mantienen en toda la web.
+
+## 7. Pendientes puntuales para la siguiente etapa
+
+1. Acceso o copia local de la imagen asignada a **Reconstrucción Sostenible** de El Cairo.
+2. Identificación exacta de **MINGAS Y COMUNIDAD** y de los videos de El Cairo y Mhuysqa.
+3. Resolver la discrepancia entre texto e hipervínculo de **B3** en el inventario Excel.
+4. Incorporar los originales de Drive accesibles a los recursos de producción y preparar derivados web con encuadres de escritorio y móvil.
+5. Completar documentos de transparencia, perfiles y traducciones, respetando el contenido ya definido.
+
+Estos pendientes no requieren rehacer la estructura ni reemplazar la selección fotográfica del cliente.
+

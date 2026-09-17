@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.env*
+FOTOS Y VIDEOS
+logo versiones
+*.pdf
+*.docx
+*.xlsx
+*.zip
+*.log
+*.tsbuildinfo
+tmp

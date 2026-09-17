@@ -1,0 +1,107 @@
+/* Motion is decorative. Every text and control is visible without JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-overline > span:first-child {
+    transform-origin: left;
+    animation: alma-draw-line 900ms 150ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero-copy:before {
+    animation: alma-ring-arrive 1400ms ease-out both;
+  }
+
+  .text-link {
+    transition:
+      gap 240ms ease,
+      color 240ms ease;
+  }
+
+  .button,
+  .action-card,
+  .video-card,
+  .round-arrow {
+    transition:
+      transform 280ms ease,
+      background 280ms ease,
+      box-shadow 280ms ease;
+  }
+
+  :is(.button, .text-link, .hero-projects-link) > svg:last-child,
+  .round-arrow > svg,
+  .action-card > svg,
+  details > summary svg {
+    transition: transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  :is(.button, .hero-projects-link):focus-visible > svg:last-child,
+  .project-card:focus-visible .round-arrow > svg {
+    transform: translate(3px, -2px);
+  }
+
+  :is(.context-stats, .legal-badges, .archive)
+    details[open]
+    > summary
+    > svg:last-child,
+  .context-stats details[open] > summary span svg {
+    transform: rotate(45deg);
+  }
+
+  details[open] > :not(summary) {
+    animation: alma-detail-enter 260ms ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px #352d6210;
+    }
+    .action-card:hover > svg {
+      transform: rotate(-8deg);
+    }
+    .project-card:hover .round-arrow,
+    .project-card:focus-visible .round-arrow {
+      background: var(--gold);
+      transform: rotate(5deg);
+    }
+    :is(.button, .hero-projects-link):hover > svg:last-child,
+    .project-card:hover .round-arrow > svg {
+      transform: translate(3px, -2px);
+    }
+    .video-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px #352d6220;
+    }
+  }
+
+  .button:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+@keyframes alma-draw-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes alma-ring-arrive {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes alma-detail-enter {
+  from {
+    opacity: 0.85;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,226 @@
+[
+  {
+    "asset": "home-hero",
+    "source": "FOTOS Y VIDEOS/HOME/BANNER PRINCIPAÑ.jpg",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 225708
+  },
+  {
+    "asset": "el-cairo",
+    "source": "FOTOS Y VIDEOS/HOME/El Cairo Home banner.png",
+    "width": 1100,
+    "height": 767,
+    "bytes": 115638
+  },
+  {
+    "asset": "sierra-nevada",
+    "source": "FOTOS Y VIDEOS/HOME/Sierra Nevada Home Banner.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 99238
+  },
+  {
+    "asset": "amazonas",
+    "source": "FOTOS Y VIDEOS/HOME/Amazonas Home Banner.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 290024
+  },
+  {
+    "asset": "mhuysqa",
+    "source": "FOTOS Y VIDEOS/HOME/Mhuysqa Muisca Home Banner.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 122258
+  },
+  {
+    "asset": "amazonas-hero",
+    "source": "FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/BANNER PRINCIPAL.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 253302
+  },
+  {
+    "asset": "amazonas-aulas",
+    "source": "FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/AULAS E INFRAESTRUCTURA.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 137790
+  },
+  {
+    "asset": "amazonas-juego",
+    "source": "FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/ESPACIOS DE JUEGO.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 254094
+  },
+  {
+    "asset": "amazonas-talleres",
+    "source": "FOTOS Y VIDEOS/PROYECTOS/MISION AMAZONAS/TALLERES CREATIVOS.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 263536
+  },
+  {
+    "asset": "cairo-app",
+    "source": "FOTOS Y VIDEOS/PROYECTOS/TERREMOTO CAIRO/diseño de la app sección 1.png",
+    "width": 946,
+    "height": 537,
+    "bytes": 11958
+  },
+  {
+    "asset": "permisos-kogui",
+    "source": "FOTOS Y VIDEOS/impacto y transparencia/permisos kogui.jpg",
+    "width": 1100,
+    "height": 733,
+    "bytes": 149550
+  },
+  {
+    "asset": "logo",
+    "source": "logo versiones/Logo transparente  Fundacion Alma Arcoiris sin recuadro 15cm.png",
+    "width": 357,
+    "height": 400,
+    "bytes": 36144
+  },
+  {
+    "asset": "logo-white",
+    "source": "logo versiones/Logo Blanco F Alma Arcoiris Sello transparente.png",
+    "width": 357,
+    "height": 400,
+    "bytes": 47904
+  },
+  {
+    "asset": "icon",
+    "source": "logo versiones/ISOTIPO CIRCULAR FONDO BLANCO F ALMA ARCOIRIS.png",
+    "width": 96,
+    "height": 94,
+    "bytes": 2070
+  },
+  {
+    "asset": "ally-google",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/logo google letra negra.png",
+    "width": 800,
+    "height": 800,
+    "bytes": 20744
+  },
+  {
+    "asset": "ally-canva",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/logo de canva letra negra.jpg",
+    "width": 237,
+    "height": 278,
+    "bytes": 4260
+  },
+  {
+    "asset": "ally-elevenlabs",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/elevenlabs-logo-black.png",
+    "width": 1100,
+    "height": 143,
+    "bytes": 7868
+  },
+  {
+    "asset": "ally-contablemente",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/patrocinio SCA Somos Contablemente CUR_Mesa de trabajo 1.png",
+    "width": 1000,
+    "height": 1000,
+    "bytes": 31006
+  },
+  {
+    "asset": "ally-semilla",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/LOGOS ALIANZAS/La Semilla.jpg",
+    "width": 842,
+    "height": 595,
+    "bytes": 10828
+  },
+  {
+    "asset": "ally-aldenjina",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/LOGOS ALIANZAS/organización Aldeñjina.jpg",
+    "width": 720,
+    "height": 736,
+    "bytes": 57792
+  },
+  {
+    "asset": "ally-santuario",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/LOGOS ALIANZAS/alianza Santuario-Logo2.png",
+    "width": 1000,
+    "height": 1000,
+    "bytes": 23382
+  },
+  {
+    "asset": "ally-mujer",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/LOGOS ALIANZAS/Mujer potencia_fondo-color.png",
+    "width": 465,
+    "height": 649,
+    "bytes": 19372
+  },
+  {
+    "asset": "ally-potencia",
+    "source": "FOTOS Y VIDEOS/HOME/LOGOS COLABORADORES/LOGOS ALIANZAS/potencia humana logo 2026.avif",
+    "width": 768,
+    "height": 379,
+    "bytes": 46490
+  },
+  {
+    "asset": "sierra-ambiente",
+    "source": "https://drive.google.com/file/d/1kXYYYpHEBIDJbGdwH7TcDEEPEVhnTtUI/view",
+    "width": 1400,
+    "height": 933,
+    "bytes": 188544
+  },
+  {
+    "asset": "sierra-educacion",
+    "source": "https://drive.google.com/file/d/1ANG4W3GHpl5T40hgt6EL9289Io8XPpmG/view",
+    "width": 1400,
+    "height": 933,
+    "bytes": 111380
+  },
+  {
+    "asset": "sierra-mujeres",
+    "source": "https://drive.google.com/file/d/1xyTq3LyPt0jB4irYdPyBmGjAQAFuWznm/view",
+    "width": 800,
+    "height": 1200,
+    "bytes": 127042
+  },
+  {
+    "asset": "sierra-autoridades",
+    "source": "https://drive.google.com/file/d/1PzPDs4_586fL_qzEog6CN3O7k2fMSqbf/view",
+    "width": 800,
+    "height": 1200,
+    "bytes": 130262
+  },
+  {
+    "asset": "mhuysqa-hero",
+    "source": "https://drive.google.com/file/d/13WUcNXpRnd5u5zEsN85xQZW4OHdBXPvN/view",
+    "width": 1400,
+    "height": 933,
+    "bytes": 158462
+  },
+  {
+    "asset": "mhuysqa-agua",
+    "source": "https://drive.google.com/file/d/193EYtwYcr1dMVbQlGhsDMAGpJeh43b85/view",
+    "width": 1400,
+    "height": 1050,
+    "bytes": 238584
+  },
+  {
+    "asset": "mhuysqa-saberes",
+    "source": "https://drive.google.com/file/d/1keTBW_ZgiNDG0uDVsoy0dWW9u0mEd7dZ/view",
+    "width": 1400,
+    "height": 933,
+    "bytes": 258186
+  },
+  {
+    "asset": "mhuysqa-apulo",
+    "source": "https://drive.google.com/file/d/1T5ePpLathB2Z4JfhQJFhV6knW0oDTfjh/view",
+    "width": 800,
+    "height": 1200,
+    "bytes": 75030
+  },
+  {
+    "asset": "nelly",
+    "source": "https://drive.google.com/file/d/1xFjbEviNdv54Dfe2j5QQb_KQsJ2Jr8o6/view",
+    "width": 1200,
+    "height": 800,
+    "bytes": 131988
+  }
+]
