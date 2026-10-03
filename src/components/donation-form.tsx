@@ -6,7 +6,121 @@ import {
   validateDonation,
   type Frequency,
 } from "@/lib/donations";
-import type { Lang } from "@/lib/i18n";
+import { href, l, type Lang } from "@/lib/i18n";
+// Amount descriptions supplied in Estructura web 2026 v2.pdf, pages 6, 8–9, 12, 16 and 19.
+const giftDescriptions = {
+  general: [
+    l(
+      "Sostenimiento de proyectos a largo plazo con comunidades",
+      "Supporting long-term community projects",
+    ),
+    l(
+      "Kits mensuales de sostenibilidad comunitaria",
+      "Monthly community sustainability kits",
+    ),
+    l(
+      "Viáticos para sabedores indígenas en sus visitas",
+      "Travel expenses for Indigenous knowledge keepers",
+    ),
+  ],
+  "el-cairo": [
+    l(
+      "Modelo piloto de vivienda y materiales locales",
+      "Pilot housing model and local materials",
+    ),
+    l(
+      "Apoyo en el desarrollo de talleres de bioconstrucción",
+      "Supporting natural building workshops",
+    ),
+    l(
+      "Viáticos del equipo en territorio",
+      "Travel expenses for community teams",
+    ),
+  ],
+  "sierra-nevada": [
+    l(
+      "Sostenimiento de sabedores tradicionales y conservación de territorios",
+      "Supporting traditional knowledge keepers and land conservation",
+    ),
+    l(
+      "Materiales de tejido y producción artesanal para familias Kogui",
+      "Weaving and craft production materials for Kogui families",
+    ),
+    l(
+      "Kits escolares y material de ecopedagogía infantil",
+      "School kits and environmental learning materials for children",
+    ),
+  ],
+  amazonas: [
+    l("Materiales de infraestructura", "Infrastructure materials"),
+    l("Logística y talleres comunitarios", "Logistics and community workshops"),
+    l("Insumos educativos", "Educational supplies"),
+  ],
+  mhuysqa: [
+    l(
+      "Sostenimiento de la Casa de Pensamiento y Jardín Botánico en Apulo",
+      "Supporting Casa de Pensamiento and the Botanical Garden in Apulo",
+    ),
+    l(
+      "Círculos de canto al agua, rezos a la Tierra y eventos bioculturales",
+      "Songs to water, prayers to the Earth and biocultural events",
+    ),
+    l(
+      "Insumos para talleres de medicina herbal y tejido ancestral",
+      "Materials for herbal knowledge and ancestral weaving workshops",
+    ),
+  ],
+};
+const oneTimeDescriptions = {
+  general: [
+    l(
+      "Sostenimiento de proyectos a corto plazo con comunidades",
+      "Supporting short-term community projects",
+    ),
+    l("Kits de sostenibilidad comunitaria", "Community sustainability kits"),
+    giftDescriptions.general[2],
+  ],
+  "el-cairo": [
+    giftDescriptions["el-cairo"][0],
+    l(
+      "Desarrollo y pedagogía para la construcción en minga",
+      "Development and learning for collective construction",
+    ),
+    l(
+      "Apoyo a la reactivación económica y turismo regenerativo",
+      "Supporting economic recovery and regenerative tourism",
+    ),
+  ],
+  "sierra-nevada": [
+    l(
+      "Sostenimiento de Mamos y Sagas y apoyo en sus viajes espirituales",
+      "Supporting Mamos and Sagas and their spiritual journeys",
+    ),
+    l(
+      "Materiales artesanales textiles y apoyo a olla comunitaria",
+      "Textile craft materials and community meals",
+    ),
+    l(
+      "Kits escolares e insumos pedagógicos",
+      "School kits and learning supplies",
+    ),
+  ],
+  amazonas: giftDescriptions.amazonas,
+  mhuysqa: [
+    l(
+      "Sostenimiento del centro regenerativo Mhuysqa y siembras en Apulo",
+      "Supporting the Mhuysqa regenerative centre and planting in Apulo",
+    ),
+    l(
+      "Acompañamiento a movimientos de canto al agua y liderazgo espiritual femenino",
+      "Supporting songs to water and women’s spiritual leadership",
+    ),
+    l(
+      "Materiales para talleres comunitarios urbanos de tejido y botánica",
+      "Materials for urban community weaving and botanical workshops",
+    ),
+  ],
+};
 export function DonationForm({
   lang,
   cause = "general",
@@ -27,6 +141,13 @@ export function DonationForm({
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
   const selected = amount ?? Number(custom);
+  const amountIndex = donationAmounts[frequency].findIndex((v) => v === amount);
+  const descriptions =
+    frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;
+  const giftText =
+    descriptions[destination as keyof typeof giftDescriptions]?.[amountIndex]?.[
+      lang
+    ];
   const labels: Record<string, string> = {
     general: es ? "Donde más se necesite" : "Where it is needed most",
     "el-cairo": "El Cairo",
@@ -165,13 +286,21 @@ export function DonationForm({
           )}
         </fieldset>
         <p className="gift-description">
-          {frequency === "monthly"
-            ? es
-              ? "Un apoyo constante para acompañar los proyectos en territorio."
-              : "Ongoing support for long-term community projects."
-            : es
-              ? "Un aporte que ayuda a responder a las necesidades de las comunidades."
-              : "A gift that helps meet the needs of local communities."}
+          {giftText ??
+            (frequency === "monthly"
+              ? es
+                ? "Un apoyo constante para acompañar los proyectos en territorio."
+                : "Ongoing support for long-term community projects."
+              : es
+                ? "Un aporte que ayuda a responder a las necesidades de las comunidades."
+                : "A gift that helps meet the needs of local communities.")}
+        </p>
+        <p className="donation-policy-links">
+          <a href={href(lang, "terms")}>
+            {es ? "Condiciones de donación" : "Donation terms"}
+          </a>
+          <span aria-hidden="true"> · </span>
+          <a href={href(lang, "privacy")}>{es ? "Privacidad" : "Privacy"}</a>
         </p>
         {error && (
           <p className="field-error" id={`${id}-error`} role="alert">

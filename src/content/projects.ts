@@ -18,6 +18,9 @@ export type Project = {
     portrait?: boolean;
   }[];
   results: { value: string; label: Localized }[];
+  resultsTitle?: Localized;
+  achievements?: Localized[];
+  testimony?: { quote: Localized; author: Localized };
   video?: string;
   videoImage?: string;
   involvement: Localized;
@@ -37,12 +40,12 @@ export const projects: Project[] = [
     slug: "el-cairo",
     name: l("El Cairo", "El Cairo"),
     title: l(
-      "Emergencia Terremoto: Reconstrucción Sostenible en El Cairo",
-      "Earthquake Emergency: Sustainable Rebuilding in El Cairo",
+      "Emergencia Terremoto: Reconstrucción Sostenible en El Cairo, Valle del Cauca",
+      "Earthquake Emergency: Sustainable Rebuilding in El Cairo, Valle del Cauca",
     ),
     subtitle: l(
-      "Tu aporte financia la reconstrucción segura de viviendas campesinas, recupera la arquitectura tradicional de bahareque y reactiva la autosostenibilidad de familias afectadas en el Paisaje Cultural Cafetero.",
-      "Your support helps rebuild safe rural homes, preserve traditional bahareque architecture and restore livelihoods in Colombia’s Coffee Cultural Landscape.",
+      "Tu aporte financia la reconstrucción segura de viviendas campesinas, recupera la arquitectura tradicional de bahareque y reactiva la autosostenibilidad de 20 familias afectadas en el Paisaje Cultural Cafetero.",
+      "Your support helps rebuild safe rural homes, preserve traditional bahareque architecture and restore the livelihoods of 20 affected families in Colombia’s Coffee Cultural Landscape.",
     ),
     location: l("Valle del Cauca, Colombia", "Valle del Cauca, Colombia"),
     category: l("Respuesta humanitaria", "Humanitarian response"),
@@ -88,6 +91,13 @@ export const projects: Project[] = [
     ],
     results: [
       {
+        value: "+$20M COP",
+        label: l(
+          "recaudados para primeras entregas de emergencia y articulación técnica",
+          "raised for initial emergency support and technical coordination",
+        ),
+      },
+      {
         value: "20",
         label: l(
           "familias priorizadas en el proyecto",
@@ -95,6 +105,20 @@ export const projects: Project[] = [
         ),
       },
     ],
+    resultsTitle: l(
+      "Respuestas reales ante la emergencia en El Cairo",
+      "Responses to the emergency in El Cairo",
+    ),
+    testimony: {
+      quote: l(
+        "No es solo volver a levantar techos y paredes; es reconstruir nuestra identidad campesina con nuestras propias manos y los materiales de nuestra tierra.",
+        "It is more than rebuilding roofs and walls; it is rebuilding our rural identity with our own hands and the materials of our land.",
+      ),
+      author: l(
+        "Líder comunitario del Municipio de El Cairo, Valle del Cauca",
+        "Community leader from El Cairo, Valle del Cauca",
+      ),
+    },
     involvement: l(
       "Súmate a las mingas de reconstrucción",
       "Join the rebuilding mingas",
@@ -122,8 +146,8 @@ export const projects: Project[] = [
     slug: "sierra-nevada",
     name: l("Sierra Nevada", "Sierra Nevada"),
     title: l(
-      "Cuidando el corazón del mundo y la sabiduría Kogui",
-      "Caring for the heart of the world and Kogui wisdom",
+      "Misión Sierra Nevada: Cuidando el corazón del mundo y la sabiduría Kogui",
+      "Sierra Nevada Mission: Caring for the heart of the world and Kogui wisdom",
     ),
     subtitle: l(
       "Tu aporte protege los ecosistemas sagrados de la Sierra Nevada de Santa Marta, apoya la educación ancestral de la niñez y sostiene a las autoridades indígenas del Pueblo Kogui.",
@@ -204,6 +228,34 @@ export const projects: Project[] = [
       },
     ],
     video: "QrTNcRNwD2s",
+    resultsTitle: l(
+      "Resultados reales en la Sierra Nevada de Santa Marta durante los últimos 3 años",
+      "Results in the Sierra Nevada de Santa Marta over the last 3 years",
+    ),
+    achievements: [
+      l(
+        "Apoyo logístico en más de 5 viajes nacionales e internacionales (Perú, Francia, Chile, Nueva Zelanda y Bogotá) de autoridades indígenas Kogui con propósitos espirituales y medioambientales.",
+        "Logistics support for over 5 national and international journeys (Peru, France, Chile, New Zealand and Bogotá) by Kogui authorities for spiritual and environmental purposes.",
+      ),
+      l(
+        "Intermediación en la proyección del primer documental sobre los Kogui en Japón.",
+        "Facilitating a screening of the first documentary about the Kogui in Japan.",
+      ),
+      l(
+        "Conformación de la alianza oficial entre ONG Colombo Francesa La Semilla y la Organización Kogui Aldeñjina.",
+        "Formation of the partnership between the Colombian-French NGO La Semilla and the Kogui organisation Aldeñjina.",
+      ),
+    ],
+    testimony: {
+      quote: l(
+        "Sostener la labor ceremonial de los Mamos y cuidar el agua de la Sierra es salvaguardar el equilibrio de toda la Tierra.",
+        "Supporting the Mamos’ ceremonial work and caring for the Sierra’s water safeguards the balance of the whole Earth.",
+      ),
+      author: l(
+        "Memoria Viva · Autoridades tradicionales del resguardo Kogui",
+        "Living memory · Traditional authorities of the Kogui reserve",
+      ),
+    },
     videoImage: "/images/sierra-educacion.webp",
     involvement: l(
       "¿Sientes el llamado a conectar con el corazón del mundo?",
@@ -232,8 +284,8 @@ export const projects: Project[] = [
     slug: "amazonas",
     name: l("Amazonas", "Amazon"),
     title: l(
-      "Empoderando a los guardianes de la selva",
-      "Supporting the guardians of the rainforest",
+      "Misión Amazonas: empoderando a los guardianes de la selva",
+      "Amazon Mission: empowering the guardians of the rainforest",
     ),
     subtitle: l(
       "Tu aporte nos ayuda en la construcción de espacios educativos dignos, preserva la sabiduría ancestral y apoya a la comunidad indígena Tikuna en Leticia, Amazonas colombiano.",
@@ -301,6 +353,16 @@ export const projects: Project[] = [
       },
     ],
     video: "vd6Iwo2xobA",
+    resultsTitle: l(
+      "Resultados reales en la comunidad Tikuna",
+      "Results in the Tikuna community",
+    ),
+    achievements: [
+      l(
+        "Construcción del primer espacio de juegos artesanal de la Escuela junto a 9 voluntarios.",
+        "Construction of the school’s first handcrafted playground alongside 9 volunteers.",
+      ),
+    ],
     videoImage: "/images/amazonas-hero.webp",
     involvement: l(
       "Vive esta transformación en el territorio",
@@ -408,6 +470,20 @@ export const projects: Project[] = [
       "Círculos de sabiduría y encuentros con las Abuelas",
       "Wisdom circles and gatherings with the Grandmothers",
     ),
+    resultsTitle: l(
+      "Tejiendo memoria y liderazgo femenino Mhuysqa",
+      "Weaving Mhuysqa memory and women’s leadership",
+    ),
+    testimony: {
+      quote: l(
+        "Cantarle al agua y cuidar las plantas no es un acto del pasado; es la medicina que las ciudades necesitan hoy para recordar su origen y sanar su vínculo con la Tierra.",
+        "Singing to water and caring for plants is more than an act of the past; it is the medicine cities need today to remember their origins and heal their connection with the Earth.",
+      ),
+      author: l(
+        "Abuela Blanca Nelly Rativá · Princesa Mhuysqa",
+        "Grandmother Blanca Nelly Rativá · Mhuysqa Princess",
+      ),
+    },
     involvementText: l(
       "Participa en jornadas de canto al agua, talleres de tejido, reconocimiento de plantas y encuentros en la Casa de Pensamiento.",
       "Join songs to water, weaving workshops, plant walks and gatherings at the Casa de Pensamiento.",

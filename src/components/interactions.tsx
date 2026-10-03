@@ -145,8 +145,8 @@ export function FinancialChart({ lang }: { lang: Lang }) {
         ))}
         <p className="small-note">
           {es
-            ? "La vista previa usa los importes del documento del cliente. El desglose final se publicará al conciliarlo con los estados financieros."
-            : "This preview uses the amounts in the client document. Final figures will be published after reconciliation with the financial statements."}
+            ? "Los porcentajes se calculan sobre la suma de los gastos detallados en el documento de la clienta, no sobre los ingresos. El desglose está pendiente de conciliación con los estados financieros."
+            : "Percentages are calculated from the sum of the expenses listed in the client document, rather than income. The breakdown is pending reconciliation with the financial statements."}
         </p>
       </div>
     </div>

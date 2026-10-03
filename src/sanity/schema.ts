@@ -132,6 +132,22 @@ const project = defineType({
       type: "string",
       validation: (r) => r.regex(/^[A-Za-z0-9_-]{11}$/),
     }),
+    localized("resultsTitle", "Título de resultados"),
+    defineField({
+      name: "achievements",
+      title: "Hitos documentados",
+      type: "array",
+      of: [{ type: "localizedText" }],
+    }),
+    defineField({
+      name: "testimony",
+      title: "Testimonio proporcionado por la fundación",
+      type: "object",
+      fields: [
+        localized("quote", "Cita ES / EN"),
+        localized("author", "Atribución ES / EN"),
+      ],
+    }),
     image("videoCover", "Portada del video"),
     defineField({ name: "videoImage", type: "string", hidden: true }),
     localized("involvement", "Título de participación"),

@@ -4,6 +4,20 @@ const config: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
+  async redirects() {
+    return [
+      {
+        source: "/reportes-de-gestion",
+        destination: "/es/reportes-de-gestion",
+        permanent: true,
+      },
+      {
+        source: "/es/impacto-y-transparencia",
+        destination: "/es/reportes-de-gestion",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

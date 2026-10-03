@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 const revealTargets = [
   "[data-reveal]",
+  ".full-photo-message > *",
   ".hero-copy > *",
   ".hero-portrait figcaption",
   ".hero-purpose > div",
@@ -63,7 +64,7 @@ export function MotionSurface({ children }: { children: ReactNode }) {
           ),
       );
       const portrait = surface.querySelector<HTMLElement>(
-        ".hero-portrait > .photo",
+        ".hero-portrait > .photo, .full-photo-hero > .photo",
       );
 
       observer = new IntersectionObserver(

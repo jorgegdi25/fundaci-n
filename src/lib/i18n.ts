@@ -8,7 +8,7 @@ export const path = (lang: Lang, slug = "") =>
 export const routeNames = {
   home: { es: "", en: "" },
   projects: { es: "proyectos", en: "projects" },
-  impact: { es: "impacto-y-transparencia", en: "impact-and-transparency" },
+  impact: { es: "reportes-de-gestion", en: "impact-and-transparency" },
   join: { es: "sumate", en: "get-involved" },
   about: { es: "conocenos", en: "about" },
   donate: { es: "donar", en: "donate" },

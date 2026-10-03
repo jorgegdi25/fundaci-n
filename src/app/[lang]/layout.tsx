@@ -7,6 +7,7 @@ import "@fontsource/manrope/600.css";
 import "@fontsource/manrope/700.css";
 import "./globals.css";
 import "./motion.css";
+import "./revision.css";
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {

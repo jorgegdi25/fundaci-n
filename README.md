@@ -1,6 +1,6 @@
 # Fundación Alma Arcoíris · primera versión
 
-Sitio en **Next.js 16, React 19, TypeScript y Sanity**, basado en `Estructura web 2026 v2` y en las revisiones de esta carpeta. Versión local para revisar diseño y contenido. No está publicado en el dominio de la fundación.
+Sitio en **Next.js 16, React 19, TypeScript y Sanity**, basado en `Estructura web 2026 v2` y en las revisiones suministradas. Existe una primera vista previa en Vercel; la revisión del 2 de octubre se prepara localmente para revisar contenido paso a paso. No está publicado en el dominio de la fundación.
 
 ## Ver el sitio
 
@@ -57,7 +57,7 @@ No se ha medido todavía Lighthouse, Core Web Vitals en producción, compatibili
 
 1. **Pagos:** conectar cuentas oficiales de Wompi y PayPal, confirmar recurrencia por proveedor, monedas y condiciones; implementar órdenes de servidor, firmas/webhooks, idempotencia, estados de pago, cancelación y pruebas sandbox. Nunca contar una selección o retorno del navegador como donación confirmada.
 2. **CMS:** conectar proyecto/dataset, comprobar permisos y publicaciones, enlazar el resto de los modelos y habilitar vista previa de borradores autenticada.
-3. **Contenido:** conciliar 75/15/10 de Inicio con los importes de Transparencia, verificar cifras y fuentes, cargar estados financieros y anexos oficiales, completar perfiles, misión/visión aprobadas, calendarios y las dos fotos de El Cairo.
+3. **Contenido:** conciliar el reparto financiero de Inicio con los importes de Transparencia, cargar estados financieros y anexos oficiales, completar perfiles, aprobar traducciones, calendarios y las dos fotos de El Cairo. Misión y visión ya están tomadas del PDF v2 recibido en octubre.
 4. **Contactos:** elegir y conectar el servicio de formularios/boletín. El registro del footer está visiblemente deshabilitado; los enlaces de correo y WhatsApp sí abren sus canales. No hay envíos ni inscripciones simuladas.
 5. **Privacidad:** reemplazar los textos informativos de la vista previa por las políticas aprobadas; definir consentimiento, conservación y tratamiento de datos. Activar analítica/Ads únicamente cuando exista configuración y consentimiento aplicable. Coordinar medición con SEM BOX.
 6. **Publicación:** definir hosting y dominio, HTTPS, redirecciones de las URLs actuales, páginas legales, imágenes sociales finales y comprobaciones de rendimiento/accesibilidad. Solo después activar `SITE_INDEXABLE=true` con la URL HTTPS correcta, sitemap y Search Console.
@@ -95,6 +95,16 @@ Se añadieron entradas al recorrer las secciones y tarjetas, una entrada breve d
 
 El contenido permanece visible sin JavaScript. Las animaciones se ejecutan una vez por sección y visita, se cancelan al enfocar sus controles y respetan `prefers-reduced-motion`, incluso si cambia durante la visita. Se detienen para imprimir y se recupera la observación después. El ajuste de reducción de movimiento está implementado; no se cambió la preferencia del sistema del usuario durante esta revisión.
 
-Se contrastaron los textos institucionales, cifras, proyectos y testimonios con v2. Se retiraron las respuestas editoriales del Círculo de Oro y el indicador inferido «1 modelo» de El Cairo. La misión, visión y el Círculo de Oro formal quedan pendientes del texto aprobado. El [control editorial](docs/CONTROL_EDITORIAL.md) distingue contenido suministrado, adaptaciones web, traducciones y pendientes; la procedencia documental no equivale a verificación independiente.
+Se contrastaron los textos institucionales, cifras, proyectos y testimonios con v2. Se retiraron las respuestas editoriales del Círculo de Oro y el indicador inferido «1 modelo» de El Cairo. En esa revisión la misión y visión quedaban pendientes; el PDF recibido en octubre ya aporta esos textos. El [control editorial](docs/CONTROL_EDITORIAL.md) distingue contenido suministrado, adaptaciones web, traducciones y pendientes; la procedencia documental no equivale a verificación independiente.
+
+## Revisión de estructura · 2 de octubre de 2026
+
+Se revisaron completas las 35 páginas de `Estructura web 2026 v2.pdf` y las cuatro de `Ajustes visuales a sitio web vercel.pdf`, incluidos enlaces, fotografías y anotaciones. La portada pasa a fotografía completa con frase breve y presentación debajo. Se incorporan cuatro submenús, las cuatro formas de participar, misión, visión 2030, autoridades comunitarias, funciones del equipo, alianzas y testimonios suministrados.
+
+La transparencia en español usa `/es/reportes-de-gestion`; `/reportes-de-gestion/` y `/es/impacto-y-transparencia` redirigen permanentemente a esa ruta. Se añaden los informes de gestión 2024 y 2025 ya publicados en el sitio actual. El reparto del inicio queda sustituido por acceso a los informes mientras se concilia; la gráfica financiera conserva un aviso de revisión pendiente y aclara su base de cálculo.
+
+Las nuevas fotos de caminatas y misiones proceden de los enlaces de la clienta y se optimizaron a WebP. El [control editorial](docs/CONTROL_EDITORIAL.md) registra fuentes por sección y pendientes de cifras, certificados, fotos, biografías, calendario, formularios, traducciones y pagos. Los nuevos campos de resultados y testimonios también están preparados en Sanity; no se creó una cuenta ni se publicó contenido en el CMS.
+
+Validación de esta revisión: TypeScript y seis pruebas pasaron; compilación optimizada con Webpack (alternativa incluida en Next.js); revisión HTTP de las 26 páginas ES/EN, 404, robots, API de donaciones deshabilitada y redirecciones permanentes de informes. En navegador se comprobaron Inicio, Súmate, Conócenos, informes y El Cairo a 320, 390 y 1280 px, menú móvil, cierre por teclado, acordeones, categoría financiera, importe personalizado y cambio de idioma conservando el proyecto. La fotografía principal adapta su altura a la pantalla de escritorio y mantiene su proporción completa en móvil. Los desplegables nativos conservan las interacciones anteriores a la hidratación. Estas comprobaciones no constituyen una auditoría exhaustiva de accesibilidad ni aprobación de Google Ad Grants.
 
 Pasaron la compilación optimizada y TypeScript. Se comprobó en navegador la activación de las entradas de tarjetas, la navegación ES/EN y la ausencia de desbordamiento en Inicio y Conócenos en las vistas revisadas de 320 y 1280 px; sin errores de consola.

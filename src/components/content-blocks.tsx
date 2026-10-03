@@ -38,7 +38,7 @@ export function Photo({
       width={1800}
       height={1200}
       sizes="(max-width: 700px) 100vw, (max-width: 1100px) 90vw, 1300px"
-      priority={priority}
+      preload={priority}
     />
   );
 }
@@ -90,7 +90,17 @@ export function ProjectCards({
           </div>
           <div className="project-card-copy">
             <span className="eyebrow">{p.location[lang]}</span>
-            <h3>{p.name[lang]}</h3>
+            <h3>
+              {p.slug === "sierra-nevada"
+                ? es
+                  ? "Comunidad Kogui"
+                  : "Kogui community"
+                : p.slug === "amazonas"
+                  ? es
+                    ? "Comunidad Tikuna"
+                    : "Tikuna community"
+                  : p.name[lang]}
+            </h3>
             <p>
               {
                 [
@@ -101,11 +111,11 @@ export function ProjectCards({
                     ? "Cuidando el corazón del mundo."
                     : "Caring for the heart of the world.",
                   es
-                    ? "Guardianes de la selva y sus saberes."
-                    : "Guardians of the forest and its knowledge.",
+                    ? "Empoderando a los guardianes de la selva."
+                    : "Empowering the guardians of the rainforest.",
                   es
-                    ? "Sabiduría viva de nuestras abuelas."
-                    : "The living wisdom of our grandmothers.",
+                    ? "Fondo de apoyo a sabedoras Mhuysqas."
+                    : "Supporting Mhuysqa women knowledge keepers.",
                 ][i]
               }
             </p>
@@ -143,7 +153,7 @@ export function Faq({
       />
       <div className="faq-list">
         {items.map((q, i) => (
-          <details key={i}>
+          <details key={i} suppressHydrationWarning>
             <summary>
               {q.question}
               <Plus size={21} />
@@ -182,75 +192,31 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
   return (
     <>
       <section className="home-hero" aria-labelledby="home-title">
-        <div className="hero-stage">
-          <div className="hero-copy">
-            <div className="hero-overline">
-              <span aria-hidden="true" />
-              <span>Fundación Alma Arcoíris</span>
-            </div>
+        <div className="full-photo-hero">
+          <Photo
+            src="/images/home-hero.webp"
+            alt={
+              es
+                ? "Guardianes de los saberes ancestrales en su territorio, Colombia"
+                : "Guardians of ancestral knowledge on their land in Colombia"
+            }
+            priority
+          />
+          <div className="full-photo-message section">
+            <span className="eyebrow">Fundación Alma Arcoíris</span>
             <h1 id="home-title">
-              {es ? (
-                <>
-                  Reconecta con los saberes ancestrales.
-                  <em>Protejamos los guardianes de la tierra.</em>
-                </>
-              ) : (
-                <>
-                  Reconnect with ancestral wisdom.
-                  <em>Let’s protect the guardians of the Earth.</em>
-                </>
-              )}
-            </h1>
-            <p className="hero-lead">
               {es
-                ? "Tu aporte cuida la vida, la cultura y los territorios de Colombia."
-                : "Your gift cares for life, culture and communities across Colombia."}
-            </p>
-            <div className="hero-actions">
-              <Link className="button gold" href={href(lang, "donate")}>
-                <Heart size={21} />
-                {es ? "Haz una donación" : "Make a donation"}
-                <ArrowUpRight size={21} />
-              </Link>
-              <a href="#proyectos" className="hero-projects-link">
-                {es ? "Conoce los proyectos" : "Explore the projects"}
-                <ArrowRight size={21} />
-              </a>
-            </div>
-            <div className="hero-identity">
-              <ShieldCheck size={23} />
-              <span>
-                {es ? "Entidad sin ánimo de lucro" : "Nonprofit organisation"}
-                <span>NIT 901784588-0 · Colombia</span>
-              </span>
-            </div>
+                ? "Reconecta con los saberes ancestrales."
+                : "Reconnect with ancestral wisdom."}
+            </h1>
           </div>
-          <figure className="hero-portrait">
-            <Photo
-              src="/images/home-hero.webp"
-              alt={
-                es
-                  ? "Dos guardianes de los saberes ancestrales en su territorio, Colombia"
-                  : "Two guardians of ancestral knowledge on their land in Colombia"
-              }
-              priority
-            />
-            <figcaption>
-              <span className="hero-caption-mark" aria-hidden="true">
-                <Leaf size={27} />
-              </span>
-              <span>
-                {es
-                  ? "La sabiduría que nos une."
-                  : "The wisdom that connects us."}
-                <strong>
-                  {es
-                    ? "La tierra que nos cuida."
-                    : "The Earth that sustains us."}
-                </strong>
-              </span>
-            </figcaption>
-          </figure>
+          <div className="full-photo-identity">
+            <ShieldCheck size={22} aria-hidden="true" />
+            <span>
+              Fundación Alma Arcoíris Colombia · NIT 901784588-0 ·{" "}
+              {es ? "Entidad sin ánimo de lucro" : "Nonprofit organisation"}
+            </span>
+          </div>
         </div>
         <div className="hero-purpose section">
           <div>
@@ -259,21 +225,26 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             </span>
             <h2>
               {es
-                ? "El bienestar de las comunidades. El cuidado de la tierra."
-                : "Community wellbeing. Care for the Earth."}
+                ? "Impulsamos el bienestar y la soberanía de comunidades indígenas guardianes de la biodiversidad en Colombia."
+                : "We support the wellbeing and sovereignty of Indigenous communities who protect biodiversity in Colombia."}
             </h2>
           </div>
           <div>
-            <p className="purpose-lead">
-              {es
-                ? "Impulsamos el bienestar y la soberanía de comunidades indígenas guardianes de la biodiversidad en Colombia."
-                : "We support the wellbeing and sovereignty of Indigenous communities who protect biodiversity in Colombia."}
-            </p>
             <p>
               {es
                 ? "Desarrollamos proyectos de doble impacto que conectan la sabiduría indígena Kogui, Mhuysqa y Tikuna con el desarrollo sostenible mediante expediciones con propósito, reconexión ecológica y espiritual, protegiendo así la vida, la cultura y el planeta."
                 : "Our projects connect Kogui, Mhuysqa and Tikuna Indigenous wisdom with sustainable development through purposeful expeditions and ecological and spiritual reconnection, protecting life, culture and the planet."}
             </p>
+            <div className="button-row">
+              <Link className="button gold" href={href(lang, "donate")}>
+                <Heart size={20} />
+                {es ? "Haz una donación" : "Make a donation"}
+              </Link>
+              <a className="button outline" href="#proyectos">
+                {es ? "Conoce nuestros proyectos" : "Explore our projects"}
+                <ArrowRight size={20} />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -288,30 +259,39 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
         {[
           {
             n: "115",
-            a: es ? "pueblos indígenas" : "Indigenous peoples",
+            a: es
+              ? "pueblos indígenas en Colombia"
+              : "Indigenous peoples in Colombia",
             b: es
-              ? "El 4,7% de la población de Colombia."
-              : "4.7% of Colombia’s population.",
-            s: "DANE / IWGIA",
+              ? "Pueblos nativos identificados por el Censo Nacional de Población y Vivienda 2018."
+              : "Native peoples identified by Colombia’s 2018 population and housing census.",
+            s: "DANE · CNPV 2018",
+            url: "https://www.dane.gov.co/files/investigaciones/boletines/grupos-etnicos/infograf%C3%ADa-grupos-etnicos-2019.pdf",
           },
           {
             n: "46%",
-            a: es ? "de los bosques" : "of forests",
+            a: es
+              ? "del bosque natural colombiano"
+              : "of Colombia’s natural forest",
             b: es
-              ? "Se concentran en resguardos indígenas: 29% del territorio continental, con el 91% en excelente estado ecológico."
-              : "Are located in Indigenous reserves: 29% of the continental territory, with 91% in excellent ecological condition.",
-            s: "Instituto Humboldt",
+              ? "Aproximadamente el 46% del bosque natural de Colombia se encuentra en resguardos indígenas."
+              : "Approximately 46% of Colombia’s natural forest is located in Indigenous reserves.",
+            s: "WWF Colombia · 2024",
+            url: "https://www.wwf.org.co/de_interes/noticias/?uNewsID=364960",
           },
           {
             n: "60%",
-            a: es ? "del carbono forestal" : "of forest carbon",
+            a: es
+              ? "del carbono forestal amazónico de Colombia"
+              : "of forest carbon in Colombia’s Amazon",
             b: es
-              ? "Almacenado en resguardos de la Amazonía colombiana."
-              : "Stored in Indigenous reserves in the Colombian Amazon.",
-            s: "WWF Colombia",
+              ? "El 60% del carbono de los bosques de la Amazonía colombiana se almacena en resguardos indígenas."
+              : "60% of forest carbon in the Colombian Amazon is stored in Indigenous reserves.",
+            s: "WWF Colombia · 2024",
+            url: "https://www.wwf.org.co/de_interes/noticias/?uNewsID=364960",
           },
         ].map((x) => (
-          <details key={x.n}>
+          <details key={x.n} suppressHydrationWarning>
             <summary>
               <strong>{x.n}</strong>
               <span>
@@ -320,12 +300,15 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               </span>
             </summary>
             <p>{x.b}</p>
-            <small>
-              {es
-                ? "Fuente indicada en el documento"
-                : "Source cited in the brief"}
-              : {x.s}. {es ? "Dato en validación." : "Figure under review."}
-            </small>
+            <a
+              className="stat-source"
+              href={x.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {es ? "Fuente" : "Source"}: {x.s}
+              <ArrowUpRight size={16} />
+            </a>
           </details>
         ))}
       </section>
@@ -401,8 +384,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               eyebrow={es ? "¿QUÉ HEMOS HECHO?" : "WHAT HAVE WE ACHIEVED?"}
               title={
                 es
-                  ? "Transformamos tu confianza en impacto."
-                  : "Turning your trust into impact."
+                  ? "Impacto demostrable: transformamos tu confianza en desarrollo tangible para el territorio."
+                  : "Demonstrable impact: turning your trust into tangible development on the ground."
               }
             />
             <Link className="button outline-light" href={href(lang, "impact")}>
@@ -443,53 +426,27 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               </div>
             ))}
           </div>
-          <div className="home-funds">
+          <div className="home-funds-link">
+            <FileText size={36} aria-hidden="true" />
             <div>
-              <span className="eyebrow">
-                {es ? "DESTINO DE LOS FONDOS" : "HOW FUNDS ARE USED"}
-              </span>
               <h3>
-                {es ? "Cada aporte, un propósito." : "Every gift, a purpose."}
+                {es
+                  ? "Memorias, estados financieros y documentos oficiales"
+                  : "Annual reports, financial statements and official records"}
               </h3>
               <p>
                 {es
-                  ? "Distribución propuesta en el documento del cliente. Pendiente de conciliar con los estados financieros."
-                  : "Distribution proposed in the client document. Pending reconciliation with financial statements."}
+                  ? "La transparencia es la base de nuestro trabajo."
+                  : "Transparency is the foundation of our work."}
               </p>
             </div>
-            <div>
-              <div
-                className="funds-bar"
-                role="img"
-                aria-label={
-                  es
-                    ? "75% programas, 15% logística, 10% administración. Borrador."
-                    : "75% programmes, 15% logistics, 10% administration. Draft."
-                }
-              >
-                <span />
-                <span />
-                <span />
-              </div>
-              <div className="funds-labels">
-                <span>
-                  <b>75%</b>
-                  {es
-                    ? "Programas e infraestructura"
-                    : "Programmes and infrastructure"}
-                </span>
-                <span>
-                  <b>15%</b>
-                  {es ? "Logística y operación" : "Logistics and operations"}
-                </span>
-                <span>
-                  <b>10%</b>
-                  {es
-                    ? "Administración y cumplimiento"
-                    : "Administration and compliance"}
-                </span>
-              </div>
-            </div>
+            <Link
+              className="button outline-light"
+              href={`${href(lang, "impact")}#memorias`}
+            >
+              {es ? "Consultar informes" : "Read the reports"}
+              <ArrowUpRight size={18} />
+            </Link>
           </div>
           <div className="impact-bottom">
             <p>
@@ -504,15 +461,17 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               {es ? "Ver destino de los fondos" : "See how funds are used"}
               <ArrowRight size={18} />
             </Link>
-            <Link
-              href={`${href(lang, "impact")}#memorias`}
+            <a
+              href="https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="text-link light-link"
             >
               {es
-                ? "Reporte de impacto 2025 · HTML"
-                : "2025 impact report · HTML"}
+                ? "Informe de gestión 2025 · PDF"
+                : "2025 annual report · PDF"}
               <ArrowRight size={18} />
-            </Link>
+            </a>
           </div>
           <p className="funds-pending">
             {es
@@ -573,7 +532,18 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
           </Link>
         </div>
       </section>
-      <section className="donation-section section">
+      <section
+        className="donation-section section donation-photo-section"
+        id="apoyo"
+      >
+        <div className="donation-background" aria-hidden="true">
+          <Image
+            src="/images/misiones.webp"
+            alt=""
+            fill
+            sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1310px) calc(100vw - 70px), 1240px"
+          />
+        </div>
         <div className="donation-story">
           <span className="eyebrow">
             {es ? "CULTIVEMOS UN FUTURO COMPARTIDO" : "GROW A SHARED FUTURE"}
@@ -698,11 +668,6 @@ export function ProjectPage({
                 <div className="module-placeholder">
                   <span>0{i + 1}</span>
                   <HandHeart size={44} />
-                  <small>
-                    {es
-                      ? "Imagen del proyecto pendiente"
-                      : "Project photograph pending"}
-                  </small>
                 </div>
               )}
               <div>
@@ -721,7 +686,10 @@ export function ProjectPage({
               ? "TRANSPARENCIA Y PRUEBA SOCIAL"
               : "TRANSPARENCY AND COMMUNITY IMPACT"
           }
-          title={es ? `Resultados en ${p.name.es}` : `Progress in ${p.name.en}`}
+          title={
+            p.resultsTitle?.[lang] ??
+            (es ? `Resultados en ${p.name.es}` : `Progress in ${p.name.en}`)
+          }
         />
         <div className="results-row">
           {p.results.map((r) => (
@@ -731,11 +699,23 @@ export function ProjectPage({
             </div>
           ))}
         </div>
+        {p.achievements && (
+          <ul className="project-details-list">
+            {p.achievements.map((item) => (
+              <li key={item.es}>{item[lang]}</li>
+            ))}
+          </ul>
+        )}
         <p className="small-note">
           {es
             ? "Datos del documento del proyecto, sujetos a revisión con sus informes de respaldo."
             : "Figures from the project brief, pending review against supporting reports."}
         </p>
+        {p.testimony && (
+          <blockquote className="project-quote">
+            “{p.testimony.quote[lang]}”<cite>{p.testimony.author[lang]}</cite>
+          </blockquote>
+        )}
         {p.video && (
           <VideoCard
             id={p.video}
@@ -743,6 +723,21 @@ export function ProjectPage({
             title={es ? `Una mirada a ${p.name.es}` : `A look at ${p.name.en}`}
             lang={lang}
           />
+        )}
+        {p.slug === "el-cairo" && (
+          <div className="project-partners">
+            <h3>{es ? "Nuestros aliados" : "Our partners"}</h3>
+            <ul>
+              <li>Santuario Playa Bonita</li>
+              <li>Fundación Pech</li>
+              <li>Casa Santuario Bogotá</li>
+              <li>
+                {es
+                  ? "Junta de Acción Comunal Prado Veraniego · Bogotá"
+                  : "Prado Veraniego Community Action Board · Bogotá"}
+              </li>
+            </ul>
+          </div>
         )}
         <div className="center">
           <a className="button gold" href="#donar-formulario">
@@ -804,8 +799,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
         </h1>
         <p>
           {es
-            ? "Explora nuestros resultados, el destino de los recursos y las memorias del trabajo que construimos junto a las comunidades."
-            : "Explore our results, how resources are used and the records of work built together with communities."}
+            ? "Transformamos cada contribución en soberanía indígena, educación intercultural y conservación ambiental. Explora la ejecución de nuestros recursos, certificados legales y memorias anuales."
+            : "We turn contributions into Indigenous sovereignty, intercultural education and environmental conservation. Explore how resources are used, legal records and annual reports."}
         </p>
         <div className="button-row">
           <Link className="button gold" href={href(lang, "donate")}>
@@ -819,24 +814,47 @@ export function ImpactPage({ lang }: { lang: Lang }) {
       </section>
       <section className="section legal-badges">
         {[
-          es ? "Identidad y registro" : "Identity and registration",
-          es ? "Régimen tributario" : "Tax status",
+          es
+            ? "Régimen Tributario Especial · DIAN"
+            : "Special Tax Regime · DIAN",
           es ? "Inspección y vigilancia" : "Oversight",
+          es ? "Registro ESAL · CCB" : "Nonprofit registration · CCB",
+          es
+            ? "Rendición Social Pública de Cuentas"
+            : "Public social accountability",
           es ? "Estados financieros" : "Financial statements",
         ].map((label, i) => (
-          <details key={label}>
+          <details key={label} suppressHydrationWarning>
             <summary>
               {i === 0 ? <ShieldCheck /> : <FileText />}
               <strong>{label}</strong>
               <Plus size={16} />
             </summary>
             <p>
-              {i === 0
-                ? "Fundación Alma Arcoíris Colombia · NIT 901784588-0."
-                : es
-                  ? "El documento oficial y su vigencia se incorporarán a la biblioteca una vez verificados."
-                  : "The official document and its validity will be added to the library once verified."}
+              {
+                [
+                  es
+                    ? "NIT 901.784.588-0. Responsabilidad 04 en el RUT."
+                    : "NIT 901.784.588-0. Responsibility 04 on the tax register.",
+                  es
+                    ? "Gobernación de Cundinamarca. Radicado GOB-S-CR-2026-0168636, 2 de septiembre de 2026, vigencia 2025."
+                    : "Cundinamarca Government. Reference GOB-S-CR-2026-0168636, 2 September 2026, 2025 reporting period.",
+                  es
+                    ? "Cámara de Comercio de Bogotá. Registro S0063813, inscripción 00373753 del Libro I de las ESAL."
+                    : "Bogotá Chamber of Commerce. Registration S0063813, entry 00373753 in Book I for nonprofits.",
+                  es
+                    ? "Ejercicio anual de Rendición Social Pública de Cuentas del año 2025."
+                    : "Annual public social accountability exercise for 2025.",
+                  es
+                    ? "NIIF para PYMES. Contadora Pública T.P. 180773-T y Revisor Fiscal T.P. 289607-T."
+                    : "IFRS for SMEs. Public Accountant licence 180773-T and Statutory Auditor licence 289607-T.",
+                ][i]
+              }
             </p>
+            <a className="text-link" href="#memorias">
+              {es ? "Consultar documentos" : "Explore records"}
+              <ArrowUpRight size={16} />
+            </a>
           </details>
         ))}
       </section>
@@ -866,14 +884,14 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           </span>
           <h2>
             {es
-              ? "La transparencia también es escuchar."
-              : "Transparency also means listening."}
+              ? "La transparencia no es solo financiera, es el respeto por la raíz"
+              : "Transparency reaches beyond finances to respect for our roots"}
           </h2>
           <blockquote>
             “
             {es
-              ? "Para cuidar la Sierra Nevada y el agua, primero hay que estar en orden con la ley de origen."
-              : "To care for the Sierra Nevada and the water, we must first be in harmony with the law of origin."}
+              ? "Para cuidar la Sierra Nevada y el agua, primero hay que estar en orden con la ley de origen. La Fundación Alma Arcoíris no llega como un extraño; llega a escuchar la palabra del Mamo, a pedir el permiso en los sitios sagrados y a caminar juntos en la protección de la naturaleza."
+              : "To care for the Sierra Nevada and the water, we must first be in harmony with the law of origin. Fundación Alma Arcoíris comes to listen to the Mamo’s words, seek permission at sacred sites and walk together to protect nature."}
             ”
           </blockquote>
           <p className="quote-author">
@@ -891,15 +909,41 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           </p>
         </div>
       </section>
-      <section className="section">
+      <section className="section" id="trayectoria">
         <SectionTitle
           eyebrow={es ? "RESULTADOS E INDICADORES" : "RESULTS AND INDICATORS"}
           title={
             es
-              ? "Un trabajo compartido que deja huella."
-              : "Shared work that makes a difference."
+              ? "Resultados cuantitativos y alineación con los ODS"
+              : "Results and alignment with the Sustainable Development Goals"
           }
         />
+        <div className="results-row">
+          <div>
+            <strong>~950</strong>
+            <p>
+              {es
+                ? "beneficiarios directos · 2025"
+                : "direct beneficiaries · 2025"}
+            </p>
+          </div>
+          <div>
+            <strong>3</strong>
+            <p>
+              {es
+                ? "comunidades étnicas aliadas: Kogui, Tikuna y Mhuysqa"
+                : "Indigenous community partners: Kogui, Tikuna and Mhuysqa"}
+            </p>
+          </div>
+          <div>
+            <strong>&gt;250</strong>
+            <p>
+              {es
+                ? "participantes en caminatas de páramo · 2025"
+                : "páramo walk participants · 2025"}
+            </p>
+          </div>
+        </div>
         <VideoCard
           lang={lang}
           id="xxoat0t-AQM"
@@ -935,8 +979,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
               es ? "Comunidad e igualdad" : "Community and equality",
               "ODS 3 · 5",
               es
-                ? "Encuentros y redes de apoyo EFIS y Hermandad del Cóndor."
-                : "Gatherings and support networks through EFIS and Hermandad del Cóndor.",
+                ? "En 2025: EFIS, comunidad virtual de 160 mujeres; Hermandad del Cóndor, red de 188 hombres."
+                : "In 2025: EFIS, a virtual community of 160 women; Hermandad del Cóndor, a network of 188 men.",
             ],
           ].map(([Icon, title, ods, text], i) => {
             const I = Icon as typeof Leaf;
@@ -963,7 +1007,7 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           }
         />
         {[2025, 2024, 2023].map((year, i) => (
-          <details key={year} open={i === 0}>
+          <details key={year} open={i === 0} suppressHydrationWarning>
             <summary>
               <strong>{year}</strong>
               <span>
@@ -984,20 +1028,32 @@ export function ImpactPage({ lang }: { lang: Lang }) {
                     ? "~950 beneficiarios directos y tres comunidades indígenas aliadas. Consulta el informe publicado de la fundación."
                     : "~950 direct beneficiaries and three Indigenous community partners. Read the foundation’s published report."
                   : es
-                    ? "Los documentos de esta vigencia se están preparando para su incorporación a esta biblioteca."
-                    : "Documents for this reporting year are being prepared for this library."}
+                    ? i === 1
+                      ? "900 caminantes, encuentro ancestral Sagrado Corazón y retiro Hermandad del Cóndor."
+                      : "Registro ante la Cámara de Comercio de Bogotá el 27 de diciembre de 2023 y asignación de NIT ante la DIAN."
+                    : i === 1
+                      ? "900 walkers, the Sagrado Corazón ancestral gathering and the Hermandad del Cóndor retreat."
+                      : "Registration with the Bogotá Chamber of Commerce on 27 December 2023 and tax identification with DIAN."}
               </p>
-              {i === 0 ? (
+              {i < 2 ? (
                 <a
                   className="button outline"
-                  href="https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+                  href={
+                    i === 0
+                      ? "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+                      : "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
+                  }
                   target="_blank"
                   rel="noreferrer"
                 >
                   <FileText size={17} />
                   {es
-                    ? "Informe de gestión 2025 · PDF"
-                    : "2025 annual report · PDF (Spanish)"}
+                    ? i === 0
+                      ? "Informe de gestión 2025 · PDF"
+                      : "Informe 2024 · corte febrero 2025 · PDF"
+                    : i === 0
+                      ? "2025 annual report · PDF (Spanish)"
+                      : "2024 report · February 2025 cut-off · PDF (Spanish)"}
                   <ArrowUpRight size={17} />
                 </a>
               ) : (
@@ -1011,13 +1067,17 @@ export function ImpactPage({ lang }: { lang: Lang }) {
               )}
               <p className="small-note">
                 {es
-                  ? "Anexos financieros y dictámenes: pendientes de incorporación."
-                  : "Financial annexes and audit reports: pending upload."}
+                  ? i < 2
+                    ? "Anexo financiero y dictamen de revisoría fiscal: pendientes de incorporación."
+                    : "Informe de constitución y balance de apertura: pendientes de incorporación."
+                  : i < 2
+                    ? "Financial annex and statutory audit report: pending upload."
+                    : "Foundation report and opening balance: pending upload."}
               </p>
             </div>
           </details>
         ))}
-        <details>
+        <details suppressHydrationWarning>
           <summary>
             <strong>
               <ShieldCheck />
@@ -1032,8 +1092,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           <div className="archive-body">
             <p>
               {es
-                ? "RUT, certificado de existencia y representación y certificado de inspección y vigilancia. Solicítalos a la fundación mientras se completa la biblioteca."
-                : "Tax registration, legal registration and oversight certificate. Contact the foundation while the library is being completed."}
+                ? "RUT vigente, certificado de existencia y representación, certificado de la Gobernación de Cundinamarca y certificado de Rendición Social Pública de Cuentas. Solicítalos a la fundación mientras se completa la biblioteca."
+                : "Current tax registration, legal registration, Cundinamarca Government certificate and public social accountability certificate. Contact the foundation while the library is being completed."}
             </p>
             <a
               className="text-link"

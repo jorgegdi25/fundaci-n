@@ -25,6 +25,10 @@ for (const [order, p] of projects.entries())
     order,
     modules: keys(p.modules),
     results: keys(p.results),
+    achievements: keys(p.achievements ?? []).map((item) => ({
+      ...item,
+      _type: "localizedText",
+    })),
     faqs: keys(p.faqs),
   });
 await transaction.commit();

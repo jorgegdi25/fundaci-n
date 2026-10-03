@@ -222,5 +222,26 @@
     "width": 1200,
     "height": 800,
     "bytes": 131988
+  },
+  {
+    "asset": "caminatas",
+    "source": "https://drive.google.com/file/d/1IQd8GSkcjRhxuogdSeaR0zcbVGBx9MTU/view",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 335744
+  },
+  {
+    "asset": "misiones",
+    "source": "https://drive.google.com/file/d/1_CxT_Ewiq5itEmT2eNpLrHgzeVSack3R/view",
+    "width": 1600,
+    "height": 1066,
+    "bytes": 468320
+  },
+  {
+    "asset": "sierra-misiones",
+    "source": "https://drive.google.com/file/d/1Enel-xHVbmVlsfyEF-BjzVJeq4iPksiW/view",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 234226
   }
 ]

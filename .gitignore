@@ -10,6 +10,7 @@ tmp/
 *.log
 # Client source documents and original media remain local.
 /FOTOS Y VIDEOS/
+/DOCUMENTOS LEGALES/
 /logo versiones/
 /*.pdf
 /*.docx

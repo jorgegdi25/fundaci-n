@@ -73,18 +73,20 @@ export function Footer({ lang }: { lang: Lang }) {
             <h2 id="community-heading" data-reveal>
               {es ? (
                 <>
-                  Haz parte de la gran familia <em>Alma Arcoíris.</em>
+                  Haz parte de la gran familia <em>Alma Arcoíris</em> alrededor
+                  del mundo.
                 </>
               ) : (
                 <>
-                  Become part of the <em>Alma Arcoíris family.</em>
+                  Become part of the <em>Alma Arcoíris family</em> around the
+                  world.
                 </>
               )}
             </h2>
             <p className={styles.intro} data-reveal>
               {es
-                ? "Expediciones, caminatas y avances en territorio. Conoce las historias que construimos juntos."
-                : "Expeditions, nature walks and progress on the ground. Discover the stories we create together."}
+                ? "Recibe noticias directas sobre nuestras expediciones, caminatas y avances en territorio."
+                : "Receive news about our expeditions, walks and progress on the ground."}
             </p>
             <div className={styles.registration}>
               <label htmlFor="community-contact">
@@ -198,6 +200,14 @@ export function Footer({ lang }: { lang: Lang }) {
                 <MessageCircle size={20} aria-hidden="true" />
                 <span>+57 304 498 9707</span>
               </a>
+              <a href="mailto:fundacionalmaarcoiris@gmail.com">
+                <Mail size={20} aria-hidden="true" />
+                <span className={styles.email}>
+                  fundacionalmaarcoiris@
+                  <wbr />
+                  gmail.com
+                </span>
+              </a>
               <a href="tel:+573178292106">
                 <Phone size={20} aria-hidden="true" />
                 <span>+57 317 829 2106</span>
@@ -205,7 +215,8 @@ export function Footer({ lang }: { lang: Lang }) {
               <div>
                 <MapPin size={20} aria-hidden="true" />
                 <span>
-                  Chía, Cundinamarca
+                  Carrera 9 A No 21-61, Conjunto Portanova Cs 1. Chía,
+                  Cundinamarca
                   <span className={styles.country}>Colombia</span>
                 </span>
               </div>
