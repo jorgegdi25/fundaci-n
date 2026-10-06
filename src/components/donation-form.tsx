@@ -1,5 +1,5 @@
 "use client";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Heart, ArrowUpRight, LockKeyhole, X, Check } from "lucide-react";
 import {
   donationAmounts,
@@ -7,6 +7,7 @@ import {
   type Frequency,
 } from "@/lib/donations";
 import { href, l, type Lang } from "@/lib/i18n";
+import { DonationCheckout } from "./donation-checkout";
 // Amount descriptions supplied in Estructura web 2026 v2.pdf, pages 6, 8–9, 12, 16 and 19.
 const giftDescriptions = {
   general: [
@@ -138,6 +139,18 @@ export function DonationForm({
   const [custom, setCustom] = useState("");
   const [error, setError] = useState("");
   const [destination, setDestination] = useState(cause);
+  const [reviewed, setReviewed] = useState(false);
+  const [sandbox, setSandbox] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/donations", { signal: controller.signal, cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) =>
+        setSandbox(data.configured === true && data.environment === "sandbox"),
+      )
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
   const selected = amount ?? Number(custom);
@@ -165,12 +178,13 @@ export function DonationForm({
     if (!result.ok) {
       setError(
         es
-          ? "Ingresa un valor entero entre $1.000 y $100.000.000 COP."
-          : "Enter a whole amount between COP 1,000 and 100,000,000.",
+          ? "Ingresa un valor entero entre $1.500 y $100.000.000 COP."
+          : "Enter a whole amount between COP 1,500 and 100,000,000.",
       );
       return;
     }
     setError("");
+    setReviewed(true);
     dialog.current?.showModal();
   };
   return (
@@ -273,7 +287,7 @@ export function DonationForm({
               <input
                 id={`${id}-amount`}
                 type="number"
-                min="1000"
+                min="1500"
                 max="100000000"
                 step="1"
                 inputMode="numeric"
@@ -313,9 +327,13 @@ export function DonationForm({
         </button>
         <p className="payment-notice">
           <LockKeyhole size={14} />
-          {es
-            ? "Pagos en línea disponibles próximamente"
-            : "Online payments coming soon"}
+          {sandbox
+            ? es
+              ? "Wompi en modo de pruebas · Sin dinero real"
+              : "Wompi test mode · No real money"
+            : es
+              ? "Pagos en línea disponibles próximamente"
+              : "Online payments coming soon"}
         </p>
       </form>
       <dialog
@@ -357,18 +375,16 @@ export function DonationForm({
             </dd>
           </div>
         </dl>
-        <p>
-          {es
-            ? "Estamos habilitando las donaciones en línea. No se ha realizado ningún cobro. Si quieres apoyar desde ahora, contacta a la fundación para conocer las opciones disponibles."
-            : "We are preparing online donations. No payment has been made. To help today, contact the foundation for available options."}
-        </p>
-        <a
-          className="button purple full"
-          href="mailto:contacto@fundacionalmaarcoiris.org"
-        >
-          {es ? "Contactar a la fundación" : "Contact the foundation"}
-          <ArrowUpRight size={18} />
-        </a>
+        {reviewed && (
+          <DonationCheckout
+            key={`${frequency}-${selected}-${destination}`}
+            lang={lang}
+            amount={selected}
+            frequency={frequency}
+            cause={destination}
+            close={() => dialog.current?.close()}
+          />
+        )}
       </dialog>
     </div>
   );

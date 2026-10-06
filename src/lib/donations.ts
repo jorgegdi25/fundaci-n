@@ -19,7 +19,7 @@ export function validateDonation(value: unknown) {
   if (
     typeof v.amount !== "number" ||
     !Number.isSafeInteger(v.amount) ||
-    v.amount < 1000 ||
+    v.amount < 1500 ||
     v.amount > 100000000
   )
     return { ok: false as const, error: "invalid_amount" };

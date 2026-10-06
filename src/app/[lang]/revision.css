@@ -616,3 +616,105 @@
     grid-template-columns: 1fr;
   }
 }
+.checkout-content {
+  margin-top: 1.25rem;
+}
+.sandbox-notice {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 1rem 1.1rem;
+  border: 1px solid #d7cfaa;
+  border-radius: 12px;
+  background: #f7f3de;
+  color: #49421f;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.sandbox-notice svg {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+.checkout-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin: 1.1rem 0;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.checkout-consent input {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0.3rem 0 0;
+  accent-color: #574c96;
+}
+.checkout-consent a,
+.checkout-status-link,
+.management-link a {
+  color: #51458b;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.checkout-status-link {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+}
+.checkout-content .button:disabled,
+.payment-result-card .button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.payment-result-page {
+  background: #f6f6f0;
+  min-height: 65vh;
+}
+.payment-result-card {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  background: white;
+  border: 1px solid #e1e0d7;
+  border-radius: 24px;
+  box-shadow: 0 16px 45px #3042340b;
+}
+.payment-result-card h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  margin: 1rem 0 1.5rem;
+}
+.payment-result-card > .eyebrow {
+  display: block;
+  margin-top: 1.3rem;
+}
+.payment-result-card p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.payment-result-card .gift-summary {
+  margin: 1.5rem 0;
+}
+.payment-home-link {
+  display: block;
+  margin-top: 1.2rem;
+  color: #51458b;
+  text-decoration: underline;
+}
+.payment-cancel {
+  margin: 1rem 0;
+  border: 1px solid #a78d91;
+  background: white;
+  color: #733546;
+  width: 100%;
+}
+.management-link {
+  background: #f3f0f8;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+}
+.management-link p {
+  margin: 0 0 0.7rem;
+}

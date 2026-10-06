@@ -15,6 +15,7 @@ test("rejects malformed, fractional, nonfinite and out-of-bounds amounts", () =>
     Infinity,
     -1,
     0,
+    1000,
     999,
     100000001,
     5000.5,

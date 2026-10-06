@@ -37,6 +37,43 @@ npm run cms:seed
 
 El script usa `createIfNotExists`, conserva documentos existentes y no publica. Las fotos iniciales continúan usando las rutas de `public/images`; desde Studio se podrán sustituir por imágenes subidas a Sanity. No hay credenciales ni cuenta de Sanity creadas por este proyecto. La verificación de conexión y permisos requiere esa cuenta.
 
+## Preparación de credenciales Wompi · 6 de octubre de 2026
+
+Los nombres de configuración están en `.env.example`:
+
+| Variable                 | Valor inicial de pruebas                       | Tipo en Vercel |
+| ------------------------ | ---------------------------------------------- | -------------- |
+| `WOMPI_ENVIRONMENT`      | `sandbox`                                      | Config         |
+| `WOMPI_PUBLIC_KEY`       | Llave completa con prefijo `pub_test_`         | Secret         |
+| `WOMPI_PRIVATE_KEY`      | Llave completa con prefijo `prv_test_`         | Secret         |
+| `WOMPI_INTEGRITY_SECRET` | Secreto completo con prefijo `test_integrity_` | Secret         |
+| `WOMPI_EVENTS_SECRET`    | Secreto completo con prefijo `test_events_`    | Secret         |
+
+El enlace actual de revisión corresponde al entorno **Production de Vercel**. Para probar en ese enlace, guardar allí estas credenciales **Sandbox de Wompi**. Los entornos de despliegue de Vercel y los ambientes de pagos de Wompi son independientes. Las credenciales reales se configurarán al activar cobros, después de validar la integración. No incluir valores privados en el chat, capturas, documentación ni GitHub.
+
+Para pruebas locales, usar valores Sandbox en `.env.local`, ignorado por Git. Las variables de tipo Secret de Production y Preview no se recuperan mediante `vercel env pull`. La integración de pruebas se describe a continuación; su configuración no activa cobros reales.
+
+## Integración Wompi Sandbox · 6 de octubre de 2026
+
+La integración acepta exclusivamente credenciales Sandbox. Las llaves de producción quedan bloqueadas por código. El sitio conserva `noindex` y no cobra dinero real.
+
+- Donación única: referencia y firma de integridad generadas en el servidor, registro previo en Postgres, salida al Checkout de Wompi y consulta del resultado autenticada por una cookie privada.
+- Donación mensual: autorización explícita del valor, frecuencia y cancelación; Widget de tokenización de Wompi para tarjeta o Nequi; creación de la fuente de pago en el servidor. La web no recibe ni almacena números de tarjeta ni CVC.
+- Registro persistente en la base separada `alma-arcoiris-donaciones-sandbox` de Neon, provisionada con plan Free y conectada al proyecto de Vercel. Sanity sigue reservado para contenido editorial.
+- Notificaciones: `POST /api/wompi/events` valida firma, ambiente y los datos canónicos de la transacción obtenidos del API de Wompi. Configurar en el panel **Sandbox** de Wompi la URL `https://fundacion-alma-arcoiris.vercel.app/api/wompi/events`.
+- Mensualidades: tarea diaria `/api/wompi/monthly`, protegida con `CRON_SECRET`, mantiene el día de referencia al pasar por meses cortos. No repite automáticamente un cobro con respuesta incierta. Si cambia una versión de los contratos de Wompi, pausa el aporte hasta una nueva autorización.
+- Cancelación: enlace personal con token en el fragmento de URL, o la cookie del navegador original. Detiene futuros ciclos; un aporte que ya estaba en procesamiento puede completar su resultado. La recuperación del enlace por correo y las confirmaciones por correo quedan pendientes para el lanzamiento real.
+
+Variables de servidor: las cinco `WOMPI_*`, `DATABASE_URL` y `CRON_SECRET`. La configuración protegida no se descarga ni se imprime. Para migraciones de la base de Sandbox: `node --env-file=tmp/payments-dev.env --experimental-strip-types scripts/migrate-payments.ts` (archivo local ignorado, obtenido con el entorno Development del proyecto). El script elige una conexión directa para la migración. No ejecutar esta migración sobre una base de producción ajena a las pruebas.
+
+Antes de dinero real: completar las pruebas de Checkout, eventos, mensualidades y cancelación; aprobar los textos legales de la fundación; confirmar las capacidades de pagos recurrentes/3DS de su cuenta Wompi; separar la base real de Sandbox y preparar avisos/recuperación por correo. La activación real requiere una modificación explícita del bloqueo Sandbox.
+
+Documentación oficial usada: [ambientes y llaves](https://docs.wompi.co/docs/colombia/ambientes-y-llaves/), [Checkout](https://docs.wompi.co/docs/colombia/widget-checkout-web/), [tokens de aceptación](https://docs.wompi.co/docs/colombia/tokens-de-aceptacion/), [fuentes de pago](https://docs.wompi.co/docs/colombia/fuentes-de-pago/), [eventos](https://docs.wompi.co/docs/colombia/eventos/).
+
+El valor personalizado mínimo pasa a $1.500 COP para cubrir el mínimo publicado para el modelo Agregador. Los valores sugeridos de la clienta se conservan. Referencia: [mínimos por modelo de Wompi](https://soporte.wompi.co/hc/es-419/articles/360038824313--Cu%C3%A1l-es-el-monto-m%C3%ADnimo-para-realizar-una-transacci%C3%B3n).
+
+Verificado el 6 de octubre con datos oficiales ficticios de Sandbox: firma de pago único aceptada y resultado APPROVED comprobado contra Wompi; primer y segundo ciclo mensual con tarjeta APPROVED; aporte mensual de $1.500 mediante Nequi APPROVED; reenvío de autorización rechazado sin otro cargo; repetición del programador sin otro ciclo; tarjeta de rechazo DECLINED con mensualidad pausada; cancelación mediante enlace personal sin futuros cargos; rechazo de consultas sin acceso, peticiones desde otro origen, eventos sin firma y programador sin secreto. Pasan 11 pruebas unitarias y TypeScript. Pendiente configurar la URL de eventos en el panel de Wompi y comprobar su entrega real; la validación de firmas también se prueba con fixtures locales.
+
 ## Comprobaciones realizadas
 
 ```sh
@@ -49,13 +86,15 @@ node --experimental-strip-types scripts/check-preview.ts
 
 El 16 de septiembre de 2026 pasaron TypeScript, tres pruebas de validación de donaciones, compilación optimizada y revisión HTTP de las 26 páginas. Se verificaron 404, bloqueo de pagos y robots. En el navegador se revisaron escritorio y móvil de 390 px, menú móvil, idioma conservando proyecto, monto personalizado, resumen sin cobro y selección de categoría financiera. Sin errores de consola en las páginas revisadas.
 
-`npm install` reportó cero vulnerabilidades tras aplicar correcciones puntuales de dependencias transitivas del CLI de Sanity. Los `overrides` de `package.json` corrigen js-yaml, smol-toml, adm-zip y uuid; revisar su necesidad al actualizar Sanity. No se hizo una degradación forzada de Sanity.
+El 16 de septiembre `npm install` reportó cero vulnerabilidades tras aplicar correcciones puntuales de dependencias transitivas del CLI de Sanity. Los `overrides` de `package.json` corrigen js-yaml, smol-toml, adm-zip y uuid; revisar su necesidad al actualizar Sanity. No se hizo una degradación forzada de Sanity.
+
+El 6 de octubre se actualizó Next.js a 16.3.6 para incorporar el [parche de ImageResponse](https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j). Esta aplicación no usa ImageResponse. La instalación ya no reporta alertas críticas; quedan 22 alertas transitivas (1 baja, 11 moderadas, 10 altas), incluidas herramientas de Sanity. Revisarlas antes del lanzamiento real, sin aplicar degradaciones automáticas de Sanity.
 
 No se ha medido todavía Lighthouse, Core Web Vitals en producción, compatibilidad exhaustiva entre navegadores ni accesibilidad mediante auditoría completa. No se ha certificado cumplimiento de Google Ad Grants.
 
 ## Antes del lanzamiento
 
-1. **Pagos:** conectar cuentas oficiales de Wompi y PayPal, confirmar recurrencia por proveedor, monedas y condiciones; implementar órdenes de servidor, firmas/webhooks, idempotencia, estados de pago, cancelación y pruebas sandbox. Nunca contar una selección o retorno del navegador como donación confirmada.
+1. **Pagos:** completar la verificación de Wompi Sandbox, configurar eventos en su panel y preparar la activación real con políticas aprobadas. Conectar PayPal y confirmar recurrencia, monedas y condiciones. Nunca contar una selección o retorno del navegador como donación confirmada.
 2. **CMS:** conectar proyecto/dataset, comprobar permisos y publicaciones, enlazar el resto de los modelos y habilitar vista previa de borradores autenticada.
 3. **Contenido:** conciliar el reparto financiero de Inicio con los importes de Transparencia, cargar estados financieros y anexos oficiales, completar perfiles, aprobar traducciones, calendarios y las dos fotos de El Cairo. Misión y visión ya están tomadas del PDF v2 recibido en octubre.
 4. **Contactos:** elegir y conectar el servicio de formularios/boletín. El registro del footer está visiblemente deshabilitado; los enlaces de correo y WhatsApp sí abren sus canales. No hay envíos ni inscripciones simuladas.

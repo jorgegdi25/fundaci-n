@@ -92,8 +92,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
               ? "¿Ya puedo realizar un pago en esta página?"
               : "Can I make a payment on this website now?",
             answer: es
-              ? "Todavía no. La fundación está preparando sus cuentas de Wompi y PayPal. Esta vista previa permite seleccionar y revisar el aporte, sin solicitar datos bancarios ni efectuar cobros."
-              : "Not yet. The foundation is preparing its Wompi and PayPal accounts. This preview lets you choose and review a gift without collecting payment details or making charges.",
+              ? "Los cobros reales todavía no están habilitados. Cuando veas el aviso de modo de pruebas, podrás revisar Wompi con datos ficticios, sin mover dinero real. No introduzcas datos bancarios reales en estas pruebas."
+              : "Real payments are not enabled yet. When the test mode notice appears, you can try Wompi with fictitious data without moving real money. Do not enter real banking details in these tests.",
           },
           {
             question: es

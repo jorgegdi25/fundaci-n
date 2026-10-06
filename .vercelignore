@@ -11,3 +11,5 @@ logo versiones
 *.log
 *.tsbuildinfo
 tmp
+.agents
+skills-lock.json

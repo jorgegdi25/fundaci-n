@@ -299,8 +299,8 @@ export function Footer({ lang }: { lang: Lang }) {
         <p className={styles.preview}>
           <span aria-hidden="true" />
           {es
-            ? "Vista previa · Contenido en revisión · Pagos aún no habilitados"
-            : "Preview · Content under review · Payments not yet enabled"}
+            ? "Vista previa · Contenido en revisión · Sin cobros reales"
+            : "Preview · Content under review · No real payments"}
         </p>
       </div>
     </footer>

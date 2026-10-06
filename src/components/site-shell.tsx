@@ -82,11 +82,23 @@ function submenu(lang: Lang, key: PageKey) {
     label,
   ]);
 }
-export function Header({ lang, alternate }: { lang: Lang; alternate: string }) {
+export function Header({
+  lang,
+  alternate,
+  preserveFragment = false,
+}: {
+  lang: Lang;
+  alternate: string;
+  preserveFragment?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const navigation = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const es = lang === "es";
+  const [fragment, setFragment] = useState("");
+  useEffect(() => {
+    if (preserveFragment) setFragment(window.location.hash);
+  }, [preserveFragment]);
   useEffect(() => {
     const closeOutside = (event: PointerEvent) => {
       if (
@@ -210,7 +222,7 @@ export function Header({ lang, alternate }: { lang: Lang; alternate: string }) {
           </nav>
           <div className="header-actions">
             <Link
-              href={alternate}
+              href={`${alternate}${fragment}`}
               className="language"
               aria-label={es ? "Read in English" : "Leer en español"}
             >
