@@ -56,8 +56,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
         </h1>
         <p>
           {es
-            ? "Elige un aporte único o mensual y la causa que quieres acompañar. Estamos preparando los pagos en línea; por ahora puedes explorar las opciones y conversar con la fundación."
-            : "Choose a one-time or monthly gift and the cause you would like to support. We are preparing online payments; for now, explore the options and get in touch with the foundation."}
+            ? "Elige un aporte único o mensual y la causa que quieres acompañar. Esta versión permite revisar Wompi en modo de pruebas, sin mover dinero real."
+            : "Choose a one-time or monthly gift and the cause you would like to support. This version lets you try Wompi in test mode without moving real money."}
         </p>
       </section>
       <section className="section donation-section">
