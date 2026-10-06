@@ -177,7 +177,7 @@ export function DonationForm({
   const formatted =
     currency === "COP"
       ? `$${fmt(selected)} COP`
-      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency }).format(selected)} ${currency}`;
+      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency, currencyDisplay: "narrowSymbol" }).format(selected)} ${currency}`;
   const amountIndex = donationAmounts[frequency].findIndex((v) => v === amount);
   const descriptions =
     frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;

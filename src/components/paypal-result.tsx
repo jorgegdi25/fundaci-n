@@ -139,6 +139,7 @@ export function PayPalResult({
                   {new Intl.NumberFormat(es ? "es-CO" : "en-US", {
                     style: "currency",
                     currency: gift.currency,
+                    currencyDisplay: "narrowSymbol",
                   }).format(gift.amount / 100)}{" "}
                   {gift.currency}
                   {gift.frequency === "monthly"
