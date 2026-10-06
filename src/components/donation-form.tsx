@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Heart, ArrowUpRight, LockKeyhole, X, Check } from "lucide-react";
 import {
   donationAmounts,
+  usdDonationAmounts,
   validateDonation,
   type Frequency,
 } from "@/lib/donations";
@@ -14,6 +15,12 @@ import {
   decimalAmount,
   type PayPalCurrency,
 } from "@/lib/paypal-security";
+import {
+  convertUsdToEur,
+  ecbReferenceUrl,
+  readEuroReferenceRate,
+  type EuroReferenceRate,
+} from "@/lib/exchange-rates";
 // Amount descriptions supplied in Estructura web 2026 v2.pdf, pages 6, 8–9, 12, 16 and 19.
 const giftDescriptions = {
   general: [
@@ -149,6 +156,11 @@ export function DonationForm({
   const [sandbox, setSandbox] = useState(false);
   const [currency, setCurrency] = useState<"COP" | PayPalCurrency>("COP");
   const [international, setInternational] = useState("");
+  const [internationalIndex, setInternationalIndex] = useState<number | null>(
+    1,
+  );
+  const [euroRate, setEuroRate] = useState<EuroReferenceRate | null>(null);
+  const [euroRateUnavailable, setEuroRateUnavailable] = useState(false);
   const [paypalSandbox, setPaypalSandbox] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
@@ -168,21 +180,64 @@ export function DonationForm({
       .catch(() => {});
     return () => controller.abort();
   }, []);
+  useEffect(() => {
+    if (currency !== "EUR" || euroRate) return;
+    const controller = new AbortController();
+    setEuroRateUnavailable(false);
+    fetch("/api/exchange-rates", { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("exchange_rate_unavailable");
+        const rate = readEuroReferenceRate(await response.json());
+        if (!rate) throw new Error("exchange_rate_unavailable");
+        setEuroRate(rate);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setEuroRateUnavailable(true);
+      });
+    return () => controller.abort();
+  }, [currency, euroRate]);
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
+  const internationalAmounts =
+    currency === "USD"
+      ? usdDonationAmounts[frequency]
+      : euroRate
+        ? usdDonationAmounts[frequency].map((usd) =>
+            convertUsdToEur(usd, euroRate),
+          )
+        : [];
+  const suggestions: readonly number[] =
+    currency === "COP" ? donationAmounts[frequency] : internationalAmounts;
+  const preset =
+    currency === "COP"
+      ? amount
+      : internationalIndex === null
+        ? null
+        : (internationalAmounts[internationalIndex] ?? null);
+  const internationalValue = preset === null ? international : String(preset);
   const selected =
     currency === "COP"
       ? (amount ?? Number(custom))
-      : (decimalCents(international) ?? 0) / 100;
+      : (decimalCents(internationalValue) ?? 0) / 100;
+  const formatSuggestion = (value: number) =>
+    currency === "COP"
+      ? `$${fmt(value)}`
+      : new Intl.NumberFormat(es ? "es-CO" : "en-US", {
+          style: "currency",
+          currency,
+          currencyDisplay: "narrowSymbol",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }).format(value);
   const formatted =
     currency === "COP"
       ? `$${fmt(selected)} COP`
       : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency, currencyDisplay: "narrowSymbol" }).format(selected)} ${currency}`;
-  const amountIndex = donationAmounts[frequency].findIndex((v) => v === amount);
+  const amountIndex = suggestions.findIndex((value) => value === preset);
   const descriptions =
     frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;
   const giftText =
-    currency === "COP"
+    currency === "COP" || currency === "USD" || euroRate
       ? descriptions[destination as keyof typeof giftDescriptions]?.[
           amountIndex
         ]?.[lang]
@@ -197,7 +252,7 @@ export function DonationForm({
   const review = (e: React.FormEvent) => {
     e.preventDefault();
     if (currency !== "COP") {
-      const cents = decimalCents(international);
+      const cents = decimalCents(internationalValue);
       if (cents === null || cents < 100 || cents > 1000000) {
         setError(
           es
@@ -259,6 +314,8 @@ export function DonationForm({
               onClick={() => {
                 setFrequency(f);
                 setAmount(donationAmounts[f][1]);
+                setInternationalIndex(1);
+                setReviewed(false);
                 setError("");
               }}
             >
@@ -281,7 +338,9 @@ export function DonationForm({
             id={`${id}-currency`}
             value={currency}
             onChange={(e) => {
-              setCurrency(e.target.value as "COP" | PayPalCurrency);
+              const nextCurrency = e.target.value as "COP" | PayPalCurrency;
+              setCurrency(nextCurrency);
+              setInternationalIndex(1);
               setReviewed(false);
               setError("");
             }}
@@ -309,74 +368,110 @@ export function DonationForm({
             </select>
           </div>
         )}
-        {currency === "COP" ? (
-          <fieldset className="amounts">
-            <legend>
-              {es ? "Elige tu aporte" : "Choose your gift"} <span>COP</span>
-            </legend>
+        <fieldset className="amounts">
+          <legend>
+            {es ? "Elige tu aporte" : "Choose your gift"}{" "}
+            <span>{currency}</span>
+          </legend>
+          {suggestions.length > 0 && (
             <div className="amount-grid">
-              {donationAmounts[frequency].map((v) => (
+              {suggestions.map((v, index) => (
                 <button
                   type="button"
                   key={v}
-                  aria-pressed={amount === v}
+                  aria-pressed={preset === v}
                   onClick={() => {
-                    setAmount(v);
+                    if (currency === "COP") setAmount(v);
+                    else setInternationalIndex(index);
+                    setReviewed(false);
                     setError("");
                   }}
                 >
-                  ${fmt(v)}
+                  {formatSuggestion(v)}
                 </button>
               ))}
             </div>
+          )}
+          {suggestions.length > 0 && (
             <button
               className="other-amount"
               type="button"
-              aria-pressed={amount === null}
-              onClick={() => setAmount(null)}
+              aria-pressed={preset === null}
+              onClick={() => {
+                if (currency === "COP") setAmount(null);
+                else setInternationalIndex(null);
+                setReviewed(false);
+                setError("");
+              }}
             >
               {es ? "Elegir otro valor" : "Choose another amount"}
             </button>
-            {amount === null && (
-              <div className="field">
-                <label htmlFor={`${id}-amount`}>
-                  {es
+          )}
+          {preset === null && (
+            <div className="field">
+              <label htmlFor={`${id}-amount`}>
+                {currency === "COP"
+                  ? es
                     ? "Tu aporte en pesos colombianos"
-                    : "Your gift in Colombian pesos"}
-                </label>
-                <input
-                  id={`${id}-amount`}
-                  type="number"
-                  min="1500"
-                  max="100000000"
-                  step="1"
-                  inputMode="numeric"
-                  value={custom}
-                  onChange={(e) => setCustom(e.target.value)}
-                  required
-                  aria-describedby={error ? `${id}-error` : undefined}
-                />
-              </div>
+                    : "Your gift in Colombian pesos"
+                  : `${es ? "Tu aporte en" : "Your gift in"} ${currency}`}
+              </label>
+              <input
+                id={`${id}-amount`}
+                type="number"
+                min={currency === "COP" ? "1500" : "1"}
+                max={currency === "COP" ? "100000000" : "10000"}
+                step={currency === "COP" ? "1" : "0.01"}
+                inputMode={currency === "COP" ? "numeric" : "decimal"}
+                value={currency === "COP" ? custom : international}
+                onChange={(e) => {
+                  if (currency === "COP") setCustom(e.target.value);
+                  else {
+                    setInternational(e.target.value);
+                    setInternationalIndex(null);
+                  }
+                  setReviewed(false);
+                  setError("");
+                }}
+                required
+                aria-describedby={error ? `${id}-error` : undefined}
+              />
+            </div>
+          )}
+        </fieldset>
+        {currency === "EUR" && (
+          <p className="source-note" aria-live="polite">
+            {euroRate ? (
+              <>
+                {es
+                  ? "Importes sugeridos convertidos desde USD. "
+                  : "Suggested amounts converted from USD. "}
+                <a href={ecbReferenceUrl} target="_blank" rel="noreferrer">
+                  {es ? "Referencia BCE" : "ECB reference"}
+                </a>
+                {": "}
+                {new Intl.DateTimeFormat(es ? "es-CO" : "en-US", {
+                  dateStyle: "medium",
+                  timeZone: "UTC",
+                }).format(new Date(`${euroRate.date}T00:00:00Z`))}
+                {". "}
+                {frequency === "monthly" &&
+                  (es
+                    ? "Tu aporte mensual conserva el importe en EUR que autorices."
+                    : "Your monthly gift keeps the EUR amount you authorize.")}
+              </>
+            ) : euroRateUnavailable ? (
+              es ? (
+                "No pudimos consultar la cotización. Puedes ingresar tu aporte en EUR o elegir USD."
+              ) : (
+                "We could not retrieve the exchange rate. Enter your gift in EUR or choose USD."
+              )
+            ) : es ? (
+              "Consultando la cotización para los importes en EUR…"
+            ) : (
+              "Checking the exchange rate for EUR amounts…"
             )}
-          </fieldset>
-        ) : (
-          <div className="field">
-            <label htmlFor={`${id}-international`}>
-              {es ? "Tu aporte en" : "Your gift in"} {currency}
-            </label>
-            <input
-              id={`${id}-international`}
-              type="number"
-              inputMode="decimal"
-              min="1"
-              max="10000"
-              step="0.01"
-              required
-              value={international}
-              onChange={(e) => setInternational(e.target.value)}
-              aria-describedby={error ? `${id}-error` : undefined}
-            />
-          </div>
+          </p>
         )}
         <p className="gift-description">
           {giftText ??

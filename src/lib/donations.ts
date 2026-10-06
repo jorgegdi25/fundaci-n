@@ -3,6 +3,12 @@ export const donationAmounts = {
   monthly: [250000, 150000, 50000],
   once: [750000, 500000, 250000],
 } as const;
+// Suggested USD gifts supplied in Estructura web 2026 v2.pdf, page 6.
+// These are independent donation amounts, not a live conversion from COP.
+export const usdDonationAmounts = {
+  monthly: [77, 46, 15],
+  once: [234, 156, 77],
+} as const;
 export const causes = [
   "general",
   "el-cairo",
