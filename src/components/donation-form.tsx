@@ -8,6 +8,12 @@ import {
 } from "@/lib/donations";
 import { href, l, type Lang } from "@/lib/i18n";
 import { DonationCheckout } from "./donation-checkout";
+import { PayPalCheckout } from "./paypal-checkout";
+import {
+  decimalCents,
+  decimalAmount,
+  type PayPalCurrency,
+} from "@/lib/paypal-security";
 // Amount descriptions supplied in Estructura web 2026 v2.pdf, pages 6, 8–9, 12, 16 and 19.
 const giftDescriptions = {
   general: [
@@ -141,6 +147,9 @@ export function DonationForm({
   const [destination, setDestination] = useState(cause);
   const [reviewed, setReviewed] = useState(false);
   const [sandbox, setSandbox] = useState(false);
+  const [currency, setCurrency] = useState<"COP" | PayPalCurrency>("COP");
+  const [international, setInternational] = useState("");
+  const [paypalSandbox, setPaypalSandbox] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
     fetch("/api/donations", { signal: controller.signal, cache: "no-store" })
@@ -149,18 +158,35 @@ export function DonationForm({
         setSandbox(data.configured === true && data.environment === "sandbox"),
       )
       .catch(() => {});
+    fetch("/api/paypal", { signal: controller.signal, cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) =>
+        setPaypalSandbox(
+          data.configured === true && data.environment === "sandbox",
+        ),
+      )
+      .catch(() => {});
     return () => controller.abort();
   }, []);
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
-  const selected = amount ?? Number(custom);
+  const selected =
+    currency === "COP"
+      ? (amount ?? Number(custom))
+      : (decimalCents(international) ?? 0) / 100;
+  const formatted =
+    currency === "COP"
+      ? `$${fmt(selected)} COP`
+      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency }).format(selected)} ${currency}`;
   const amountIndex = donationAmounts[frequency].findIndex((v) => v === amount);
   const descriptions =
     frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;
   const giftText =
-    descriptions[destination as keyof typeof giftDescriptions]?.[amountIndex]?.[
-      lang
-    ];
+    currency === "COP"
+      ? descriptions[destination as keyof typeof giftDescriptions]?.[
+          amountIndex
+        ]?.[lang]
+      : undefined;
   const labels: Record<string, string> = {
     general: es ? "Donde más se necesite" : "Where it is needed most",
     "el-cairo": "El Cairo",
@@ -170,6 +196,21 @@ export function DonationForm({
   };
   const review = (e: React.FormEvent) => {
     e.preventDefault();
+    if (currency !== "COP") {
+      const cents = decimalCents(international);
+      if (cents === null || cents < 100 || cents > 1000000) {
+        setError(
+          es
+            ? `Ingresa un valor entre 1 y 10.000 ${currency}, con máximo dos decimales.`
+            : `Enter an amount between 1 and 10,000 ${currency}, with up to two decimal places.`,
+        );
+        return;
+      }
+      setError("");
+      setReviewed(true);
+      dialog.current?.showModal();
+      return;
+    }
     const result = validateDonation({
       amount: selected,
       frequency,
@@ -232,6 +273,24 @@ export function DonationForm({
             </button>
           ))}
         </fieldset>
+        <div className="field donation-currency">
+          <label htmlFor={`${id}-currency`}>
+            {es ? "Moneda y medio de pago" : "Currency and payment method"}
+          </label>
+          <select
+            id={`${id}-currency`}
+            value={currency}
+            onChange={(e) => {
+              setCurrency(e.target.value as "COP" | PayPalCurrency);
+              setReviewed(false);
+              setError("");
+            }}
+          >
+            <option value="COP">COP · Wompi</option>
+            <option value="USD">USD · PayPal</option>
+            <option value="EUR">EUR · PayPal</option>
+          </select>
+        </div>
         {cause === "general" && (
           <div className="field">
             <label htmlFor={`${id}-cause`}>
@@ -250,55 +309,75 @@ export function DonationForm({
             </select>
           </div>
         )}
-        <fieldset className="amounts">
-          <legend>
-            {es ? "Elige tu aporte" : "Choose your gift"} <span>COP</span>
-          </legend>
-          <div className="amount-grid">
-            {donationAmounts[frequency].map((v) => (
-              <button
-                type="button"
-                key={v}
-                aria-pressed={amount === v}
-                onClick={() => {
-                  setAmount(v);
-                  setError("");
-                }}
-              >
-                ${fmt(v)}
-              </button>
-            ))}
-          </div>
-          <button
-            className="other-amount"
-            type="button"
-            aria-pressed={amount === null}
-            onClick={() => setAmount(null)}
-          >
-            {es ? "Elegir otro valor" : "Choose another amount"}
-          </button>
-          {amount === null && (
-            <div className="field">
-              <label htmlFor={`${id}-amount`}>
-                {es
-                  ? "Tu aporte en pesos colombianos"
-                  : "Your gift in Colombian pesos"}
-              </label>
-              <input
-                id={`${id}-amount`}
-                type="number"
-                min="1500"
-                max="100000000"
-                step="1"
-                inputMode="numeric"
-                value={custom}
-                onChange={(e) => setCustom(e.target.value)}
-                required
-                aria-describedby={error ? `${id}-error` : undefined}
-              />
+        {currency === "COP" ? (
+          <fieldset className="amounts">
+            <legend>
+              {es ? "Elige tu aporte" : "Choose your gift"} <span>COP</span>
+            </legend>
+            <div className="amount-grid">
+              {donationAmounts[frequency].map((v) => (
+                <button
+                  type="button"
+                  key={v}
+                  aria-pressed={amount === v}
+                  onClick={() => {
+                    setAmount(v);
+                    setError("");
+                  }}
+                >
+                  ${fmt(v)}
+                </button>
+              ))}
             </div>
-          )}
-        </fieldset>
+            <button
+              className="other-amount"
+              type="button"
+              aria-pressed={amount === null}
+              onClick={() => setAmount(null)}
+            >
+              {es ? "Elegir otro valor" : "Choose another amount"}
+            </button>
+            {amount === null && (
+              <div className="field">
+                <label htmlFor={`${id}-amount`}>
+                  {es
+                    ? "Tu aporte en pesos colombianos"
+                    : "Your gift in Colombian pesos"}
+                </label>
+                <input
+                  id={`${id}-amount`}
+                  type="number"
+                  min="1500"
+                  max="100000000"
+                  step="1"
+                  inputMode="numeric"
+                  value={custom}
+                  onChange={(e) => setCustom(e.target.value)}
+                  required
+                  aria-describedby={error ? `${id}-error` : undefined}
+                />
+              </div>
+            )}
+          </fieldset>
+        ) : (
+          <div className="field">
+            <label htmlFor={`${id}-international`}>
+              {es ? "Tu aporte en" : "Your gift in"} {currency}
+            </label>
+            <input
+              id={`${id}-international`}
+              type="number"
+              inputMode="decimal"
+              min="1"
+              max="10000"
+              step="0.01"
+              required
+              value={international}
+              onChange={(e) => setInternational(e.target.value)}
+              aria-describedby={error ? `${id}-error` : undefined}
+            />
+          </div>
+        )}
         <p className="gift-description">
           {giftText ??
             (frequency === "monthly"
@@ -327,10 +406,10 @@ export function DonationForm({
         </button>
         <p className="payment-notice">
           <LockKeyhole size={14} />
-          {sandbox
+          {(currency === "COP" ? sandbox : paypalSandbox)
             ? es
-              ? "Wompi en modo de pruebas · Sin dinero real"
-              : "Wompi test mode · No real money"
+              ? `${currency === "COP" ? "Wompi" : "PayPal"} en modo de pruebas · Sin dinero real`
+              : `${currency === "COP" ? "Wompi" : "PayPal"} test mode · No real money`
             : es
               ? "Pagos en línea disponibles próximamente"
               : "Online payments coming soon"}
@@ -370,21 +449,35 @@ export function DonationForm({
           <div>
             <dt>{es ? "Aporte" : "Gift"}</dt>
             <dd>
-              ${fmt(selected)} COP{" "}
+              {formatted}{" "}
               {frequency === "monthly" ? (es ? "/ mes" : "/ month") : ""}
             </dd>
           </div>
         </dl>
-        {reviewed && (
-          <DonationCheckout
-            key={`${frequency}-${selected}-${destination}`}
-            lang={lang}
-            amount={selected}
-            frequency={frequency}
-            cause={destination}
-            close={() => dialog.current?.close()}
-          />
-        )}
+        {reviewed &&
+          (currency === "COP" ? (
+            <DonationCheckout
+              key={`${frequency}-${selected}-${destination}`}
+              lang={lang}
+              amount={selected}
+              frequency={frequency}
+              cause={destination}
+              close={() => dialog.current?.close()}
+            />
+          ) : (
+            <PayPalCheckout
+              key={`${currency}-${frequency}-${selected}-${destination}`}
+              lang={lang}
+              amount={decimalAmount(Math.round(selected * 100))}
+              currency={currency}
+              frequency={frequency}
+              cause={destination}
+              close={() => dialog.current?.close()}
+              reopen={() => {
+                if (!dialog.current?.open) dialog.current?.showModal();
+              }}
+            />
+          ))}
       </dialog>
     </div>
   );

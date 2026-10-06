@@ -56,8 +56,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
         </h1>
         <p>
           {es
-            ? "Elige un aporte único o mensual y la causa que quieres acompañar. Esta versión permite revisar Wompi en modo de pruebas, sin mover dinero real."
-            : "Choose a one-time or monthly gift and the cause you would like to support. This version lets you try Wompi in test mode without moving real money."}
+            ? "Elige un aporte único o mensual y la causa que quieres acompañar. Revisa Wompi en pesos colombianos o PayPal en dólares y euros, en modo de pruebas y sin mover dinero real."
+            : "Choose a one-time or monthly gift and the cause you would like to support. Try Wompi in Colombian pesos or PayPal in dollars and euros, in test mode without moving real money."}
         </p>
       </section>
       <section className="section donation-section">
@@ -92,8 +92,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
               ? "¿Ya puedo realizar un pago en esta página?"
               : "Can I make a payment on this website now?",
             answer: es
-              ? "Los cobros reales todavía no están habilitados. Cuando veas el aviso de modo de pruebas, podrás revisar Wompi con datos ficticios, sin mover dinero real. No introduzcas datos bancarios reales en estas pruebas."
-              : "Real payments are not enabled yet. When the test mode notice appears, you can try Wompi with fictitious data without moving real money. Do not enter real banking details in these tests.",
+              ? "Los cobros reales todavía no están habilitados. Puedes revisar Wompi con datos ficticios y PayPal con una cuenta personal de Sandbox, sin mover dinero real."
+              : "Real payments are not enabled yet. You can try Wompi with fictitious data and PayPal with a personal Sandbox account, without moving real money.",
           },
           {
             question: es
@@ -148,8 +148,8 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         <h2>{es ? "Alcance actual" : "Current scope"}</h2>
         <p>
           {es
-            ? "Esta versión permite consultar los proyectos y explorar una intención de donación. No procesa pagos, no registra suscripciones ni envía formularios a una base de datos."
-            : "This version lets you explore projects and review a potential gift. It does not process payments, register subscriptions or send forms to a database."}
+            ? "Esta versión permite consultar los proyectos y probar aportes únicos y mensuales con Wompi y PayPal Sandbox. No mueve dinero real. Guarda el aporte de prueba, su autorización y su estado en una base de datos de pruebas. Los datos del medio de pago se introducen en la plataforma de pagos correspondiente."
+            : "This version lets you explore projects and test one-time and monthly gifts with Wompi and PayPal Sandbox. No real money moves. The test gift, authorization and status are stored in a test database. Payment method details are entered through the relevant payment platform."}
         </p>
         <h2>
           {cookies

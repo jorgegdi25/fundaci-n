@@ -8,7 +8,12 @@ const connection = new URL(
 connection.hostname = connection.hostname.replace("-pooler.", ".");
 const sql = neon(connection.href);
 const source = await readFile(
-  new URL("./payments-schema.sql", import.meta.url),
+  new URL(
+    process.argv[2] === "paypal"
+      ? "./paypal-schema.sql"
+      : "./payments-schema.sql",
+    import.meta.url,
+  ),
   "utf8",
 );
 const statements = source

@@ -26,6 +26,7 @@
   "dependencies": {
     "@fontsource/manrope": "^5.3.0",
     "@neondatabase/serverless": "^1.0.2",
+    "@paypal/paypal-js": "^11.2.1",
     "@sanity/image-url": "^2.1.1",
     "lucide-react": "^1.46.0",
     "next": "16.3.6",

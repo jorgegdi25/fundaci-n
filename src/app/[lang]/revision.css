@@ -619,6 +619,18 @@
 .checkout-content {
   margin-top: 1.25rem;
 }
+.paypal-buttons {
+  min-height: 50px;
+}
+.cancel-review {
+  padding: 1rem;
+  border: 1px solid #ded8e9;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+.cancel-review .button {
+  margin: 0.4rem 0.5rem 0.4rem 0;
+}
 .sandbox-notice {
   display: flex;
   gap: 0.65rem;

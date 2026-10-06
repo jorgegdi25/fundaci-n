@@ -11,6 +11,7 @@ import {
   sameContract,
 } from "../wompi-security";
 import { validateDonation } from "../donations";
+import { matchesOrigin } from "../request-security";
 
 export class PaymentError extends Error {
   constructor(
@@ -89,7 +90,13 @@ export async function merchantContracts() {
   return { policy, personal };
 }
 export function requireSameOrigin(request: Request) {
-  if (request.headers.get("origin") !== new URL(request.url).origin)
+  if (
+    !matchesOrigin(
+      request.url,
+      request.headers.get("host"),
+      request.headers.get("origin"),
+    )
+  )
     throw new PaymentError("invalid_origin", 403);
 }
 export async function limited(request: Request, action: string, limit = 15) {
