@@ -34,12 +34,17 @@ export function PayPalResult({
     [link, setLink] = useState(""),
     [cancelReview, setCancelReview] = useState(false);
   useEffect(() => {
+    let storedAccess: string | null = null;
+    if (!manage && donation) {
+      try {
+        storedAccess = sessionStorage.getItem(`alma-paypal-${donation}`);
+      } catch {
+        // Private cookies still allow the original browser to check its gift.
+      }
+    }
     const [id, access] = manage
       ? window.location.hash.slice(1).split(".")
-      : [
-          donation,
-          donation ? sessionStorage.getItem(`alma-paypal-${donation}`) : null,
-        ];
+      : [donation, storedAccess];
     if (id) {
       setIdentity({ id, ...(access ? { access } : {}) });
       if (access)
