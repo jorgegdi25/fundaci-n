@@ -83,7 +83,11 @@ export function samePayPalOrder(
 export function samePayPalSubscription(sub: any, gift: PayPalContract) {
   const cycles = sub?.plan?.billing_cycles;
   const cycle = cycles?.[0],
-    price = cycle?.pricing_scheme?.fixed_price;
+    price = cycle?.pricing_scheme?.fixed_price,
+    tax = sub?.plan?.taxes?.percentage;
+  // Canonical Sandbox responses can represent an unset tax as the string "null".
+  // Reject positive taxes and malformed numeric values rather than coercing them.
+  const noTax = tax == null || tax === "null" || decimalCents(tax) === 0;
   return (
     sub?.id === gift.subscription_id &&
     sub.custom_id === gift.id &&
@@ -102,7 +106,7 @@ export function samePayPalSubscription(sub: any, gift: PayPalContract) {
     (!sub.plan.payment_preferences.setup_fee ||
       decimalCents(sub.plan.payment_preferences.setup_fee.value) === 0) &&
     (!sub.shipping_amount || decimalCents(sub.shipping_amount.value) === 0) &&
-    (!sub.plan.taxes || Number(sub.plan.taxes.percentage) === 0)
+    noTax
   );
 }
 export function safePayPalId(

@@ -156,6 +156,21 @@ test("subscriptions match indefinite monthly frequency with no fees or extra out
     },
   };
   assert.ok(samePayPalSubscription(sub, gift));
+  for (const percentage of [undefined, null, "null", "0", "0.0", "0.00"])
+    assert.ok(
+      samePayPalSubscription(
+        { ...sub, plan: { ...sub.plan, taxes: { percentage } } },
+        gift,
+      ),
+    );
+  for (const percentage of ["1.00", "0.01", "", "0e0", "false", "NaN"])
+    assert.equal(
+      samePayPalSubscription(
+        { ...sub, plan: { ...sub.plan, taxes: { percentage } } },
+        gift,
+      ),
+      false,
+    );
   for (const change of [
     { total_cycles: 12 },
     { tenure_type: "TRIAL" },
