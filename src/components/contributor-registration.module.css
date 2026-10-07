@@ -1,0 +1,172 @@
+.card {
+  max-width: 750px;
+  margin: 1.5rem auto 0;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  border: 1px solid #ded9ec;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #fff 40%, #f3f0f8);
+  box-shadow: 0 16px 45px #342d620b;
+}
+
+.heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #f4edcf;
+  color: var(--purple-dark);
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--purple);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.heading h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.intro {
+  margin-top: 1.5rem;
+  color: #50564f;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.notice {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  border: 1px solid #d7cfaa;
+  border-radius: 14px;
+  background: #f7f3de;
+  color: #49421f;
+}
+
+.notice svg {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.notice p {
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.notice strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  margin-top: 1.5rem;
+  color: var(--purple-dark);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.paymentNote,
+.privacy {
+  color: #50564f;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.paymentNote {
+  margin-top: 1rem;
+}
+
+.paymentNote a,
+.privacy a {
+  color: var(--purple);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.actions button {
+  white-space: normal;
+}
+
+.external {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--purple);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.external svg {
+  flex-shrink: 0;
+}
+
+.privacy {
+  margin-top: 1.25rem;
+}
+
+.frame {
+  margin-top: 1.75rem;
+  border: 1px solid #ded9ec;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f0f3f6;
+}
+
+.frame iframe {
+  display: block;
+  width: 100%;
+  height: 1000px;
+  border: 0;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.5rem 1rem;
+  }
+
+  .heading {
+    flex-direction: column;
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+
+  .frame {
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+  }
+}

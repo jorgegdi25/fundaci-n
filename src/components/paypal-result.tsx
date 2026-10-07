@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CheckCircle2, Heart, RefreshCw } from "lucide-react";
 import { paypalRequest } from "@/lib/paypal-client";
 import { href, type Lang } from "@/lib/i18n";
+import { ContributorRegistration } from "./contributor-registration";
 type Gift = {
   id: string;
   amount: number;
@@ -13,6 +14,7 @@ type Gift = {
   subscriptionState: string;
   nextCharge: string | null;
   cancelled: boolean;
+  environment: string;
 };
 export function PayPalResult({
   lang,
@@ -277,6 +279,13 @@ export function PayPalResult({
           {es ? "Contactar a la fundación" : "Contact the foundation"}
         </a>
       </div>
+      {!manage && paid && !gift?.cancelled && !error && (
+        <ContributorRegistration
+          lang={lang}
+          provider="paypal"
+          testMode={gift?.environment !== "production"}
+        />
+      )}
     </main>
   );
 }

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Heart, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { donationRequest } from "./donation-checkout";
 import { href, type Lang } from "@/lib/i18n";
+import { ContributorRegistration } from "./contributor-registration";
 
 type GiftStatus = {
   id: string;
@@ -13,6 +14,7 @@ type GiftStatus = {
   subscriptionState: string;
   nextCharge: string | null;
   cancelled: boolean;
+  environment: string;
 };
 export function DonationResult({
   lang,
@@ -249,6 +251,13 @@ export function DonationResult({
           {es ? "Contactar a la fundación" : "Contact the foundation"}
         </a>
       </div>
+      {!manage && approved && !gift?.cancelled && !error && (
+        <ContributorRegistration
+          lang={lang}
+          provider="wompi"
+          testMode={gift?.environment !== "production"}
+        />
+      )}
     </main>
   );
 }
