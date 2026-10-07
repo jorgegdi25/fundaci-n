@@ -1,0 +1,75 @@
+.form {
+  margin-top: 24px;
+}
+.field {
+  margin-bottom: 18px;
+}
+.field label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 9px;
+}
+.field input {
+  width: 100%;
+  min-height: 54px;
+  background: white;
+  border: 1px solid #abae9e;
+  border-radius: 9px;
+  padding: 13px 15px;
+  font-size: 1.125rem;
+  color: #303b33;
+}
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #535a54;
+  margin: 20px 0;
+}
+.consent input {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 4px;
+  accent-color: var(--purple);
+  cursor: pointer;
+}
+.consent a {
+  color: var(--purple);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.form > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #211e0d;
+  padding: 14px 24px;
+  min-height: 54px;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+.form > button:disabled {
+  cursor: not-allowed;
+  background: #e5d99f;
+}
+.status {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: #535a54;
+  min-height: 1.6em;
+  margin-top: 14px;
+}
+@media (max-width: 520px) {
+  .form > button {
+    width: 100%;
+  }
+}

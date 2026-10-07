@@ -78,7 +78,20 @@ export function ProjectCards({
           className="project-card"
         >
           <div className="project-photo">
-            <Photo src={p.image} alt={p.alt[lang]} />
+            <Photo
+              src={
+                p.slug === "el-cairo"
+                  ? "/images/el-cairo-escuela.webp"
+                  : p.image
+              }
+              alt={
+                p.slug === "el-cairo"
+                  ? es
+                    ? "Escuela de la comunidad indígena Embera Chami en Doxura, El Cairo"
+                    : "The Embera Chami Indigenous community’s school in Doxura, El Cairo"
+                  : p.alt[lang]
+              }
+            />
             {i === 0 && (
               <span className="project-tag">
                 {es ? "Respuesta humanitaria" : "Humanitarian response"}
@@ -99,14 +112,16 @@ export function ProjectCards({
                   ? es
                     ? "Comunidad Tikuna"
                     : "Tikuna community"
-                  : p.name[lang]}
+                  : p.slug === "el-cairo"
+                    ? "Doxura, El Cairo."
+                    : p.name[lang]}
             </h3>
             <p>
               {
                 [
                   es
-                    ? "Reconstrucción de hogares y comunidad."
-                    : "Rebuilding homes and community.",
+                    ? "Reconstrucción de la Escuela comunidad Indigena Embera Chami."
+                    : "Rebuilding the Embera Chami Indigenous community’s school.",
                   es
                     ? "Cuidando el corazón del mundo."
                     : "Caring for the heart of the world.",
@@ -206,8 +221,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             <span className="eyebrow">Fundación Alma Arcoíris</span>
             <h1 id="home-title">
               {es
-                ? "Reconecta con los saberes ancestrales."
-                : "Reconnect with ancestral wisdom."}
+                ? "Reconecta con los saberes ancestrales, protejamos los guardianes de la tierra."
+                : "Reconnect with ancestral wisdom, let’s protect the guardians of the Earth."}
             </h1>
           </div>
           <div className="full-photo-identity">
@@ -215,6 +230,11 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             <span>
               Fundación Alma Arcoíris Colombia · NIT 901784588-0 ·{" "}
               {es ? "Entidad sin ánimo de lucro" : "Nonprofit organisation"}
+              <span className="hero-motto">
+                {es
+                  ? "Unión Consciente, Corazón y Mente"
+                  : "Conscious Union, Heart and Mind"}
+              </span>
             </span>
           </div>
         </div>
@@ -263,32 +283,28 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               ? "pueblos indígenas en Colombia"
               : "Indigenous peoples in Colombia",
             b: es
-              ? "Pueblos nativos identificados por el Censo Nacional de Población y Vivienda 2018."
-              : "Native peoples identified by Colombia’s 2018 population and housing census.",
-            s: "DANE · CNPV 2018",
-            url: "https://www.dane.gov.co/files/investigaciones/boletines/grupos-etnicos/infograf%C3%ADa-grupos-etnicos-2019.pdf",
+              ? "Representan el 4,7% de la población y gestionan casi la mitad de las zonas de mayor riqueza natural de Colombia."
+              : "Represent 4.7% of the population and manage almost half of Colombia’s most naturally rich areas.",
+            s: "DANE / IWGIA",
+            url: "https://www.iwgia.org/es/noticias/mi-2025-colombia",
           },
           {
             n: "46%",
-            a: es
-              ? "del bosque natural colombiano"
-              : "of Colombia’s natural forest",
+            a: es ? "de los bosques" : "of forests",
             b: es
-              ? "Aproximadamente el 46% del bosque natural de Colombia se encuentra en resguardos indígenas."
-              : "Approximately 46% of Colombia’s natural forest is located in Indigenous reserves.",
-            s: "WWF Colombia · 2024",
-            url: "https://www.wwf.org.co/de_interes/noticias/?uNewsID=364960",
+              ? "Se concentran en resguardos indígenas (29% del territorio continental), manteniendo el 91% en excelente estado ecológico."
+              : "Are concentrated in Indigenous reserves (29% of the mainland), with 91% in excellent ecological condition.",
+            s: "Instituto Humboldt",
+            url: "https://reporte.humboldt.org.co/biodiversidad/2020/cap2/203/#seccion2",
           },
           {
             n: "60%",
-            a: es
-              ? "del carbono forestal amazónico de Colombia"
-              : "of forest carbon in Colombia’s Amazon",
+            a: es ? "carbono forestal almacenado" : "forest carbon stored",
             b: es
-              ? "El 60% del carbono de los bosques de la Amazonía colombiana se almacena en resguardos indígenas."
-              : "60% of forest carbon in the Colombian Amazon is stored in Indigenous reserves.",
-            s: "WWF Colombia · 2024",
-            url: "https://www.wwf.org.co/de_interes/noticias/?uNewsID=364960",
+              ? "En resguardos de la Amazonía colombiana, actuando como escudo crítico contra el cambio climático."
+              : "In reserves in Colombia’s Amazon, acting as a critical shield against climate change.",
+            s: "WWF Colombia",
+            url: "https://www.wwf.org.co/en/?368990/Iniciativas-de-conservacion-indigena-que-protegen-la-Amazonia",
           },
         ].map((x) => (
           <details key={x.n} suppressHydrationWarning>
@@ -322,14 +338,14 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             }
             title={
               es
-                ? "Haz que tu aporte cuide la vida y los territorios."
-                : "Help care for life and the land."
+                ? "Elige tu misión. Cada territorio tiene una historia. Tú puedes ser parte de lo que viene."
+                : "Choose your mission. Every territory has a story. You can be part of what comes next."
             }
           />
           <p>
             {es
-              ? "Elige tu misión. Cada territorio tiene una historia. Tú puedes ser parte de lo que viene."
-              : "Choose your mission. Every territory has a story. You can be part of what comes next."}
+              ? "Haz que tu aporte cuide la vida y los territorios."
+              : "Help care for life and the land."}
           </p>
         </div>
         <ProjectCards lang={lang} projects={projects} />
@@ -363,8 +379,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               icon: Leaf,
               t: es ? "Regenera" : "Regenerate",
               d: es
-                ? "Conoce los avances y sigue siendo parte de esta comunidad."
-                : "Follow our progress and stay connected to the community.",
+                ? "Recibe actualizaciones directas del impacto, se parte de la comunidad y recibe beneficios por tu apoyo."
+                : "Receive direct impact updates, be part of the community and receive benefits for your support.",
             },
           ].map((x, i) => (
             <div className="step" key={x.t}>
@@ -384,8 +400,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               eyebrow={es ? "¿QUÉ HEMOS HECHO?" : "WHAT HAVE WE ACHIEVED?"}
               title={
                 es
-                  ? "Impacto demostrable: transformamos tu confianza en desarrollo tangible para el territorio."
-                  : "Demonstrable impact: turning your trust into tangible development on the ground."
+                  ? "Transparencia real: auditamos cada aporte para fortalecer la educación, infraestructura y conservación en territorio."
+                  : "Real transparency: we audit every contribution to strengthen education, infrastructure and conservation on the ground."
               }
             />
             <Link className="button outline-light" href={href(lang, "impact")}>
@@ -431,13 +447,13 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             <div>
               <h3>
                 {es
-                  ? "Memorias, estados financieros y documentos oficiales"
-                  : "Annual reports, financial statements and official records"}
+                  ? "Informes, estados financieros y certificados de auditoría."
+                  : "Reports, financial statements and audit certificates."}
               </h3>
               <p>
                 {es
-                  ? "La transparencia es la base de nuestro trabajo."
-                  : "Transparency is the foundation of our work."}
+                  ? "Transformamos tu confianza en desarrollo tangible para el territorio."
+                  : "We turn your trust into tangible development on the ground."}
               </p>
             </div>
             <Link
@@ -473,20 +489,24 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               <ArrowRight size={18} />
             </a>
           </div>
-          <p className="funds-pending">
-            {es
-              ? "Estados financieros (PDF): pendientes de incorporar el documento oficial."
-              : "Financial statements (PDF): official document pending upload."}
-          </p>
+          <a
+            className="text-link light-link"
+            href="https://drive.google.com/file/d/10b0yQ183pwdhK7gs7n1wpA1S6peH3J7Z/view?usp=drive_link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {es ? "Estados financieros · PDF" : "Financial statements · PDF"}
+            <ArrowUpRight size={18} />
+          </a>
         </div>
       </section>
       <section className="section action-section">
         <SectionTitle
-          eyebrow={es ? "ECOSISTEMA DE ACCIÓN" : "WAYS TO TAKE PART"}
+          eyebrow={es ? "SÚMATE" : "GET INVOLVED"}
           title={
             es
-              ? "Hay muchas formas de sumar."
-              : "There is more than one way to help."
+              ? "Hay muchas formas de ser parte."
+              : "There are many ways to be part of it."
           }
         />
         <div className="action-grid">

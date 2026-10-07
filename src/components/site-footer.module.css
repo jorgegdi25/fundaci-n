@@ -1,3 +1,21 @@
+.floatingWhatsApp {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  right: 18px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #187844;
+  color: #fff;
+  box-shadow: 0 4px 18px #163e2830;
+  border: 2px solid #fff;
+}
+.floatingWhatsApp:hover {
+  background: #105a32;
+}
 .footer {
   scroll-margin-top: 160px;
   background: linear-gradient(

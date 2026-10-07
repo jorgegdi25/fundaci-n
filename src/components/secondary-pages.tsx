@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { ArrowUpRight, Heart } from "lucide-react";
 import { href, type Lang, type PageKey } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
-import { ProjectCards, Faq, Closing } from "./content-blocks";
-import { DonationForm } from "./donation-form";
+import { ProjectCards, Closing } from "./content-blocks";
 
 const contact = "mailto:contacto@fundacionalmaarcoiris.org";
 export function ProjectsIndex({
@@ -27,8 +25,8 @@ export function ProjectsIndex({
         </h1>
         <p>
           {es
-            ? "Acompañamos a comunidades que cuidan la vida, la cultura y la biodiversidad de Colombia. Conoce su trabajo y elige la misión que quieres apoyar."
-            : "We work alongside communities that care for life, culture and biodiversity in Colombia. Discover their work and choose the mission you would like to support."}
+            ? "Empoderamos a los guardianes ancestrales de la biodiversidad global. Ejecutamos proyectos de doble impacto que conectan la sabiduría indígena con el desarrollo sostenible. Conoce su trabajo y elige la misión que quieres apoyar"
+            : "We empower the ancestral guardians of global biodiversity. We carry out projects with a dual impact that connect Indigenous wisdom with sustainable development. Discover their work and choose the mission you want to support."}
         </p>
       </section>
       <section className="section" style={{ paddingTop: 0 }}>
@@ -41,86 +39,58 @@ export function ProjectsIndex({
 
 export { JoinPage, AboutPage } from "./institutional-pages";
 
-export function DonatePage({ lang }: { lang: Lang }) {
-  const es = lang === "es";
-  return (
-    <>
-      <section className="section page-intro">
-        <span className="eyebrow">
-          {es ? "TU APORTE TIENE UN PROPÓSITO" : "YOUR GIFT HAS A PURPOSE"}
-        </span>
-        <h1>
-          {es
-            ? "Ayúdanos a cuidar la vida y los territorios."
-            : "Help us care for life and the land."}
-        </h1>
-        <p>
-          {es
-            ? "Elige un aporte único o mensual y la causa que quieres acompañar. Revisa Wompi en pesos colombianos o PayPal en dólares y euros, en modo de pruebas y sin mover dinero real."
-            : "Choose a one-time or monthly gift and the cause you would like to support. Try Wompi in Colombian pesos or PayPal in dollars and euros, in test mode without moving real money."}
-        </p>
-      </section>
-      <section className="section donation-section">
-        <div className="donation-story">
-          <Heart size={36} color="#534a8f" />
-          <h2>
-            {es
-              ? "La continuidad también transforma."
-              : "Lasting support creates lasting change."}
-          </h2>
-          <p>
-            {es
-              ? "Un aporte mensual permite acompañar procesos comunitarios. Una donación única suma a las necesidades del territorio. Tú eliges cómo contribuir."
-              : "A monthly gift helps sustain community work. A one-time donation contributes to local needs. You choose how to help."}
-          </p>
-          <Link
-            className="text-link"
-            style={{ marginTop: 25 }}
-            href={href(lang, "impact")}
-          >
-            {es ? "Revisa nuestros informes" : "Read our reports"}
-            <ArrowUpRight size={17} />
-          </Link>
-        </div>
-        <DonationForm lang={lang} />
-      </section>
-      <Faq
-        lang={lang}
-        items={[
-          {
-            question: es
-              ? "¿Ya puedo realizar un pago en esta página?"
-              : "Can I make a payment on this website now?",
-            answer: es
-              ? "Los cobros reales todavía no están habilitados. Puedes revisar Wompi con datos ficticios y PayPal con una cuenta personal de Sandbox, sin mover dinero real."
-              : "Real payments are not enabled yet. You can try Wompi with fictitious data and PayPal with a personal Sandbox account, without moving real money.",
-          },
-          {
-            question: es
-              ? "¿Puedo elegir un proyecto?"
-              : "Can I choose a project?",
-            answer: es
-              ? "Sí. Puedes seleccionar El Cairo, Sierra Nevada, Amazonas, Pueblo Mhuysqa o apoyar el trabajo general de la fundación."
-              : "Yes. Choose El Cairo, Sierra Nevada, the Amazon, the Mhuysqa people or support the foundation’s overall work.",
-          },
-          {
-            question: es
-              ? "¿Cómo recibo orientación para donar?"
-              : "How can I get help with donating?",
-            answer: es
-              ? "Escríbenos a contacto@fundacionalmaarcoiris.org. El equipo podrá explicarte las opciones disponibles y la documentación del aporte."
-              : "Email contacto@fundacionalmaarcoiris.org. Our team can explain the available options and documentation for your gift.",
-          },
-        ]}
-      />
-    </>
-  );
-}
+export { DonatePage } from "./donate-page";
 
 export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
   const es = lang === "es";
   const privacy = kind === "privacy";
   const cookies = kind === "cookies";
+  if (kind === "dataPolicy")
+    return (
+      <>
+        <section className="section page-intro">
+          <span className="eyebrow">
+            Fundación Alma Arcoíris Colombia · NIT 901784588-0
+          </span>
+          <h1>
+            {es
+              ? "Política de Tratamiento de Datos Personales"
+              : "Personal Data Processing Policy"}
+          </h1>
+        </section>
+        <section className="section legal-copy">
+          <p>
+            {es
+              ? "Responsable: Fundación Alma Arcoíris, carrera 9A No 21-61 Cs1, Chía, Cundinamarca, Colombia."
+              : "Data controller: Fundación Alma Arcoíris, carrera 9A No 21-61 Cs1, Chía, Cundinamarca, Colombia."}
+          </p>
+          <h2>{es ? "Finalidades y derechos" : "Purposes and rights"}</h2>
+          <p>
+            {es
+              ? "Gestión de proyectos y donaciones, comunicación institucional y seguridad en misiones. Puedes conocer, actualizar y rectificar tus datos, solicitar prueba de autorización y ejercer tus derechos ante la Fundación."
+              : "Project and donation management, institutional communication and mission safety. You can access, update and correct your data, request proof of authorization and exercise your rights with the Foundation."}
+          </p>
+          <a
+            className="text-link"
+            href="mailto:contacto@fundacionalmaarcoiris.org"
+          >
+            contacto@fundacionalmaarcoiris.org
+          </a>
+          <p>
+            <a
+              className="text-link"
+              href="https://fundacionalmaarcoiris.org/politica-de-privacidad"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {es
+                ? "Consultar la política institucional completa"
+                : "Read the full institutional policy"}
+            </a>
+          </p>
+        </section>
+      </>
+    );
   return (
     <>
       <section className="section page-intro">
@@ -128,8 +98,8 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         <h1>
           {cookies
             ? es
-              ? "Preferencias de cookies"
-              : "Cookie preferences"
+              ? "Cookies y Aviso Legal"
+              : "Cookies and Legal Notice"
             : privacy
               ? es
                 ? "Privacidad y datos personales"
@@ -145,6 +115,24 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         </p>
       </section>
       <section className="section legal-copy">
+        {(privacy || cookies) && (
+          <p>
+            <a
+              className="text-link"
+              href={
+                privacy
+                  ? "https://fundacionalmaarcoiris.org/politica-de-privacidad"
+                  : "https://fundacionalmaarcoiris.org/avisolegalycookies/"
+              }
+              target="_blank"
+              rel="noreferrer"
+            >
+              {es
+                ? "Consultar el documento institucional completo"
+                : "Read the full institutional document"}
+            </a>
+          </p>
+        )}
         <h2>{es ? "Alcance actual" : "Current scope"}</h2>
         <p>
           {es

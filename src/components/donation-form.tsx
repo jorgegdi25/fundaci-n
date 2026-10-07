@@ -139,10 +139,16 @@ export function DonationForm({
   lang,
   cause = "general",
   compact = false,
+  missionPage = false,
+  selectedCause,
+  onCauseChange,
 }: {
   lang: Lang;
   cause?: string;
   compact?: boolean;
+  missionPage?: boolean;
+  selectedCause?: string;
+  onCauseChange?: (cause: string) => void;
 }) {
   const es = lang === "es";
   const id = useId();
@@ -151,7 +157,8 @@ export function DonationForm({
   const [amount, setAmount] = useState<number | null>(150000);
   const [custom, setCustom] = useState("");
   const [error, setError] = useState("");
-  const [destination, setDestination] = useState(cause);
+  const [internalDestination, setDestination] = useState(cause);
+  const destination = selectedCause ?? internalDestination;
   const [reviewed, setReviewed] = useState(false);
   const [sandbox, setSandbox] = useState(false);
   const [currency, setCurrency] = useState<"COP" | PayPalCurrency>("COP");
@@ -236,12 +243,49 @@ export function DonationForm({
   const amountIndex = suggestions.findIndex((value) => value === preset);
   const descriptions =
     frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;
+  const missionDescriptions = [
+    l(
+      "Bioconstrucción y apoyo a sabedores",
+      "Natural building and support for knowledge keepers",
+    ),
+    l(
+      "Kits comunitarios y logística de campo",
+      "Community kits and field logistics",
+    ),
+    l("Semilla de Sostenimiento (Insumos)", "A seed of support (supplies)"),
+  ];
+  const missionFocus = {
+    general: l(
+      "Flexibilidad operativa para respuesta inmediata y logística territorial.",
+      "Operational flexibility for an immediate response and logistics on the ground.",
+    ),
+    "el-cairo": l(
+      "Reconstrucción sostenible con guadua y bahareque",
+      "Sustainable rebuilding with guadua bamboo and bahareque",
+    ),
+    "sierra-nevada": l(
+      "Protección del agua, educación ancestral y movilidad de Mamos/Sagas",
+      "Water protection, ancestral education and travel for Mamos/Sagas",
+    ),
+    amazonas: l(
+      "Infraestructura escolar y parques infantiles artesanales",
+      "School infrastructure and handcrafted playgrounds",
+    ),
+    mhuysqa: l(
+      "Fondo de Apoyo a Sabedoras y Casa de Pensamiento en Apulo.",
+      "Support Fund for Women Knowledge Keepers and Casa de Pensamiento in Apulo.",
+    ),
+  };
   const giftText =
-    currency === "COP" || currency === "USD" || euroRate
-      ? descriptions[destination as keyof typeof giftDescriptions]?.[
-          amountIndex
-        ]?.[lang]
-      : undefined;
+    missionPage && frequency === "once"
+      ? missionFocus[destination as keyof typeof missionFocus]?.[lang]
+      : missionPage && frequency === "monthly" && amountIndex >= 0
+        ? missionDescriptions[amountIndex]?.[lang]
+        : currency === "COP" || currency === "USD" || euroRate
+          ? descriptions[destination as keyof typeof giftDescriptions]?.[
+              amountIndex
+            ]?.[lang]
+          : undefined;
   const labels: Record<string, string> = {
     general: es ? "Donde más se necesite" : "Where it is needed most",
     "el-cairo": "El Cairo",
@@ -249,6 +293,25 @@ export function DonationForm({
     amazonas: es ? "Amazonas" : "Amazon",
     mhuysqa: es ? "Pueblo Mhuysqa" : "Mhuysqa people",
   };
+  if (missionPage) {
+    Object.assign(labels, {
+      general: es
+        ? "Fondo General de Mayor Impacto (Recomendado)"
+        : "General Fund for Greatest Impact (Recommended)",
+      "el-cairo": es
+        ? "Reconstrucción de escuela tras el terremoto El Cairo (Valle)"
+        : "School rebuilding after the El Cairo earthquake (Valle)",
+      "sierra-nevada": es
+        ? "Misión Sierra Nevada (Comunidad Kogui)"
+        : "Sierra Nevada Mission (Kogui community)",
+      amazonas: es
+        ? "Misión Amazonas (Comunidad Tikuna)"
+        : "Amazon Mission (Tikuna community)",
+      mhuysqa: es
+        ? "Resurgimiento Mhuysqa (Sabedoras y Casa de Pensamiento)"
+        : "Mhuysqa Revival (Knowledge keepers and Casa de Pensamiento)",
+    });
+  }
   const review = (e: React.FormEvent) => {
     e.preventDefault();
     if (currency !== "COP") {
@@ -321,10 +384,14 @@ export function DonationForm({
             >
               {f === "monthly"
                 ? es
-                  ? "Mensualmente"
+                  ? missionPage
+                    ? "Dona Mensualmente"
+                    : "Mensualmente"
                   : "Monthly"
                 : es
-                  ? "Una sola vez"
+                  ? missionPage
+                    ? "Donación Única"
+                    : "Una sola vez"
                   : "One time"}
               {frequency === f && <Check size={15} />}
             </button>
@@ -358,7 +425,11 @@ export function DonationForm({
             <select
               id={`${id}-cause`}
               value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+              onChange={(e) => {
+                if (onCauseChange) onCauseChange(e.target.value);
+                else setDestination(e.target.value);
+                setReviewed(false);
+              }}
             >
               {Object.entries(labels).map(([key, label]) => (
                 <option key={key} value={key}>
@@ -496,7 +567,13 @@ export function DonationForm({
           </p>
         )}
         <button className="button gold full" type="submit">
-          {es ? "Revisar mi aporte" : "Review my gift"}
+          {missionPage
+            ? es
+              ? "Donar ahora de forma segura"
+              : "Donate securely now"
+            : es
+              ? "Revisar mi aporte"
+              : "Review my gift"}
           <ArrowUpRight size={19} />
         </button>
         <p className="payment-notice">

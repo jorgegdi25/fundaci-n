@@ -59,6 +59,7 @@ const titles: Record<PageKey, { es: string; en: string }> = {
     en: "Donate and support communities",
   },
   privacy: { es: "Privacidad", en: "Privacy" },
+  dataPolicy: { es: "Tratamiento de Datos", en: "Data Processing" },
   terms: { es: "Condiciones", en: "Terms" },
   cookies: { es: "Cookies", en: "Cookies" },
 };

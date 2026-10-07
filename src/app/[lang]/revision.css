@@ -152,8 +152,8 @@
   display: block;
 }
 .full-photo-message h1 {
-  font-size: clamp(2.5rem, 5.2vw, 5rem);
-  max-width: 850px;
+  font-size: clamp(2.5rem, 4.6vw, 4.4rem);
+  max-width: 1050px;
   font-weight: 600;
   text-wrap: balance;
   line-height: 1.13;
@@ -176,6 +176,10 @@
 .full-photo-identity svg {
   flex-shrink: 0;
   color: #e6d181;
+}
+.hero-motto {
+  display: block;
+  margin-top: 4px;
 }
 .hero-purpose {
   grid-template-columns: 1.05fr 1fr;
@@ -564,6 +568,7 @@
   }
   .full-photo-message h1 {
     font-size: clamp(1.875rem, 7.6vw, 2.625rem);
+    margin: 0;
   }
   .full-photo-message .eyebrow {
     font-size: 1rem;

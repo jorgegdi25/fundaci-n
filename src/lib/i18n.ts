@@ -13,6 +13,7 @@ export const routeNames = {
   about: { es: "conocenos", en: "about" },
   donate: { es: "donar", en: "donate" },
   privacy: { es: "privacidad", en: "privacy" },
+  dataPolicy: { es: "tratamiento-de-datos", en: "data-processing" },
   terms: { es: "condiciones", en: "terms" },
   cookies: { es: "cookies", en: "cookies" },
 };
