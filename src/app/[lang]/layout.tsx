@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getSiteUrl } from "@/lib/site-url";
+import { headers } from "next/headers";
+import { routedDonationChannel } from "@/lib/server/donation-channel";
+import { DonationChannelProvider } from "@/components/donation-channel";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
@@ -29,9 +32,14 @@ export default async function Layout({
 }) {
   const { lang } = await params;
   if (lang !== "es" && lang !== "en") notFound();
+  const mode = routedDonationChannel((await headers()).get("host"));
   return (
     <html lang={lang}>
-      <body>{children}</body>
+      <body>
+        <DonationChannelProvider mode={mode} lang={lang}>
+          {children}
+        </DonationChannelProvider>
+      </body>
     </html>
   );
 }

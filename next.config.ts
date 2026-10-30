@@ -6,6 +6,11 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/gracias-por-tu-aporte",
+        destination: "/es/registro-aporte",
+        permanent: false,
+      },
       { source: "/nosotros", destination: "/es/conocenos", permanent: true },
       { source: "/experiencias", destination: "/es/sumate", permanent: true },
       {

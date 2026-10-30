@@ -2,6 +2,7 @@ import Link from "next/link";
 import { href, type Lang, type PageKey } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { ProjectCards, Closing } from "./content-blocks";
+import { CurrentDonationScope } from "./donation-channel";
 
 const contact = "mailto:contacto@fundacionalmaarcoiris.org";
 export function ProjectsIndex({
@@ -134,11 +135,7 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
           </p>
         )}
         <h2>{es ? "Alcance actual" : "Current scope"}</h2>
-        <p>
-          {es
-            ? "Esta versión permite consultar los proyectos y probar aportes únicos y mensuales con Wompi y PayPal Sandbox. No mueve dinero real. Guarda el aporte de prueba, su autorización y su estado en una base de datos de pruebas. Los datos del medio de pago se introducen en la plataforma de pagos correspondiente."
-            : "This version lets you explore projects and test one-time and monthly gifts with Wompi and PayPal Sandbox. No real money moves. The test gift, authorization and status are stored in a test database. Payment method details are entered through the relevant payment platform."}
-        </p>
+        <CurrentDonationScope lang={lang} />
         <h2>
           {cookies
             ? es
@@ -179,8 +176,8 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         </p>
         <p>
           {es
-            ? "La política completa de tratamiento de datos, los canales para ejercer derechos y las condiciones de las donaciones se incorporarán antes de habilitar el sitio público."
-            : "The full data policy, rights request channels and donation terms will be added before the public website is enabled."}
+            ? "Consulta los documentos institucionales disponibles en los enlaces de esta página. Para consultas sobre tus datos o tu aporte, comunícate con la fundación."
+            : "Read the institutional documents available through this page’s links. Contact the foundation with questions about your data or your gift."}
         </p>
       </section>
     </>

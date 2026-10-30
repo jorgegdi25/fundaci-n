@@ -12,6 +12,8 @@ import {
 import { href, l, type Lang } from "@/lib/i18n";
 import { DonationCheckout } from "./donation-checkout";
 import { PayPalCheckout } from "./paypal-checkout";
+import { useDonationChannel } from "./donation-channel";
+import { LegacyDonationCard } from "./legacy-donation";
 import {
   decimalCents,
   decimalAmount,
@@ -50,6 +52,7 @@ export function DonationForm({
   onCauseChange?: (cause: string) => void;
 }) {
   const es = lang === "es";
+  const channel = useDonationChannel();
   const id = useId();
   const dialog = useRef<HTMLDialogElement>(null);
   const [frequency, setFrequency] = useState<Frequency>("monthly");
@@ -72,6 +75,7 @@ export function DonationForm({
   const [euroRateUnavailable, setEuroRateUnavailable] = useState(false);
   const [paypalSandbox, setPaypalSandbox] = useState(false);
   useEffect(() => {
+    if (channel !== "sandbox") return;
     const controller = new AbortController();
     fetch("/api/donations", { signal: controller.signal, cache: "no-store" })
       .then((res) => res.json())
@@ -88,9 +92,9 @@ export function DonationForm({
       )
       .catch(() => {});
     return () => controller.abort();
-  }, []);
+  }, [channel]);
   useEffect(() => {
-    if (currency !== "EUR" || euroRate) return;
+    if (channel !== "sandbox" || currency !== "EUR" || euroRate) return;
     const controller = new AbortController();
     setEuroRateUnavailable(false);
     fetch("/api/exchange-rates", { signal: controller.signal })
@@ -104,7 +108,9 @@ export function DonationForm({
         if (!controller.signal.aborted) setEuroRateUnavailable(true);
       });
     return () => controller.abort();
-  }, [currency, euroRate]);
+  }, [channel, currency, euroRate]);
+  if (channel !== "sandbox")
+    return <LegacyDonationCard lang={lang} compact={compact} />;
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
   const internationalAmounts =

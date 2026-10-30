@@ -1,4 +1,5 @@
 import { paypalConfig } from "@/lib/paypal-security";
+import { requestDonationChannel } from "@/lib/server/donation-channel";
 import {
   PaymentError,
   requireSameOrigin,
@@ -12,12 +13,14 @@ import {
   status,
   cancel,
 } from "@/lib/server/paypal";
-export async function GET() {
+export async function GET(request: Request) {
+  const mode = requestDonationChannel(request);
   const c = paypalConfig(process.env),
-    ready = Boolean(c && process.env.DATABASE_URL);
+    ready = mode === "sandbox" && Boolean(c && process.env.DATABASE_URL);
   return Response.json(
     {
       configured: ready,
+      mode,
       environment: ready ? "sandbox" : null,
       clientId: ready ? c?.clientId : undefined,
     },
@@ -27,6 +30,8 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     requireSameOrigin(request);
+    if (requestDonationChannel(request) !== "sandbox")
+      throw new PaymentError("sandbox_only_on_review_site", 403);
     const text = await request.text();
     if (text.length > 16000) throw new PaymentError("invalid_request", 400);
     let body: Record<string, unknown>;

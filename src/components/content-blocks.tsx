@@ -18,6 +18,7 @@ import {
 import { href, projectHref, type Lang } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { DonationForm } from "./donation-form";
+import { SandboxOnly } from "./donation-channel";
 import { VideoCard, FinancialChart } from "./interactions";
 export function Photo({
   src,
@@ -182,11 +183,13 @@ export function Faq({
 }
 export function DonationEntryNote({ lang }: { lang: Lang }) {
   return (
-    <p className="donation-entry-note">
-      {lang === "es"
-        ? "Puedes apoyar desde $9.900 COP mensuales."
-        : "You can contribute from COP $9,900 per month."}
-    </p>
+    <SandboxOnly>
+      <p className="donation-entry-note">
+        {lang === "es"
+          ? "Puedes apoyar desde $9.900 COP mensuales."
+          : "You can contribute from COP $9,900 per month."}
+      </p>
+    </SandboxOnly>
   );
 }
 export function Closing({ lang }: { lang: Lang }) {

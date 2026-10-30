@@ -865,3 +865,16 @@
 .support-options button:disabled {
   opacity: 0.45;
 }
+.donation-review-banner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  padding: 14px 22px;
+  background: #fff1d5;
+  border-bottom: 1px solid #e6d19e;
+  color: #513b10;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+}

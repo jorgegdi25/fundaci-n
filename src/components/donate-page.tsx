@@ -19,6 +19,8 @@ import { href, type Lang } from "@/lib/i18n";
 import { DonationForm } from "./donation-form";
 import { CommunitySignup } from "./community-signup";
 import styles from "./donate-page.module.css";
+import { useDonationChannel } from "./donation-channel";
+import { LegacyDonationPage } from "./legacy-donation";
 
 // Copy: ajustes DONAR oct 24 2026. Unchanged cause descriptions retain the prior client copy.
 const causes = [
@@ -97,6 +99,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
     i = es ? 0 : 1;
   const [cause, setCause] = useState("general");
   const widget = useRef<HTMLDivElement>(null);
+  const channel = useDonationChannel();
+  if (channel !== "sandbox") return <LegacyDonationPage lang={lang} />;
   const chooseCause = (value: string) => {
     setCause(value);
     widget.current?.scrollIntoView({

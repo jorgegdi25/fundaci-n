@@ -1,4 +1,6 @@
 import { sandboxConfig } from "@/lib/wompi-security";
+import { requestDonationChannel } from "@/lib/server/donation-channel";
+import { legacyDonationUrl } from "@/lib/donation-channel";
 import {
   config,
   requireSameOrigin,
@@ -11,16 +13,26 @@ import {
   PaymentError,
 } from "@/lib/server/payments";
 
-export async function GET() {
-  const ready = Boolean(sandboxConfig(process.env) && process.env.DATABASE_URL);
+export async function GET(request: Request) {
+  const mode = requestDonationChannel(request);
+  const ready =
+    mode === "sandbox" &&
+    Boolean(sandboxConfig(process.env) && process.env.DATABASE_URL);
   return Response.json(
-    { environment: ready ? "sandbox" : null, configured: ready },
+    {
+      mode,
+      environment: ready ? "sandbox" : null,
+      configured: ready,
+      ...(mode === "external" ? { donationUrl: legacyDonationUrl } : {}),
+    },
     { headers: { "Cache-Control": "no-store" } },
   );
 }
 export async function POST(request: Request) {
   try {
     requireSameOrigin(request);
+    if (requestDonationChannel(request) !== "sandbox")
+      throw new PaymentError("sandbox_only_on_review_site", 403);
     const text = await request.text();
     if (text.length > 16000) throw new PaymentError("invalid_request", 400);
     let body: Record<string, unknown>;
@@ -38,7 +50,7 @@ export async function POST(request: Request) {
     await limited(request, String(action), action === "status" ? 120 : 15);
     let data: unknown, cookie: string | undefined;
     if (action === "create") {
-      const intent = await createIntent(body, new URL(request.url).origin);
+      const intent = await createIntent(body, request.headers.get("origin")!);
       cookie = cookieHeader(intent.id, intent.token, request);
       // The cookie keeps the browser's result lookup private. The access token is
       // also provided for the donor's own monthly cancellation link.
