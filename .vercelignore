@@ -5,6 +5,8 @@ node_modules
 FOTOS Y VIDEOS
 logo versiones
 *.pdf
+!public/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf
+!public/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf
 *.docx
 *.xlsx
 *.zip
