@@ -79,7 +79,7 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
           <p>
             <a
               className="text-link"
-              href="https://fundacionalmaarcoiris.org/politica-de-privacidad"
+              href="/documentos/politica-de-privacidad-institucional.html"
               target="_blank"
               rel="noreferrer"
             >
@@ -121,8 +121,8 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
               className="text-link"
               href={
                 privacy
-                  ? "https://fundacionalmaarcoiris.org/politica-de-privacidad"
-                  : "https://fundacionalmaarcoiris.org/avisolegalycookies/"
+                  ? "/documentos/politica-de-privacidad-institucional.html"
+                  : "/documentos/aviso-legal-y-cookies-institucional.html"
               }
               target="_blank"
               rel="noreferrer"

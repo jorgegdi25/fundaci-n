@@ -1086,8 +1086,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
                   className="button outline"
                   href={
                     i === 0
-                      ? "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
-                      : "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
+                      ? "/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+                      : "/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
                   }
                   target="_blank"
                   rel="noreferrer"

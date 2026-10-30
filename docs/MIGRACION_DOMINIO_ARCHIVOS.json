@@ -1,0 +1,60 @@
+{
+  "capturedOn": "2026-10-30",
+  "note": "Public source files preserved before DNS cutover. PDF bytes unchanged; legal page body text preserved without scripts or former navigation. Not a complete WordPress or DNS-zone backup.",
+  "sources": [
+    {
+      "source": "https://fundacionalmaarcoiris.org/",
+      "resolved": "https://fundacionalmaarcoiris.org/",
+      "file": "source-0.html",
+      "type": "text/html; charset=UTF-8",
+      "bytes": 130201,
+      "sha256": "788e4d7fcbf3bd085a76ff20831e9e863b76879988148abba2ec24e5f109e1c8"
+    },
+    {
+      "source": "https://fundacionalmaarcoiris.org/robots.txt",
+      "resolved": "https://fundacionalmaarcoiris.org/robots.txt",
+      "file": "source-1.txt",
+      "type": "text/plain; charset=utf-8",
+      "bytes": 126,
+      "sha256": "38a17f5b2cda8eab29d6715b4bff5376677257ad534b27be78ca3ace7875ce2a"
+    },
+    {
+      "source": "https://fundacionalmaarcoiris.org/politica-de-privacidad",
+      "resolved": "https://fundacionalmaarcoiris.org/politica-de-privacidad/",
+      "file": "source-2.html",
+      "type": "text/html; charset=UTF-8",
+      "bytes": 61143,
+      "sha256": "b7b9281106eef8a8d4ac25dd8dd6cf8d32e2f22526a97b63116c76dc7a974fd7",
+      "publishedPath": "/documentos/politica-de-privacidad-institucional.html",
+      "contentSha256": "3cb791152ec2b4d99c08a2f80f87004e9f68abe2d55a138f596911a211f5b7a7"
+    },
+    {
+      "source": "https://fundacionalmaarcoiris.org/avisolegalycookies/",
+      "resolved": "https://fundacionalmaarcoiris.org/avisolegalycookies/",
+      "file": "source-3.html",
+      "type": "text/html; charset=UTF-8",
+      "bytes": 59605,
+      "sha256": "651bbc95bc4ed05b26b991112849349e97e023c6eb762d42158f4d0182c4b0f6",
+      "publishedPath": "/documentos/aviso-legal-y-cookies-institucional.html",
+      "contentSha256": "fd32f3218d24268e0ac420b6e19ea03f39f71ef38e417247864679fad1fad20e"
+    },
+    {
+      "source": "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf",
+      "resolved": "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf",
+      "file": "source-4.pdf",
+      "type": "application/pdf",
+      "bytes": 6652301,
+      "sha256": "73ffd8731ab70d94fbb8a08c63f713ed0a87af08765d4558e4d9a156035c6a2e",
+      "publishedPath": "/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+    },
+    {
+      "source": "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf",
+      "resolved": "https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf",
+      "file": "source-5.pdf",
+      "type": "application/pdf",
+      "bytes": 1117087,
+      "sha256": "92587b6fb3be2df45b0d27b8fc6ea6e81fa5c4153270a63bf12041d4a2bdd03c",
+      "publishedPath": "/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
+    }
+  ]
+}

@@ -198,3 +198,13 @@ Pendientes: entrega de guía y certificados, validación tributaria por la conta
 Inicio y Donar siguen los tres PDF entregados por la clienta; las decisiones y diferencias están registradas en `docs/CONTROL_EDITORIAL.md`. Los importes COP y USD son los indicados en esos ajustes; EUR se convierte mediante el BCE. El adicional voluntario para costos inicia en cero y muestra el total antes de abrir el pago. Las pasarelas siguen limitadas a Sandbox.
 
 El botón de comunidad abre el grupo de WhatsApp entregado mientras no se habilite el boletín de Google Sheets. Las solicitudes de certificado se dirigen a `certificados@fundacionalmaarcoiris.org`; no hay generación automática de certificados. Los avisos de aportes deben ir a `misiones@fundacionalmaarcoiris.org` y requieren completar la conexión de correo, sin asumir que un enlace mailto envía notificaciones.
+
+### Conexión del dominio oficial
+
+Dominio previsto: `https://fundacionalmaarcoiris.org`; `www` redirige a ese dominio. La compra permanece en GoDaddy y la zona DNS en Hostinger. La dirección oficial se configura en `NEXT_PUBLIC_SITE_URL` de producción. Esto no cambia el modo Sandbox de pagos ni activa el correo automático.
+
+Los informes 2024 y 2025 que aún dependían de WordPress se conservan con los mismos bytes y rutas en `public/wp-content/`. Las políticas institucionales públicas se conservan como documentos estáticos en `public/documentos/`, sin scripts del sitio anterior, y siguen accesibles desde las páginas legales. Las antiguas rutas de navegación redirigen a sus equivalentes nuevos. Procedencia y hashes: `docs/MIGRACION_DOMINIO_ARCHIVOS.json`. Estas copias no son una copia completa de WordPress ni de su base de datos.
+
+Antes del cambio DNS, exportar la zona real en Hostinger y conservar los respaldos del sitio anterior. Cambiar exclusivamente los registros web del dominio raíz y `www`, usando la recomendación actual de Vercel. Mantener NS en Hostinger y preservar todos los registros MX/TXT de Google y otros servicios. Comprobar si el destino web está almacenado como ALIAS, A o AAAA en el panel: los valores devueltos por una consulta DNS pública no representan necesariamente el tipo de registro almacenado.
+
+La asignación y verificación de propiedad en Vercel no acreditan que DNS o HTTPS estén listos. Verificar los registros publicados, el certificado, la portada, enlaces y correo después del cambio. Mantener las pasarelas en Sandbox hasta una instrucción expresa para activar producción. `SITE_INDEXABLE` permanece pendiente de la decisión de lanzamiento; evitar mantener noindex en una publicación definitiva.

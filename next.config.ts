@@ -6,6 +6,39 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/nosotros", destination: "/es/conocenos", permanent: true },
+      { source: "/experiencias", destination: "/es/sumate", permanent: true },
+      {
+        source: "/mision_amazonas_2026",
+        destination: "/es/proyectos/amazonas",
+        permanent: true,
+      },
+      {
+        source: "/mision-amazonas-2026",
+        destination: "/es/proyectos/amazonas",
+        permanent: true,
+      },
+      {
+        source: "/aldenjina",
+        destination: "/es/conocenos#alianzas",
+        permanent: true,
+      },
+      {
+        source: "/politica-de-privacidad",
+        destination: "/es/privacidad",
+        permanent: true,
+      },
+      {
+        source: "/avisolegalycookies",
+        destination: "/es/cookies",
+        permanent: true,
+      },
+      { source: "/donar", destination: "/es/donar", permanent: true },
+      {
+        source: "/wp-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
       {
         source: "/reportes-de-gestion",
         destination: "/es/reportes-de-gestion",
