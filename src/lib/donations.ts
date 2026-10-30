@@ -1,14 +1,38 @@
 export type Frequency = "monthly" | "once";
 export const donationAmounts = {
-  monthly: [250000, 150000, 50000],
-  once: [750000, 500000, 250000],
+  monthly: [9900, 29900],
+  once: [49900, 99900],
 } as const;
-// Suggested USD gifts supplied in Estructura web 2026 v2.pdf, page 6.
+// Suggested gifts supplied in the October 24, 2026 Home and Donate revisions.
 // These are independent donation amounts, not a live conversion from COP.
 export const usdDonationAmounts = {
-  monthly: [77, 46, 15],
-  once: [234, 156, 77],
+  monthly: [3.33, 9.99],
+  once: [15.9, 31.9],
 } as const;
+export const supportPercentages = [0, 5, 10, 15] as const;
+export function donationTotal(
+  amount: number,
+  percentage: number,
+  currency: string,
+) {
+  if (
+    !Number.isFinite(amount) ||
+    amount < 0 ||
+    !["COP", "USD", "EUR"].includes(currency) ||
+    !supportPercentages.includes(percentage as 0 | 5 | 10 | 15)
+  )
+    return null;
+  const scale = currency === "COP" ? 1 : 100;
+  if (Math.abs(amount * scale - Math.round(amount * scale)) > 1e-7) return null;
+  const base = Math.round(amount * scale);
+  if (!Number.isSafeInteger(base)) return null;
+  const support = Math.round((base * percentage) / 100);
+  return {
+    base: base / scale,
+    support: support / scale,
+    total: (base + support) / scale,
+  };
+}
 export const causes = [
   "general",
   "el-cairo",

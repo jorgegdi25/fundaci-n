@@ -124,16 +124,16 @@ export function Header({
         <div className="announcement">
           <span>
             <span className="announcement-label">
-              {es ? "JUNTOS POR EL CAIRO" : "TOGETHER FOR EL CAIRO"}
+              {es ? "JUNTOS POR EL AMAZONAS" : "TOGETHER FOR THE AMAZON"}
             </span>
             <span className="announcement-copy">
               {es
-                ? "Ayudemos a las familias afectadas por el terremoto."
-                : "Support families affected by the earthquake."}
+                ? "Conviértete en Guardián del Pulmón del Planeta."
+                : "Become a Guardian of the Planet’s Lungs."}
             </span>
           </span>
-          <Link href={projectHref(lang, "el-cairo")}>
-            {es ? "Apoyar emergencia" : "Support the response"}
+          <Link href={projectHref(lang, "amazonas")}>
+            {es ? "Apoyar causa" : "Support this cause"}
             <ArrowUpRight size={14} />
           </Link>
         </div>
@@ -174,23 +174,29 @@ export function Header({
             {sections.map((key, i) =>
               key !== "home" ? (
                 <div className="nav-projects" key={key}>
-                  <Link
-                    className={
-                      pathname.startsWith(href(lang, key)) ? "active" : ""
-                    }
-                    href={href(lang, key)}
-                    onClick={() => setOpen(false)}
-                  >
-                    {labels[lang][i]}
-                  </Link>
-                  {/* Keep a native submenu opened by the visitor before hydration. */}
                   <details name="main-navigation" suppressHydrationWarning>
                     <summary
-                      aria-label={`${es ? "Abrir submenú de" : "Show submenu for"} ${labels[lang][i]}`}
+                      className={
+                        pathname.startsWith(href(lang, key)) ? "active" : ""
+                      }
                     >
-                      <ChevronDown size={13} />
+                      <span>{labels[lang][i]}</span>
+                      <ChevronDown size={13} aria-hidden="true" />
                     </summary>
                     <div className="nav-dropdown">
+                      <Link
+                        href={href(lang, key)}
+                        onClick={(e) => {
+                          setOpen(false);
+                          const menu = e.currentTarget.closest("details");
+                          if (menu) menu.open = false;
+                        }}
+                      >
+                        {es
+                          ? `Ver ${labels[lang][i].toLowerCase()}`
+                          : `View ${labels[lang][i].toLowerCase()}`}
+                        <ArrowUpRight size={14} />
+                      </Link>
                       {submenu(lang, key).map(([url, label]) => (
                         <Link
                           key={url}
@@ -232,6 +238,19 @@ export function Header({
             <Link
               className="button gold header-donate"
               href={href(lang, "donate")}
+              onClick={(event) => {
+                setOpen(false);
+                if (pathname !== href(lang, "donate")) return;
+                event.preventDefault();
+                window.scrollTo({
+                  top: 0,
+                  behavior: window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                  ).matches
+                    ? "instant"
+                    : "smooth",
+                });
+              }}
             >
               <Heart size={15} />
               {es ? "Donar" : "Donate"}

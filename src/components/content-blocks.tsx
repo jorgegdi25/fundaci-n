@@ -180,6 +180,15 @@ export function Faq({
     </section>
   );
 }
+export function DonationEntryNote({ lang }: { lang: Lang }) {
+  return (
+    <p className="donation-entry-note">
+      {lang === "es"
+        ? "Puedes apoyar desde $9.900 COP mensuales."
+        : "You can contribute from COP $9,900 per month."}
+    </p>
+  );
+}
 export function Closing({ lang }: { lang: Lang }) {
   const es = lang === "es";
   return (
@@ -194,6 +203,7 @@ export function Closing({ lang }: { lang: Lang }) {
           ? "Tu confianza sostiene la vida y la cultura en el territorio."
           : "Your trust sustains life and culture in the territory."}
       </h2>
+      <DonationEntryNote lang={lang} />
       <Link className="button gold" href={href(lang, "donate")}>
         <Heart size={18} />
         {es ? "Realizar una donación" : "Make a donation"}
@@ -221,8 +231,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             <span className="eyebrow">Fundación Alma Arcoíris</span>
             <h1 id="home-title">
               {es
-                ? "Reconecta con los saberes ancestrales, protejamos los guardianes de la tierra."
-                : "Reconnect with ancestral wisdom, let’s protect the guardians of the Earth."}
+                ? "Reconecta con los saberes ancestrales."
+                : "Reconnect with ancestral wisdom."}
             </h1>
           </div>
           <div className="full-photo-identity">
@@ -283,26 +293,28 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               ? "pueblos indígenas en Colombia"
               : "Indigenous peoples in Colombia",
             b: es
-              ? "Representan el 4,7% de la población y gestionan casi la mitad de las zonas de mayor riqueza natural de Colombia."
-              : "Represent 4.7% of the population and manage almost half of Colombia’s most naturally rich areas.",
-            s: "DANE / IWGIA",
-            url: "https://www.iwgia.org/es/noticias/mi-2025-colombia",
+              ? "El Censo Nacional de Población y Vivienda 2018 identificó 115 pueblos indígenas, que representan el 4,4% de la población censada."
+              : "The 2018 National Population and Housing Census identified 115 Indigenous peoples, representing 4.4% of the population counted.",
+            s: "DANE · CNPV 2018",
+            url: "https://www.dane.gov.co/files/investigaciones/boletines/grupos-etnicos/infograf%C3%ADa-grupos-etnicos-2019.pdf",
           },
           {
             n: "46%",
             a: es ? "de los bosques" : "of forests",
             b: es
-              ? "Se concentran en resguardos indígenas (29% del territorio continental), manteniendo el 91% en excelente estado ecológico."
-              : "Are concentrated in Indigenous reserves (29% of the mainland), with 91% in excellent ecological condition.",
+              ? "Se concentran en resguardos indígenas, que abarcan cerca del 29% del área continental de Colombia. Fuente: Biodiversidad 2020."
+              : "Are concentrated in Indigenous reserves, which cover about 29% of Colombia’s mainland. Source: Biodiversity 2020.",
             s: "Instituto Humboldt",
             url: "https://reporte.humboldt.org.co/biodiversidad/2020/cap2/203/#seccion2",
           },
           {
             n: "60%",
-            a: es ? "carbono forestal almacenado" : "forest carbon stored",
+            a: es
+              ? "de los bosques de la Amazonía colombiana"
+              : "of forests in Colombia’s Amazon",
             b: es
-              ? "En resguardos de la Amazonía colombiana, actuando como escudo crítico contra el cambio climático."
-              : "In reserves in Colombia’s Amazon, acting as a critical shield against climate change.",
+              ? "Están habitados por pueblos indígenas, que contribuyen a su conservación. Fuente: WWF Colombia, 2021."
+              : "Are inhabited by Indigenous peoples, who help conserve them. Source: WWF Colombia, 2021.",
             s: "WWF Colombia",
             url: "https://www.wwf.org.co/en/?368990/Iniciativas-de-conservacion-indigena-que-protegen-la-Amazonia",
           },
@@ -342,11 +354,14 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
                 : "Choose your mission. Every territory has a story. You can be part of what comes next."
             }
           />
-          <p>
-            {es
-              ? "Haz que tu aporte cuide la vida y los territorios."
-              : "Help care for life and the land."}
-          </p>
+          <div className="project-intro-note">
+            <p>
+              {es
+                ? "Haz que tu aporte cuide la vida y los territorios."
+                : "Help care for life and the land."}
+            </p>
+            <DonationEntryNote lang={lang} />
+          </div>
         </div>
         <ProjectCards lang={lang} projects={projects} />
       </section>
@@ -467,8 +482,8 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
           <div className="impact-bottom">
             <p>
               {es
-                ? "Cada proyecto tiene una historia y cada aporte, un propósito. Conoce nuestros resultados y el destino de los recursos."
-                : "Every project has a story and every gift has a purpose. Explore our results and how resources are used."}
+                ? "85% se destina a materiales, trabajo comunitario y logística en el territorio y 15% a coordinación, seguimiento y rendición de cuentas. Ese 15% es el equipo que hace que lo que prometemos llegue y que puedas verificarlo."
+                : "85% goes to materials, community work and logistics on the ground, and 15% to coordination, monitoring and accountability. That 15% supports the team that makes our commitments reach the communities and lets you verify the results."}
             </p>
             <Link
               href={`${href(lang, "impact")}#cuentas`}
@@ -478,7 +493,7 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               <ArrowRight size={18} />
             </Link>
             <a
-              href="https://fundacionalmaarcoiris.org/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+              href="https://drive.google.com/file/d/1QH-6DW6tGbCWiwBMXX7P64GhGa9VpyLz/view?usp=drive_link"
               target="_blank"
               rel="noreferrer"
               className="text-link light-link"
@@ -496,6 +511,17 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             rel="noreferrer"
           >
             {es ? "Estados financieros · PDF" : "Financial statements · PDF"}
+            <ArrowUpRight size={18} />
+          </a>
+          <a
+            className="text-link light-link"
+            href="https://drive.google.com/file/d/1RorNR6htOTf_Wr9Enni-agJ3C3g4K-Ek/view?usp=drive_link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {es
+              ? "Certificado de control y vigilancia 2026 · PDF"
+              : "2026 supervision certificate · PDF"}
             <ArrowUpRight size={18} />
           </a>
         </div>

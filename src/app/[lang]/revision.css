@@ -738,3 +738,95 @@
 .management-link p {
   margin: 0 0 0.7rem;
 }
+
+/* Revisions supplied on 24 October 2026. */
+.nav-projects > details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 0;
+  min-height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nav-projects summary.active {
+  color: var(--purple);
+}
+.nav-projects > details[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.nav-dropdown > a:first-child {
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+}
+.donation-card .amount-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.donation-entry-note {
+  color: var(--purple);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-weight: 600;
+  margin-block: 14px 24px;
+}
+.closing .donation-entry-note {
+  color: inherit;
+}
+.project-intro-note {
+  max-width: 400px;
+}
+.donation-disclaimer {
+  margin-top: 20px;
+  color: #545b54;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.donation-support {
+  margin: 22px 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.donation-support legend {
+  font-size: 1rem;
+  font-weight: 600;
+  padding-top: 18px;
+}
+.donation-support p {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.support-options {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 6px;
+  margin: 14px 0;
+}
+.support-options button {
+  border: 1px solid #d2d4c7;
+  background: white;
+  border-radius: 9px;
+  min-height: 48px;
+  padding: 8px;
+  font-size: 1rem;
+}
+.support-options button[aria-pressed="true"] {
+  color: var(--purple);
+  background: #eeecf6;
+  border-color: var(--purple);
+}
+.donation-total strong {
+  color: var(--ink);
+}
+@media (max-width: 1000px) {
+  .nav-projects > details {
+    width: 100%;
+  }
+  .nav-projects > details > summary {
+    width: 100%;
+    justify-content: space-between;
+    white-space: normal;
+  }
+}

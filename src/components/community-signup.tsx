@@ -63,6 +63,31 @@ export function CommunitySignup({
       setState("error");
     }
   }
+  if (!configured)
+    return (
+      <div className={styles.form}>
+        <a
+          className="button gold"
+          href="https://chat.whatsapp.com/Kd38mXQ7kYgB1jdDkr6QBt"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {es ? "Unirme a la comunidad" : "Join the community"}
+          <ArrowRight size={20} aria-hidden="true" />
+        </a>
+        <p className={styles.privacy}>
+          {es
+            ? "Al registrarte, aceptas nuestra "
+            : "By signing up, you accept our "}
+          <Link href={href(lang, "privacy")}>
+            {es ? "Política de Privacidad" : "Privacy Policy"}
+          </Link>
+          {es
+            ? " y el tratamiento de datos para envío de comunicaciones. Puedes darte de baja en cualquier momento."
+            : " and the processing of your data for communications. You can unsubscribe at any time."}
+        </p>
+      </div>
+    );
   return (
     <form onSubmit={submit} className={styles.form}>
       {withName && (

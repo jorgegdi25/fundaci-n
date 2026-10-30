@@ -110,6 +110,18 @@ export function ContributorRegistration({
         </a>
       </div>
 
+      <p className={styles.paymentNote}>
+        <a href="mailto:certificados@fundacionalmaarcoiris.org">
+          {es
+            ? "Solicitar certificado de donación"
+            : "Request a donation certificate"}
+        </a>
+        {testMode &&
+          (es
+            ? " · En Sandbox no se emiten certificados tributarios."
+            : " · Sandbox gifts do not receive tax certificates.")}
+      </p>
+
       <p className={styles.privacy}>
         {es
           ? "El formulario se aloja en Google Forms. Si lo completas y lo envías, tus respuestas se remiten al formulario de la fundación en Google."

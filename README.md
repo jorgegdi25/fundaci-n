@@ -192,3 +192,9 @@ Donar sigue la estructura de las páginas 36–38 del documento nuevo, con cinco
 El registro de comunidad requiere `COMMUNITY_SHEETS_ENDPOINT` y `COMMUNITY_SHEETS_SECRET` (solo servidor). `scripts/newsletter-google-sheets.gs` contiene el receptor para la hoja de la clienta. Antes de activarlo, revisar la plantilla existente y adaptar el mapeo de columnas; el receptor rechaza encabezados distintos en vez de sobrescribirlos. Instalarlo en un proyecto de Apps Script propiedad de la fundación y configurar el secreto y nombre de pestaña en Script Properties. Confirmar la escritura antes de habilitar la función. No publicar el secreto en el navegador ni en Git. Sin conexión, el formulario no acepta envíos ni anuncia éxito. El consentimiento es obligatorio; nunca registra contactos en el ledger Sandbox de donaciones.
 
 Pendientes: entrega de guía y certificados, validación tributaria por la contadora, documentos legales privados y notificación de donaciones al correo de misiones. Estas capacidades no se presentan como listas.
+
+### Revisión editorial del 24 de octubre (aplicada el 30)
+
+Inicio y Donar siguen los tres PDF entregados por la clienta; las decisiones y diferencias están registradas en `docs/CONTROL_EDITORIAL.md`. Los importes COP y USD son los indicados en esos ajustes; EUR se convierte mediante el BCE. El adicional voluntario para costos inicia en cero y muestra el total antes de abrir el pago. Las pasarelas siguen limitadas a Sandbox.
+
+El botón de comunidad abre el grupo de WhatsApp entregado mientras no se habilite el boletín de Google Sheets. Las solicitudes de certificado se dirigen a `certificados@fundacionalmaarcoiris.org`; no hay generación automática de certificados. Los avisos de aportes deben ir a `misiones@fundacionalmaarcoiris.org` y requieren completar la conexión de correo, sin asumir que un enlace mailto envía notificaciones.

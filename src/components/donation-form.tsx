@@ -4,6 +4,8 @@ import { Heart, ArrowUpRight, LockKeyhole, X, Check } from "lucide-react";
 import {
   donationAmounts,
   usdDonationAmounts,
+  donationTotal,
+  supportPercentages,
   validateDonation,
   type Frequency,
 } from "@/lib/donations";
@@ -21,120 +23,17 @@ import {
   readEuroReferenceRate,
   type EuroReferenceRate,
 } from "@/lib/exchange-rates";
-// Amount descriptions supplied in Estructura web 2026 v2.pdf, pages 6, 8–9, 12, 16 and 19.
-const giftDescriptions = {
-  general: [
-    l(
-      "Sostenimiento de proyectos a largo plazo con comunidades",
-      "Supporting long-term community projects",
-    ),
-    l(
-      "Kits mensuales de sostenibilidad comunitaria",
-      "Monthly community sustainability kits",
-    ),
-    l(
-      "Viáticos para sabedores indígenas en sus visitas",
-      "Travel expenses for Indigenous knowledge keepers",
-    ),
-  ],
-  "el-cairo": [
-    l(
-      "Modelo piloto de vivienda y materiales locales",
-      "Pilot housing model and local materials",
-    ),
-    l(
-      "Apoyo en el desarrollo de talleres de bioconstrucción",
-      "Supporting natural building workshops",
-    ),
-    l(
-      "Viáticos del equipo en territorio",
-      "Travel expenses for community teams",
-    ),
-  ],
-  "sierra-nevada": [
-    l(
-      "Sostenimiento de sabedores tradicionales y conservación de territorios",
-      "Supporting traditional knowledge keepers and land conservation",
-    ),
-    l(
-      "Materiales de tejido y producción artesanal para familias Kogui",
-      "Weaving and craft production materials for Kogui families",
-    ),
-    l(
-      "Kits escolares y material de ecopedagogía infantil",
-      "School kits and environmental learning materials for children",
-    ),
-  ],
-  amazonas: [
-    l("Materiales de infraestructura", "Infrastructure materials"),
-    l("Logística y talleres comunitarios", "Logistics and community workshops"),
-    l("Insumos educativos", "Educational supplies"),
-  ],
-  mhuysqa: [
-    l(
-      "Sostenimiento de la Casa de Pensamiento y Jardín Botánico en Apulo",
-      "Supporting Casa de Pensamiento and the Botanical Garden in Apulo",
-    ),
-    l(
-      "Círculos de canto al agua, rezos a la Tierra y eventos bioculturales",
-      "Songs to water, prayers to the Earth and biocultural events",
-    ),
-    l(
-      "Insumos para talleres de medicina herbal y tejido ancestral",
-      "Materials for herbal knowledge and ancestral weaving workshops",
-    ),
-  ],
-};
-const oneTimeDescriptions = {
-  general: [
-    l(
-      "Sostenimiento de proyectos a corto plazo con comunidades",
-      "Supporting short-term community projects",
-    ),
-    l("Kits de sostenibilidad comunitaria", "Community sustainability kits"),
-    giftDescriptions.general[2],
-  ],
-  "el-cairo": [
-    giftDescriptions["el-cairo"][0],
-    l(
-      "Desarrollo y pedagogía para la construcción en minga",
-      "Development and learning for collective construction",
-    ),
-    l(
-      "Apoyo a la reactivación económica y turismo regenerativo",
-      "Supporting economic recovery and regenerative tourism",
-    ),
-  ],
-  "sierra-nevada": [
-    l(
-      "Sostenimiento de Mamos y Sagas y apoyo en sus viajes espirituales",
-      "Supporting Mamos and Sagas and their spiritual journeys",
-    ),
-    l(
-      "Materiales artesanales textiles y apoyo a olla comunitaria",
-      "Textile craft materials and community meals",
-    ),
-    l(
-      "Kits escolares e insumos pedagógicos",
-      "School kits and learning supplies",
-    ),
-  ],
-  amazonas: giftDescriptions.amazonas,
-  mhuysqa: [
-    l(
-      "Sostenimiento del centro regenerativo Mhuysqa y siembras en Apulo",
-      "Supporting the Mhuysqa regenerative centre and planting in Apulo",
-    ),
-    l(
-      "Acompañamiento a movimientos de canto al agua y liderazgo espiritual femenino",
-      "Supporting songs to water and women’s spiritual leadership",
-    ),
-    l(
-      "Materiales para talleres comunitarios urbanos de tejido y botánica",
-      "Materials for urban community weaving and botanical workshops",
-    ),
-  ],
-};
+// Rubros indicados en los ajustes de Home y Donar del 24 de octubre de 2026.
+const monthlyDescriptions = [
+  l(
+    "Viáticos para sabedores indígenas en sus visitas",
+    "Travel expenses for Indigenous knowledge keepers on their visits",
+  ),
+  l(
+    "Sostenimiento de proyectos en las comunidades",
+    "Supporting projects in the communities",
+  ),
+];
 export function DonationForm({
   lang,
   cause = "general",
@@ -154,7 +53,10 @@ export function DonationForm({
   const id = useId();
   const dialog = useRef<HTMLDialogElement>(null);
   const [frequency, setFrequency] = useState<Frequency>("monthly");
-  const [amount, setAmount] = useState<number | null>(150000);
+  const [amount, setAmount] = useState<number | null>(
+    donationAmounts.monthly[0],
+  );
+  const [supportPercentage, setSupportPercentage] = useState(0);
   const [custom, setCustom] = useState("");
   const [error, setError] = useState("");
   const [internalDestination, setDestination] = useState(cause);
@@ -164,7 +66,7 @@ export function DonationForm({
   const [currency, setCurrency] = useState<"COP" | PayPalCurrency>("COP");
   const [international, setInternational] = useState("");
   const [internationalIndex, setInternationalIndex] = useState<number | null>(
-    1,
+    0,
   );
   const [euroRate, setEuroRate] = useState<EuroReferenceRate | null>(null);
   const [euroRateUnavailable, setEuroRateUnavailable] = useState(false);
@@ -236,24 +138,17 @@ export function DonationForm({
           minimumFractionDigits: 0,
           maximumFractionDigits: 2,
         }).format(value);
+  const contribution = donationTotal(selected, supportPercentage, currency);
+  const total = contribution?.total ?? selected;
+  const formatMoney = (value: number) =>
+    currency === "COP"
+      ? `$${fmt(value)} COP`
+      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency, currencyDisplay: "narrowSymbol" }).format(value)} ${currency}`;
   const formatted =
     currency === "COP"
-      ? `$${fmt(selected)} COP`
-      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency, currencyDisplay: "narrowSymbol" }).format(selected)} ${currency}`;
+      ? `$${fmt(total)} COP`
+      : `${new Intl.NumberFormat(es ? "es-CO" : "en-US", { style: "currency", currency, currencyDisplay: "narrowSymbol" }).format(total)} ${currency}`;
   const amountIndex = suggestions.findIndex((value) => value === preset);
-  const descriptions =
-    frequency === "monthly" ? giftDescriptions : oneTimeDescriptions;
-  const missionDescriptions = [
-    l(
-      "Bioconstrucción y apoyo a sabedores",
-      "Natural building and support for knowledge keepers",
-    ),
-    l(
-      "Kits comunitarios y logística de campo",
-      "Community kits and field logistics",
-    ),
-    l("Semilla de Sostenimiento (Insumos)", "A seed of support (supplies)"),
-  ];
   const missionFocus = {
     general: l(
       "Flexibilidad operativa para respuesta inmediata y logística territorial.",
@@ -277,17 +172,13 @@ export function DonationForm({
     ),
   };
   const giftText =
-    missionPage && frequency === "once"
-      ? missionFocus[destination as keyof typeof missionFocus]?.[lang]
-      : missionPage && frequency === "monthly" && amountIndex >= 0
-        ? missionDescriptions[amountIndex]?.[lang]
-        : currency === "COP" || currency === "USD" || euroRate
-          ? descriptions[destination as keyof typeof giftDescriptions]?.[
-              amountIndex
-            ]?.[lang]
-          : undefined;
+    frequency === "monthly" && amountIndex >= 0
+      ? monthlyDescriptions[amountIndex]?.[lang]
+      : frequency === "once"
+        ? missionFocus[destination as keyof typeof missionFocus]?.[lang]
+        : undefined;
   const labels: Record<string, string> = {
-    general: es ? "Donde más se necesite" : "Where it is needed most",
+    general: es ? "Fondo General (Recomendado)" : "General Fund (Recommended)",
     "el-cairo": "El Cairo",
     "sierra-nevada": "Sierra Nevada",
     amazonas: es ? "Amazonas" : "Amazon",
@@ -296,8 +187,8 @@ export function DonationForm({
   if (missionPage) {
     Object.assign(labels, {
       general: es
-        ? "Fondo General de Mayor Impacto (Recomendado)"
-        : "General Fund for Greatest Impact (Recommended)",
+        ? "Fondo General (Recomendado)"
+        : "General Fund (Recommended)",
       "el-cairo": es
         ? "Reconstrucción de escuela tras el terremoto El Cairo (Valle)"
         : "School rebuilding after the El Cairo earthquake (Valle)",
@@ -316,7 +207,13 @@ export function DonationForm({
     e.preventDefault();
     if (currency !== "COP") {
       const cents = decimalCents(internationalValue);
-      if (cents === null || cents < 100 || cents > 1000000) {
+      if (
+        cents === null ||
+        cents < 100 ||
+        cents > 1000000 ||
+        !contribution ||
+        Math.round(total * 100) > 1000000
+      ) {
         setError(
           es
             ? `Ingresa un valor entre 1 y 10.000 ${currency}, con máximo dos decimales.`
@@ -330,7 +227,7 @@ export function DonationForm({
       return;
     }
     const result = validateDonation({
-      amount: selected,
+      amount: total,
       frequency,
       cause: destination,
     });
@@ -364,6 +261,11 @@ export function DonationForm({
           </h3>
         </div>
       </div>
+      <p className="donation-entry-note">
+        {es
+          ? "Puedes apoyar desde $9.900 COP mensuales."
+          : "You can contribute from COP $9,900 per month."}
+      </p>
       <form onSubmit={review}>
         <fieldset className="frequency">
           <legend className="sr-only">
@@ -376,8 +278,8 @@ export function DonationForm({
               aria-pressed={frequency === f}
               onClick={() => {
                 setFrequency(f);
-                setAmount(donationAmounts[f][1]);
-                setInternationalIndex(1);
+                setAmount(donationAmounts[f][0]);
+                setInternationalIndex(0);
                 setReviewed(false);
                 setError("");
               }}
@@ -407,7 +309,7 @@ export function DonationForm({
             onChange={(e) => {
               const nextCurrency = e.target.value as "COP" | PayPalCurrency;
               setCurrency(nextCurrency);
-              setInternationalIndex(1);
+              setInternationalIndex(0);
               setReviewed(false);
               setError("");
             }}
@@ -554,6 +456,50 @@ export function DonationForm({
                 ? "Un aporte que ayuda a responder a las necesidades de las comunidades."
                 : "A gift that helps meet the needs of local communities.")}
         </p>
+        {missionPage && (
+          <fieldset className="donation-support">
+            <legend>
+              {es
+                ? "Cubre los costos de tu donación (opcional)"
+                : "Cover donation costs (optional)"}
+            </legend>
+            <p>
+              {es
+                ? "Quiero sumar para cubrir la comisión de la pasarela y aportar a la operación de la Fundación."
+                : "I would like to add support to cover payment processing and contribute to the Foundation’s operations."}
+            </p>
+            <div className="support-options">
+              {supportPercentages.map((percentage) => (
+                <button
+                  type="button"
+                  key={percentage}
+                  aria-pressed={supportPercentage === percentage}
+                  onClick={() => {
+                    setSupportPercentage(percentage);
+                    setReviewed(false);
+                  }}
+                >
+                  {percentage === 0
+                    ? es
+                      ? "Sin adicional"
+                      : "No extra"
+                    : `${percentage}%`}
+                </button>
+              ))}
+            </div>
+            {supportPercentage > 0 && contribution && (
+              <p className="donation-total" aria-live="polite">
+                {es ? "Aporte" : "Gift"}: {formatMoney(selected)} +{" "}
+                {formatMoney(contribution.support)} ({supportPercentage}%).
+                <br />
+                <strong>
+                  {es ? "Total" : "Total"}: {formatMoney(total)}
+                  {frequency === "monthly" ? (es ? " / mes" : " / month") : ""}
+                </strong>
+              </p>
+            )}
+          </fieldset>
+        )}
         <p className="donation-policy-links">
           <a href={href(lang, "terms")}>
             {es ? "Condiciones de donación" : "Donation terms"}
@@ -585,6 +531,11 @@ export function DonationForm({
             : es
               ? "Pagos en línea disponibles próximamente"
               : "Online payments coming soon"}
+        </p>
+        <p className="donation-disclaimer">
+          {es
+            ? "Nota legal: 85% se destina a materiales, trabajo comunitario y logística de cada proyecto y 15% a coordinación, seguimiento y rendición de cuentas."
+            : "Legal note: 85% goes to materials, community work and logistics for each project, and 15% to coordination, monitoring and accountability."}
         </p>
       </form>
       <dialog
@@ -625,22 +576,31 @@ export function DonationForm({
               {frequency === "monthly" ? (es ? "/ mes" : "/ month") : ""}
             </dd>
           </div>
+          {supportPercentage > 0 && contribution && (
+            <div>
+              <dt>{es ? "Detalle del total" : "Total breakdown"}</dt>
+              <dd>
+                {formatMoney(selected)} + {formatMoney(contribution.support)} (
+                {supportPercentage}%)
+              </dd>
+            </div>
+          )}
         </dl>
         {reviewed &&
           (currency === "COP" ? (
             <DonationCheckout
-              key={`${frequency}-${selected}-${destination}`}
+              key={`${frequency}-${total}-${destination}`}
               lang={lang}
-              amount={selected}
+              amount={total}
               frequency={frequency}
               cause={destination}
               close={() => dialog.current?.close()}
             />
           ) : (
             <PayPalCheckout
-              key={`${currency}-${frequency}-${selected}-${destination}`}
+              key={`${currency}-${frequency}-${total}-${destination}`}
               lang={lang}
-              amount={decimalAmount(Math.round(selected * 100))}
+              amount={decimalAmount(Math.round(total * 100))}
               currency={currency}
               frequency={frequency}
               cause={destination}

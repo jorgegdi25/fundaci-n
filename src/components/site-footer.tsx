@@ -174,9 +174,9 @@ export function Footer({ lang }: { lang: Lang }) {
                     gmail.com
                   </span>
                 </a>
-                <a href="tel:+573178292106">
+                <a href="tel:+573044989707">
                   <Phone size={20} aria-hidden="true" />
-                  <span>+57 317 829 2106</span>
+                  <span>+57 304 498 9707</span>
                 </a>
                 <div>
                   <MapPin size={20} aria-hidden="true" />
@@ -215,7 +215,7 @@ export function Footer({ lang }: { lang: Lang }) {
                 </li>
                 <li>
                   <a
-                    href="https://www.youtube.com/channel/UCJFXvw5HGwxwfVm_mIjA1cw"
+                    href="https://www.youtube.com/@FundacionAlmaArcoiris"
                     target="_blank"
                     rel="noreferrer"
                   >

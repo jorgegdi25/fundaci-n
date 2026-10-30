@@ -22,6 +22,7 @@ import { Header, Footer } from "@/components/site-shell";
 import { Consent } from "@/components/interactions";
 import { Studio } from "@/components/studio";
 import { MotionSurface } from "@/components/motion-surface";
+import { FoundationSchema } from "@/components/foundation-schema";
 
 type Props = { params: Promise<{ lang: string; slug?: string[] }> };
 type Resolved =
@@ -184,6 +185,7 @@ export default async function Page({ params }: Props) {
     }
   return (
     <>
+      <FoundationSchema lang={r.lang} />
       <Header lang={r.lang} alternate={alternate} />
       <MotionSurface key={`${lang}/${slug?.join("/") ?? ""}`}>
         <main id="contenido">{body}</main>
