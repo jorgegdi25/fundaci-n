@@ -54,8 +54,8 @@ export function CurrentDonationScope({ lang }: { lang: Lang }) {
           ? "Esta versión permite consultar los proyectos y probar aportes únicos y mensuales con Wompi y PayPal Sandbox. No mueve dinero real. Guarda el aporte de prueba, su autorización y su estado en una base de datos de pruebas. Los datos del medio de pago se introducen en la plataforma de pagos correspondiente."
           : "This version lets you explore projects and test one-time and monthly gifts with Wompi and PayPal Sandbox. No real money moves. The test gift, authorization and status are stored in a test database. Payment method details are entered through the relevant payment platform."
         : lang === "es"
-          ? "Las donaciones únicas se realizan mediante el enlace de Wompi que la fundación utilizaba en su página anterior. El valor y los datos de pago se introducen en Wompi. Esta web no procesa esos pagos ni los registra en su base de pruebas. El registro de aportantes se completa por separado en el formulario de Google de la fundación."
-          : "One-time donations use the Wompi link from the foundation’s previous website. The amount and payment details are entered in Wompi. This website does not process those payments or record them in its test database. Contributor registration is completed separately using the foundation’s Google form."}
+          ? "Las donaciones únicas se realizan directamente en la plataforma externa de Wompi de la fundación. El valor y los datos de pago se introducen en Wompi. Esta web no procesa esos pagos ni los registra en su base de pruebas. El registro de aportantes se completa por separado en el formulario de Google de la fundación."
+          : "One-time donations are made directly on the foundation’s external Wompi payment page. The amount and payment details are entered in Wompi. This website does not process those payments or record them in its test database. Contributor registration is completed separately using the foundation’s Google form."}
     </p>
   );
 }

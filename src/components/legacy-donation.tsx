@@ -44,8 +44,8 @@ export function LegacyDonationCard({
       </a>
       <p className={styles.note}>
         {es
-          ? "Abrirás el enlace de donación que la fundación utilizaba en su página anterior."
-          : "This opens the donation link used on the foundation’s previous website."}
+          ? "El pago se realiza en Wompi, a nombre de FUNDACION ALMA ARCOIRIS COLOMBIA."
+          : "Payment is made through Wompi to FUNDACION ALMA ARCOIRIS COLOMBIA."}
       </p>
       <a className="text-link" href={href(lang, "impact")}>
         {es ? "Impacto y transparencia" : "Impact and transparency"}

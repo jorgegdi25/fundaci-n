@@ -17,6 +17,7 @@ import {
 import { href, projectHref, type Lang, type PageKey } from "@/lib/i18n";
 import styles from "./site-footer.module.css";
 import { CommunitySignup } from "./community-signup";
+import { useDonationChannel } from "./donation-channel";
 
 const pages: { key: PageKey; es: string; en: string }[] = [
   { key: "projects", es: "Nuestros proyectos", en: "Our projects" },
@@ -31,6 +32,7 @@ const pages: { key: PageKey; es: string; en: string }[] = [
 
 export function Footer({ lang }: { lang: Lang }) {
   const es = lang === "es";
+  const channel = useDonationChannel();
   return (
     <>
       <footer className={styles.footer} id="comunidad">
@@ -267,9 +269,13 @@ export function Footer({ lang }: { lang: Lang }) {
           </div>
           <p className={styles.preview}>
             <span aria-hidden="true" />
-            {es
-              ? "Vista previa · Contenido en revisión · Sin cobros reales"
-              : "Preview · Content under review · No real payments"}
+            {channel === "sandbox"
+              ? es
+                ? "Vista previa · Contenido en revisión · Sin cobros reales"
+                : "Preview · Content under review · No real payments"
+              : es
+                ? "Donaciones procesadas en la plataforma de Wompi"
+                : "Donations processed on Wompi’s platform"}
           </p>
         </div>
       </footer>

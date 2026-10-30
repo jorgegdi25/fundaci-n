@@ -5,11 +5,18 @@ import { Header, Footer } from "@/components/site-shell";
 import { LegacyDonationReturn } from "@/components/legacy-donation";
 import { routedDonationChannel } from "@/lib/server/donation-channel";
 
-export const metadata: Metadata = {
-  title: "Fundación Alma Arcoíris · Registro",
-  robots: { index: false, follow: false },
-  referrer: "no-referrer",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    title: lang === "es" ? "Registro de tu aporte" : "Register your gift",
+    robots: { index: false, follow: false },
+    referrer: "no-referrer",
+  };
+}
 
 export default async function Page({
   params,
