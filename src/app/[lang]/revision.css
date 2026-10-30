@@ -830,3 +830,38 @@
     white-space: normal;
   }
 }
+.donation-support-details {
+  margin: 20px 0;
+  border-block: 1px solid var(--line);
+}
+.donation-support-details > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  min-height: 56px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.donation-support-details > summary::-webkit-details-marker {
+  display: none;
+}
+.donation-support-details > summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  color: var(--purple);
+}
+.donation-support-details[open] > summary::after {
+  content: "-";
+}
+.donation-support-details .donation-support {
+  margin: 0 0 18px;
+  padding-top: 0;
+  border: 0;
+}
+.support-options button:disabled {
+  opacity: 0.45;
+}

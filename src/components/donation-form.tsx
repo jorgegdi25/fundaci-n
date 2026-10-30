@@ -457,48 +457,64 @@ export function DonationForm({
                 : "A gift that helps meet the needs of local communities.")}
         </p>
         {missionPage && (
-          <fieldset className="donation-support">
-            <legend>
+          <details className="donation-support-details">
+            <summary>
               {es
                 ? "Cubre los costos de tu donación (opcional)"
                 : "Cover donation costs (optional)"}
-            </legend>
-            <p>
-              {es
-                ? "Quiero sumar para cubrir la comisión de la pasarela y aportar a la operación de la Fundación."
-                : "I would like to add support to cover payment processing and contribute to the Foundation’s operations."}
-            </p>
-            <div className="support-options">
-              {supportPercentages.map((percentage) => (
-                <button
-                  type="button"
-                  key={percentage}
-                  aria-pressed={supportPercentage === percentage}
-                  onClick={() => {
-                    setSupportPercentage(percentage);
-                    setReviewed(false);
-                  }}
-                >
-                  {percentage === 0
-                    ? es
-                      ? "Sin adicional"
-                      : "No extra"
-                    : `${percentage}%`}
-                </button>
-              ))}
-            </div>
-            {supportPercentage > 0 && contribution && (
-              <p className="donation-total" aria-live="polite">
-                {es ? "Aporte" : "Gift"}: {formatMoney(selected)} +{" "}
-                {formatMoney(contribution.support)} ({supportPercentage}%).
-                <br />
-                <strong>
-                  {es ? "Total" : "Total"}: {formatMoney(total)}
-                  {frequency === "monthly" ? (es ? " / mes" : " / month") : ""}
-                </strong>
+              {supportPercentage > 0 && <span> +{supportPercentage}%</span>}
+            </summary>
+            <fieldset className="donation-support">
+              <legend className="sr-only">
+                {es
+                  ? "Apoyo opcional para costos"
+                  : "Optional support for costs"}
+              </legend>
+              <p>
+                {es
+                  ? "Quiero sumar para cubrir la comisión de la pasarela y aportar a la operación de la Fundación."
+                  : "I would like to add support to cover payment processing and contribute to the Foundation’s operations."}
               </p>
-            )}
-          </fieldset>
+              <div className="support-options">
+                {supportPercentages.map((percentage) => (
+                  <button
+                    type="button"
+                    key={percentage}
+                    aria-pressed={supportPercentage === percentage}
+                    disabled={
+                      (donationTotal(selected, percentage, currency)?.total ??
+                        Infinity) > (currency === "COP" ? 100000000 : 10000)
+                    }
+                    onClick={() => {
+                      setSupportPercentage(percentage);
+                      setReviewed(false);
+                    }}
+                  >
+                    {percentage === 0
+                      ? es
+                        ? "Sin adicional"
+                        : "No extra"
+                      : `${percentage}%`}
+                  </button>
+                ))}
+              </div>
+              {supportPercentage > 0 && contribution && (
+                <p className="donation-total" aria-live="polite">
+                  {es ? "Aporte" : "Gift"}: {formatMoney(selected)} +{" "}
+                  {formatMoney(contribution.support)} ({supportPercentage}%).
+                  <br />
+                  <strong>
+                    {es ? "Total" : "Total"}: {formatMoney(total)}
+                    {frequency === "monthly"
+                      ? es
+                        ? " / mes"
+                        : " / month"
+                      : ""}
+                  </strong>
+                </p>
+              )}
+            </fieldset>
+          </details>
         )}
         <p className="donation-policy-links">
           <a href={href(lang, "terms")}>
