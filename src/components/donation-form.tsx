@@ -135,7 +135,7 @@ export function DonationForm({
           style: "currency",
           currency,
           currencyDisplay: "narrowSymbol",
-          minimumFractionDigits: 0,
+          minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }).format(value);
   const contribution = donationTotal(selected, supportPercentage, currency);
