@@ -1,3 +1,4 @@
+import { giftResultPath } from "../gift-result-path";
 import "server-only";
 import { randomBytes, randomUUID, createHmac } from "node:crypto";
 import { database, PaymentError, cookieName } from "./payments";
@@ -207,7 +208,7 @@ export async function create(body: Record<string, unknown>) {
     access,
     orderId,
     subscriptionId,
-    resultPath: `/${gift.lang}/paypal/result?donation=${id}`,
+    resultPath: giftResultPath(gift.lang, "paypal", id),
   };
 }
 function date(value: unknown) {

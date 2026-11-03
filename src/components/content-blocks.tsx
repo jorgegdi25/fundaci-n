@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { href, projectHref, type Lang } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
+import { SponsorSchool } from "./sponsor-school";
+import { DonationQuestions } from "./donation-questions";
 import { DonationForm } from "./donation-form";
 import { SandboxOnly } from "./donation-channel";
 import { VideoCard, FinancialChart } from "./interactions";
@@ -114,15 +116,17 @@ export function ProjectCards({
                     ? "Comunidad Tikuna"
                     : "Tikuna community"
                   : p.slug === "el-cairo"
-                    ? "Doxura, El Cairo."
+                    ? es
+                      ? "Comunidad Embera Chamí"
+                      : "Embera Chamí community"
                     : p.name[lang]}
             </h3>
             <p>
               {
                 [
                   es
-                    ? "Reconstrucción de la Escuela comunidad Indigena Embera Chami."
-                    : "Rebuilding the Embera Chami Indigenous community’s school.",
+                    ? "Reconstrucción de la Escuela Doxura, El Cairo."
+                    : "Rebuilding Doxura School, El Cairo.",
                   es
                     ? "Cuidando el corazón del mundo."
                     : "Caring for the heart of the world.",
@@ -231,12 +235,16 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             priority
           />
           <div className="full-photo-message section">
-            <span className="eyebrow">Fundación Alma Arcoíris</span>
             <h1 id="home-title">
+              Fundación
+              <br />
+              Alma Arcoíris
+            </h1>
+            <p className="hero-subtitle">
               {es
                 ? "Reconecta con los saberes ancestrales."
                 : "Reconnect with ancestral wisdom."}
-            </h1>
+            </p>
           </div>
           <div className="full-photo-identity">
             <ShieldCheck size={22} aria-hidden="true" />
@@ -777,9 +785,33 @@ export function ProjectPage({
           <div className="project-partners">
             <h3>{es ? "Nuestros aliados" : "Our partners"}</h3>
             <ul>
-              <li>Santuario Playa Bonita</li>
-              <li>Fundación Pech</li>
-              <li>Casa Santuario Bogotá</li>
+              <li>
+                <a
+                  href="https://santuario.travel/land-regeneration/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Santuario Playa Bonita ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.naranja.org/fundacionpech/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Fundación Pech ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/encasasantuario/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Casa Santuario Bogotá ↗
+                </a>
+              </li>
               <li>
                 {es
                   ? "Junta de Acción Comunal Prado Veraniego · Bogotá"
@@ -801,21 +833,20 @@ export function ProjectPage({
           {es ? "DA UN PASO MÁS" : "TAKE ANOTHER STEP"}
         </span>
         <h2>{p.involvement[lang]}</h2>
-        <p>{p.involvementText[lang]}</p>
-        {p.slug === "el-cairo" && (
-          <p>
-            {es
-              ? "Un proyecto en alianza con otras organizaciones y las familias del territorio."
-              : "A project in partnership with other organisations and local families."}
-          </p>
+        {p.slug === "el-cairo" ? (
+          <SponsorSchool lang={lang} />
+        ) : (
+          <>
+            <p>{p.involvementText[lang]}</p>
+            <Link
+              className="button outline-light"
+              href={`${href(lang, "join")}#${p.slug === "mhuysqa" ? "encuentros" : "expediciones"}`}
+            >
+              {es ? "Conocer cómo participar" : "Discover how to take part"}
+              <ArrowUpRight size={18} />
+            </Link>
+          </>
         )}
-        <Link
-          className="button outline-light"
-          href={`${href(lang, "join")}#${p.slug === "mhuysqa" ? "encuentros" : "expediciones"}`}
-        >
-          {es ? "Conocer cómo participar" : "Discover how to take part"}
-          <ArrowUpRight size={18} />
-        </Link>
       </section>
       <Faq
         lang={lang}
@@ -824,6 +855,16 @@ export function ProjectPage({
           answer: f.answer[lang],
         }))}
       />
+      <section className="section faq-section">
+        <h2>
+          {es
+            ? "Preguntas frecuentes sobre donaciones"
+            : "Frequently asked questions about donations"}
+        </h2>
+        <div className="faq-list">
+          <DonationQuestions lang={lang} />
+        </div>
+      </section>
       <div className="mobile-donate">
         <a className="button gold full" href="#donar-formulario">
           <Heart size={18} />
@@ -1010,8 +1051,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
               es ? "Conservación y territorio" : "Conservation and land",
               "ODS 15",
               es
-                ? "Más de 250 participantes en caminatas de reconexión ecológica durante 2025."
-                : "Over 250 participants in ecological reconnection walks during 2025.",
+                ? "Movilización de más de 250 personas en rutas de reconexión ecológica en Cundinamarca (Sueva, Sumapaz, Guasca, Sesquilé). Involucramiento corporativo con 50 líderes de Comware/Icetex e iniciación de la infancia en la conservación de frailejones (Guardianes del Páramo)."
+                : "Over 250 people took part in ecological reconnection walks in Cundinamarca (Sueva, Sumapaz, Guasca, Sesquilé), with 50 Comware/Icetex leaders involved and children introduced to frailejón conservation through Guardianes del Páramo.",
             ],
             [
               HandHeart,
@@ -1020,16 +1061,16 @@ export function ImpactPage({ lang }: { lang: Lang }) {
                 : "Sovereignty and infrastructure",
               "ODS 10 · 17",
               es
-                ? "Educación, bioconstrucción y cooperación junto a comunidades Tikuna, Kogui y Mhuysqa."
-                : "Education, natural building and cooperation with Tikuna, Kogui and Mhuysqa communities.",
+                ? "Entrega de infraestructura escolar lúdica para 300 beneficiarios de la comunidad Tikuna en la Escuela Santa Isabel (Leticia, Amazonas). Bioconstrucción en minga del sauna ancestral Colmena Colibrí en Guasca y cooperación internacional con la ONG La Semilla (Francia) para pagamentos de Mamos Kogui."
+                : "School and play infrastructure for 300 Tikuna beneficiaries at Santa Isabel School (Leticia, Amazonas). Community construction of the Colmena Colibrí ancestral sauna in Guasca and cooperation with La Semilla NGO (France) for Kogui Mamos’ ceremonies of reciprocity.",
             ],
             [
               Users,
               es ? "Comunidad e igualdad" : "Community and equality",
               "ODS 3 · 5",
               es
-                ? "En 2025: EFIS, comunidad virtual de 160 mujeres; Hermandad del Cóndor, red de 188 hombres."
-                : "In 2025: EFIS, a virtual community of 160 women; Hermandad del Cóndor, a network of 188 men.",
+                ? "Consolidación de redes activas: EFIS (160 mujeres) y Hermandad del Cóndor (188 hombres) con programas virtuales y presenciales de autogestión emocional."
+                : "Active community networks: EFIS (160 women) and Hermandad del Cóndor (188 men), with virtual and in-person emotional self-management programmes.",
             ],
           ].map(([Icon, title, ods, text], i) => {
             const I = Icon as typeof Leaf;
@@ -1084,45 +1125,55 @@ export function ImpactPage({ lang }: { lang: Lang }) {
                       ? "900 walkers, the Sagrado Corazón ancestral gathering and the Hermandad del Cóndor retreat."
                       : "Registration with the Bogotá Chamber of Commerce on 27 December 2023 and tax identification with DIAN."}
               </p>
-              {i < 2 ? (
-                <a
-                  className="button outline"
-                  href={
-                    i === 0
-                      ? "/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
-                      : "/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <FileText size={17} />
-                  {es
-                    ? i === 0
-                      ? "Informe de gestión 2025 · PDF"
-                      : "Informe 2024 · corte febrero 2025 · PDF"
-                    : i === 0
-                      ? "2025 annual report · PDF (Spanish)"
-                      : "2024 report · February 2025 cut-off · PDF (Spanish)"}
-                  <ArrowUpRight size={17} />
-                </a>
-              ) : (
-                <a
-                  className="text-link"
-                  href="mailto:contacto@fundacionalmaarcoiris.org"
-                >
-                  {es ? "Solicitar documentación" : "Request documents"}
-                  <ArrowUpRight size={16} />
-                </a>
-              )}
-              <p className="small-note">
-                {es
-                  ? i < 2
-                    ? "Anexo financiero y dictamen de revisoría fiscal: pendientes de incorporación."
-                    : "Informe de constitución y balance de apertura: pendientes de incorporación."
-                  : i < 2
-                    ? "Financial annex and statutory audit report: pending upload."
-                    : "Foundation report and opening balance: pending upload."}
-              </p>
+              <div className="archive-downloads">
+                {[
+                  {
+                    url:
+                      year === 2025
+                        ? "/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
+                        : year === 2024
+                          ? "/wp-content/uploads/2026/03/3-Reporte-de-gestion-2024-a-febrero-2025.pdf"
+                          : "/documentos/transparencia/informe-gestion-2023.pdf",
+                    label: es
+                      ? `Informe de gestión ${year}${year === 2024 ? " · corte febrero 2025" : ""}`
+                      : `${year} annual report${year === 2024 ? " · February 2025 cut-off" : ""}`,
+                  },
+                  {
+                    url: `/documentos/transparencia/estados-financieros-${year}.pdf`,
+                    label: es
+                      ? `Estados financieros ${year}`
+                      : `${year} financial statements`,
+                  },
+                  {
+                    url: `/documentos/transparencia/dictamen-${year}.pdf`,
+                    label: es
+                      ? `Dictamen de revisoría fiscal ${year}`
+                      : `${year} statutory audit report`,
+                  },
+                  ...(year === 2025
+                    ? [
+                        {
+                          url: "/documentos/transparencia/anexo-financiero-2025.pdf",
+                          label: es
+                            ? "Anexo financiero y cuantitativo 2025"
+                            : "2025 financial and quantitative annex",
+                        },
+                      ]
+                    : []),
+                ].map((file) => (
+                  <a
+                    className="text-link"
+                    href={file.url}
+                    key={file.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FileText size={18} />
+                    {file.label} · PDF{!es && " (Spanish)"}
+                    <ArrowUpRight size={17} />
+                  </a>
+                ))}
+              </div>
             </div>
           </details>
         ))}
@@ -1141,9 +1192,20 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           <div className="archive-body">
             <p>
               {es
-                ? "RUT vigente, certificado de existencia y representación, certificado de la Gobernación de Cundinamarca y certificado de Rendición Social Pública de Cuentas. Solicítalos a la fundación mientras se completa la biblioteca."
-                : "Current tax registration, legal registration, Cundinamarca Government certificate and public social accountability certificate. Contact the foundation while the library is being completed."}
+                ? "Certificado de inspección, vigilancia y control de la Gobernación de Cundinamarca disponible para consulta. El RUT vigente, el certificado de existencia y representación y el certificado de Rendición Social Pública de Cuentas se incorporarán al recibir los archivos."
+                : "The Cundinamarca Government oversight certificate is available. Current tax registration, legal registration and public social accountability certificates will be added when the files are received."}
             </p>
+            <a
+              className="text-link"
+              href="/documentos/transparencia/certificado-gobernacion-2026.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FileText size={18} />
+              {es
+                ? "Certificado de la Gobernación · PDF"
+                : "Government oversight certificate · PDF (Spanish)"}
+            </a>
             <a
               className="text-link"
               href="mailto:contacto@fundacionalmaarcoiris.org"
@@ -1162,8 +1224,8 @@ export function ImpactPage({ lang }: { lang: Lang }) {
               ? "¿Cómo conozco el destino de mi aporte?"
               : "How can I see where my gift goes?",
             answer: es
-              ? "Los informes de gestión y las memorias de cada proyecto documentan las actividades y sus resultados. Estamos preparando los anexos financieros para esta biblioteca."
-              : "Annual reports and project records document activities and results. We are preparing the financial annexes for this library.",
+              ? "Los informes de gestión y las memorias de cada proyecto documentan las actividades y sus resultados. Puedes consultar los estados financieros y dictámenes disponibles en la biblioteca."
+              : "Annual reports and project records document activities and results. Explore the financial statements and audit reports available in the library.",
           },
           {
             question: es

@@ -1,0 +1,105 @@
+{
+  "source": "Ajuste general nov 2 2026.pdf",
+  "date": "2026-11-03",
+  "applied": {
+    "home": [
+      "Nombre de la fundación como H1 y frase como subtítulo",
+      "Formulario de comunidad visible; envío deshabilitado sin conexión; alternativa WhatsApp"
+    ],
+    "projects": [
+      "Tarjeta Comunidad Embera Chamí",
+      "El Cairo centrado en la escuela, sin módulos de app ni mingas",
+      "Apadrinamiento: selecciona mensual en Sandbox; consulta por WhatsApp en canal público",
+      "Título Mhuysqa actualizado",
+      "FAQ de donación compartidas y enlaces de aliados"
+    ],
+    "join": [
+      "Videos de caminatas, Cóndor y encuentros con carga al hacer clic",
+      "Enlace de comunidad general y mensaje WhatsApp de encuentros"
+    ],
+    "about": [
+      "Biografías del documento, agrupadas y desplegables",
+      "Valores solo en acordeones",
+      "Acuerdo Escuela Embera Chamí y garantía cultural",
+      "Nota de voluntariado sin repetir la referencia legal pendiente de validación",
+      "Enlaces Pech y Casa Santuario; imágenes aún pendientes"
+    ],
+    "donations": [
+      "Rótulo de correo actualizado",
+      "Enlace privado de gestión visible y copiable; sin volver a enlazar a sí mismo en el gestor",
+      "Confirmación previa a cancelar en Wompi y PayPal",
+      "Botones directos de soporte",
+      "Nueva ruta noindex gracias-donacion con verificación privada; rutas anteriores compatibles",
+      "Registro SARLAFT embebido después de aprobación verificada; aviso en Sandbox y de idioma español",
+      "Certificados sin promesa automática; comunidad y opciones de compartir",
+      "Retirada dirección interna de notificaciones de la página"
+    ],
+    "transparency": [
+      "Nueve PDF originales recibidos el 2 de octubre con hashes de procedencia",
+      "Biblioteca por vigencias, dictámenes y certificado de Gobernación",
+      "ODS ampliados con los textos de noviembre; sin cambiar porcentajes pendientes"
+    ],
+    "technical": [
+      "Restauración de scroll diferenciando navegación nueva, anclas y atrás/adelante",
+      "Schema institucional en layout y específico por página, sin consultas ni tokens privados"
+    ]
+  },
+  "preserved": [
+    "Botón público original de Wompi",
+    "Integración nueva solo en Sandbox",
+    "WordPress conservado en Hostinger",
+    "Sin activación de analítica, remarketing ni indexación",
+    "Sin transacciones, cancelaciones, envíos de correo ni formularios reales durante esta revisión"
+  ],
+  "pending": [
+    {
+      "item": "Fotos, retratos, logos y MP4 exactos",
+      "dependency": "Descargas del usuario; enlaces Drive inaccesibles para la cuenta conectada",
+      "handling": "Sin fotos sustitutas inventadas; se conserva material verificado o fondo neutro"
+    },
+    {
+      "item": "Términos de donaciones actualizados",
+      "dependency": "Documento aprobado de Drive por descargar"
+    },
+    {
+      "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
+      "dependency": "Cuenta gratuita de Resend y dominio remitente verificado; no creada todavía"
+    },
+    {
+      "item": "Google Sheets de comunidad y conciliación de intentos/pagos/registro",
+      "dependency": "Conexión a hoja de la fundación y receptor; no configurada"
+    },
+    {
+      "item": "Formulario SARLAFT en inglés",
+      "dependency": "Versión aprobada de Google Forms; preguntas actuales solo en español"
+    },
+    {
+      "item": "Datos de contacto comercial en Wompi",
+      "dependency": "Actualizar comercio en Wompi; customer-data permanece con los datos del pagador"
+    },
+    {
+      "item": "Porcentajes contables y afirmaciones tributarias",
+      "dependency": "Confirmación de contadora; no publicar ajustes no aprobados"
+    },
+    {
+      "item": "Cita legal del voluntariado",
+      "dependency": "Validar Ley 1500 de 2012 indicada en el PDF; se omitió la cita no verificada"
+    },
+    {
+      "item": "RUT, existencia y representación, RSPC",
+      "dependency": "Archivos exactos nuevos por descargar"
+    },
+    {
+      "item": "PageSpeed público y prueba completa de pagos recurrentes",
+      "dependency": "Versión revisable desplegada y servicios pendientes conectados"
+    }
+  ],
+  "validation": {
+    "unitTests": 26,
+    "unitResult": "passed",
+    "typecheck": "passed",
+    "localImages": "no missing referenced files",
+    "browser": "pending"
+  },
+  "release": "pending"
+}

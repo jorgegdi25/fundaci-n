@@ -50,7 +50,7 @@ export function validatePayPalGift(v: Record<string, unknown>) {
     currency: v.currency as PayPalCurrency,
     frequency: v.frequency as Frequency,
     cause: v.cause,
-    lang: v.lang,
+    lang: v.lang as "es" | "en",
   };
 }
 export type PayPalContract = {

@@ -9,12 +9,16 @@ import {
   HandHeart,
   MessageCircle,
   ShieldCheck,
+  ChevronDown,
 } from "lucide-react";
 import { href, l, type Lang } from "@/lib/i18n";
 import { Photo, SectionTitle, Faq } from "./content-blocks";
+import { VideoCard } from "./interactions";
+import { teamProfiles } from "@/content/team";
 
 const contact = "mailto:contacto@fundacionalmaarcoiris.org";
 const whatsapp = "https://wa.me/573044989707";
+const communityGroup = "https://chat.whatsapp.com/Kd38mXQ7kYgB1jdDkr6QBt";
 const valueDescriptions = [
   {
     title: l("Humildad", "Humility"),
@@ -227,13 +231,15 @@ export function JoinPage({ lang }: { lang: Lang }) {
       </section>
       <section className="section" id="caminatas">
         <article className="feature-row">
-          <Photo
-            src="/images/caminatas.webp"
-            alt={
+          <VideoCard
+            id="LR6hMrAQRq8"
+            image="/images/caminatas.webp"
+            title={
               es
-                ? "Grupo de caminantes junto a una laguna de páramo en Cundinamarca"
-                : "Walkers beside a páramo lake in Cundinamarca"
+                ? "Espiral Hacia El Centro · Caminatas Conscientes"
+                : "Espiral Hacia El Centro · Mindful Walks"
             }
+            lang={lang}
           />
           <div>
             <span className="eyebrow">
@@ -302,35 +308,56 @@ export function JoinPage({ lang }: { lang: Lang }) {
                 ? "Red de liderazgo consciente y sanación emocional para hombres. Círculos de palabra y retiros."
                 : "A conscious leadership and emotional healing network for men. Listening circles and retreats.",
             ],
-          ].map(([title, text]) => (
+          ].map(([title, text], index) => (
             <article key={title}>
               <MessageCircle size={28} />
               <h3>{title}</h3>
               <p>{text}</p>
               <a
                 className="text-link"
-                href={whatsapp}
+                href={
+                  index === 0
+                    ? communityGroup
+                    : `${whatsapp}?text=${encodeURIComponent(index === 1 ? "Hola! Quiero unirme al grupo EFIS" : "Hola! Quiero unirme a la Hermandad del Cóndor")}`
+                }
                 target="_blank"
                 rel="noreferrer"
               >
-                {es
-                  ? "Consultar cómo unirme por WhatsApp"
-                  : "Ask how to join on WhatsApp"}
+                {index === 0
+                  ? es
+                    ? "Unirme a la comunidad de WhatsApp"
+                    : "Join the WhatsApp community"
+                  : es
+                    ? "Solicitar acceso por WhatsApp"
+                    : "Request access on WhatsApp"}
                 <ArrowUpRight size={18} />
               </a>
+              {index === 2 && (
+                <VideoCard
+                  id="MLh43Zdps9E"
+                  title={
+                    es
+                      ? "El Cóndor y el Colibrí volando juntos · Documental 2025"
+                      : "The Condor and the Hummingbird flying together · 2025 Documentary"
+                  }
+                  lang={lang}
+                />
+              )}
             </article>
           ))}
         </div>
       </section>
       <section className="section" id="encuentros">
         <article className="feature-row">
-          <Photo
-            src="/images/mhuysqa-agua.webp"
-            alt={
+          <VideoCard
+            id="Vfe8aNpbU2c"
+            image="/images/mhuysqa-agua.webp"
+            title={
               es
-                ? "Encuentro del pueblo Mhuysqa junto al agua"
-                : "A Mhuysqa gathering by the water"
+                ? "Activación del Sagrado Corazón · Video oficial"
+                : "Activación del Sagrado Corazón · Official video"
             }
+            lang={lang}
           />
           <div>
             <span className="eyebrow">
@@ -350,7 +377,9 @@ export function JoinPage({ lang }: { lang: Lang }) {
             </p>
             <a
               className="button outline"
-              href={`${contact}?subject=Eventos%20y%20foros%20culturales`}
+              href={`${whatsapp}?text=${encodeURIComponent("Hola! Quiero saber sobre los próximos encuentros con sabedores ancestrales")}`}
+              target="_blank"
+              rel="noreferrer"
             >
               {es
                 ? "Consultar próximos encuentros"
@@ -402,7 +431,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
         </p>
         <a
           className="button gold"
-          href={whatsapp}
+          href={communityGroup}
           target="_blank"
           rel="noreferrer"
         >
@@ -416,40 +445,6 @@ export function JoinPage({ lang }: { lang: Lang }) {
   );
 }
 
-const team = [
-  [
-    "Claudia Patricia Pavas Salazar",
-    "Presidente y Representante Legal",
-    "President and Legal Representative",
-  ],
-  [
-    "Alejandro",
-    "Liderazgo estratégico y cofundador",
-    "Strategic leadership and co-founder",
-  ],
-  [
-    "Ana Zivkovic",
-    "Dirección y desarrollo institucional",
-    "Institutional leadership and development",
-  ],
-  [
-    "Óscar y Tatiana",
-    "Coordinación y ejecución de proyectos en territorio",
-    "Community project coordination and delivery",
-  ],
-  ["Julián Méndez", "Guía y etnoeducador", "Guide and ethno-educator"],
-  [
-    "Jorge González",
-    "Desarrollador web y arquitectura digital",
-    "Web development and digital architecture",
-  ],
-  ["Bernardo", "Asesoría legal internacional", "International legal advisory"],
-  [
-    "SEMbox España · Paqui Martín",
-    "Gestión de campañas Google Ad Grants y estrategia SEM",
-    "Google Ad Grants campaigns and SEM strategy",
-  ],
-];
 const allianceGroups = [
   {
     es: "Soporte tecnológico y herramientas",
@@ -631,10 +626,24 @@ export function AboutPage({ lang }: { lang: Lang }) {
           </article>
           <article data-reveal>
             <span className="eyebrow">Valle del Cauca</span>
-            <h3>El Cairo</h3>
-            <p>{es ? "Acuerdo de apoyo." : "Support agreement."}</p>
+            <h3>
+              {es
+                ? "Escuela Embera Chamí, Doxura"
+                : "Embera Chamí School, Doxura"}
+            </h3>
+            <p>
+              {es
+                ? "Acuerdo de apoyo con Líder comunitario y Maestra Escuela Embera Chamí."
+                : "Support agreement with the community leader and the teacher at Embera Chamí School."}
+            </p>
           </article>
         </div>
+        <p className="cultural-guarantee">
+          <ShieldCheck size={25} aria-hidden="true" />
+          {es
+            ? "Garantía de Respeto Cultural: Toda expedición o bioconstrucción cuenta con la consulta previa, la ceremonia de pago y el permiso explícito de las autoridades de los resguardos Kogui, Tikuna y Mhuysqa."
+            : "Cultural Respect Guarantee: Every expedition or natural-building project has prior consultation, a ceremony of reciprocity and explicit permission from the authorities of the Kogui, Tikuna and Mhuysqa reserves."}
+        </p>
       </section>
       <section className="section" id="valores">
         <SectionTitle
@@ -650,28 +659,6 @@ export function AboutPage({ lang }: { lang: Lang }) {
               : "These principles underpin our commitment to the common good, guided by a shared vision of humanity and compassion."
           }
         />
-        <ul className="values-list">
-          {(es
-            ? [
-                "Humildad",
-                "Hermandad",
-                "Compromiso",
-                "Integridad",
-                "Gratitud",
-                "Compasión",
-              ]
-            : [
-                "Humility",
-                "Fellowship",
-                "Commitment",
-                "Integrity",
-                "Gratitude",
-                "Compassion",
-              ]
-          ).map((v) => (
-            <li key={v}>{v}</li>
-          ))}
-        </ul>
         <div className="value-descriptions">
           {valueDescriptions.map((value) => (
             <details key={value.title.es} suppressHydrationWarning>
@@ -692,15 +679,48 @@ export function AboutPage({ lang }: { lang: Lang }) {
             es ? "El equipo detrás del impacto" : "The team behind the impact"
           }
         />
-        <div className="team-grid">
-          {team.map(([name, role, roleEn]) => (
-            <article className="team-card" key={name}>
-              <span aria-hidden="true">{name.charAt(0)}</span>
-              <h3>{name}</h3>
-              <p>{es ? role : roleEn}</p>
-            </article>
-          ))}
-        </div>
+        {(["leadership", "operations"] as const).map((group) => (
+          <div className="team-group" key={group}>
+            <h3>
+              {group === "leadership"
+                ? es
+                  ? "Liderazgo e Identidad"
+                  : "Leadership and Identity"
+                : es
+                  ? "Gestión de Proyectos y Operaciones"
+                  : "Project Management and Operations"}
+            </h3>
+            <div className="team-grid">
+              {teamProfiles
+                .filter((person) => person.group === group)
+                .map((person) => (
+                  <details className="team-card team-profile" key={person.name}>
+                    <summary>
+                      <span className="team-initials" aria-hidden="true">
+                        {person.name
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((word) => word[0])
+                          .join("")}
+                      </span>
+                      <h4>{person.name}</h4>
+                      <p>{person.role[lang]}</p>
+                      <span className="text-link">
+                        {es ? "Ver trayectoria" : "Read biography"}
+                        <ChevronDown size={18} aria-hidden="true" />
+                      </span>
+                    </summary>
+                    <p className="team-biography">{person.bio[lang]}</p>
+                  </details>
+                ))}
+            </div>
+          </div>
+        ))}
+        <p className="team-framework">
+          {es
+            ? "Con excepción de los servicios técnicos especializados contratados externamente (Desarrollo Web, Gestión de Google Ad Grants y Soporte Contable/Fiscal), todo el equipo directivo, operativo, asesores y facilitadores participan bajo la modalidad de Voluntariado Formal."
+            : "Except for externally contracted specialist services (web development, Google Ad Grants management and accounting/tax support), the management and operations team, advisors and facilitators participate as formal volunteers."}
+        </p>
       </section>
       <section className="section" id="alianzas">
         <SectionTitle
@@ -725,7 +745,25 @@ export function AboutPage({ lang }: { lang: Lang }) {
                       height={120}
                     />
                   )}
-                  <span>{name}</span>
+                  {name.startsWith("Fundación Pech") ? (
+                    <a
+                      href="http://www.naranja.org/fundacionpech/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {name} ↗
+                    </a>
+                  ) : name.startsWith("Casa Santuario") ? (
+                    <a
+                      href="https://www.instagram.com/encasasantuario/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {name} ↗
+                    </a>
+                  ) : (
+                    <span>{name}</span>
+                  )}
                 </div>
               ))}
             </div>

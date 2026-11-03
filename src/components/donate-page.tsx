@@ -1,4 +1,5 @@
 "use client";
+import { DonationQuestions } from "./donation-questions";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -489,64 +490,13 @@ export function DonatePage({ lang }: { lang: Lang }) {
             : "Frequently asked questions about donations"}
         </h2>
         <div className={styles.faq}>
-          {[
-            [
-              "¿Recibo certificado de donación?",
-              "Will I receive a donation certificate?",
-              "Sí. Somos una entidad sin ánimo de lucro calificada en el Régimen Tributario Especial. Si lo necesitas, déjanos tu nombre y documento al donar; lo emitimos conforme a la ley a más tardar en enero del año siguiente. Los contribuyentes en Colombia pueden tener derecho a un descuento del 25% del valor donado (art. 257 E.T.), con sus límites.",
-              "Yes. We are a nonprofit organisation qualified under Colombia’s Special Tax Regime. If you need one, provide your name and identification when donating; we issue it in accordance with the law, no later than January of the following year. Taxpayers in Colombia may be entitled to a tax credit of 25% of the donated amount (Article 257), subject to statutory limits.",
-            ],
-            [
-              "¿A dónde va tu donación?",
-              "Where does your donation go?",
-              "Del 100% de tu aporte a este proyecto, 85% se destina a materiales, trabajo comunitario y logística en el territorio y 15% a coordinación, seguimiento y rendición de cuentas. Ese 15% es el equipo que hace que lo que prometemos llegue y que puedas verificarlo.",
-              "Of your full contribution to this project, 85% goes to materials, community work and logistics on the ground, and 15% to coordination, monitoring and accountability. That 15% supports the team that fulfils our commitments and lets you verify the results.",
-            ],
-            [
-              "Fondo General",
-              "General Fund",
-              "Sostiene a quienes sostienen los proyectos. Cubre el equipo, la contabilidad, la revisoría fiscal, los seguros y la logística que todos los proyectos necesitan. Informamos en qué se usa cada trimestre.",
-              "It supports those who sustain the projects. It covers the team, accounting, statutory auditing, insurance and logistics that all projects need. We report on its use every quarter.",
-            ],
-            [
-              "Cubre los costos de tu donación (opcional)",
-              "Cover donation costs (optional)",
-              "Quiero sumar 5% / 10% / 15% para cubrir la comisión de la pasarela y aportar a la operación de la Fundación.",
-              "I would like to add 5% / 10% / 15% to cover payment processing and contribute to the Foundation’s operations.",
-            ],
-            [
-              "¿Puedo donar desde fuera de Colombia?",
-              "Can I donate from outside Colombia?",
-              "Sí. La pasarela de pagos acepta tarjetas de crédito/débito internacionales de cualquier país, así como transferencias seguras mediante PayPal.",
-              "Yes. The payment gateway accepts international credit/debit cards from any country, as well as secure transfers through PayPal.",
-            ],
-            [
-              "¿Cómo puedo cancelar o modificar mi donación mensual recurrente?",
-              "How can I cancel or change my recurring monthly donation?",
-              "Puedes gestionar, cambiar el monto o pausar tu suscripción en cualquier momento enviando un mensaje directo a nuestro equipo vía WhatsApp (+57 304 498 9707) o correo electrónico.",
-              "You can manage, change the amount or pause your subscription at any time by messaging our team on WhatsApp (+57 304 498 9707) or by email.",
-            ],
-            [
-              "¿Cómo garantizan que los fondos lleguen realmente al territorio?",
-              "How do you ensure funds reach the communities?",
-              "Publicamos anualmente los Estados Financieros Auditados NIIF y enviamos boletines con fotografías, testimonios y rendición de cuentas a toda nuestra red de donantes.",
-              "We publish audited IFRS financial statements annually and send newsletters with photographs, testimonies and accountability reports to our donor network.",
-            ],
-          ].map(([a, b, c, d]) => (
-            <details key={a}>
-              <summary>
-                {es ? a : b}
-                <span aria-hidden="true">+</span>
-              </summary>
-              <p>{es ? c : d}</p>
-            </details>
-          ))}
+          <DonationQuestions lang={lang} fundDetails />
         </div>
         <a
           className={styles.support}
-          href="mailto:misiones@fundacionalmaarcoiris.org"
+          href="mailto:contacto@fundacionalmaarcoiris.org"
         >
-          misiones@fundacionalmaarcoiris.org
+          contacto@fundacionalmaarcoiris.org
           <ArrowUpRight size={18} />
         </a>
       </section>

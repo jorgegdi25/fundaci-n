@@ -109,6 +109,20 @@ export function DonationForm({
       });
     return () => controller.abort();
   }, [channel, currency, euroRate]);
+  useEffect(() => {
+    if (channel !== "sandbox" || cause !== "el-cairo") return;
+    const selectMonthly = (event: Event) => {
+      if ((event as CustomEvent).detail !== cause) return;
+      setFrequency("monthly");
+      setDestination(cause);
+      setAmount(donationAmounts.monthly[0]);
+      setInternationalIndex(0);
+      setReviewed(false);
+      setError("");
+    };
+    window.addEventListener("alma:monthly-sponsorship", selectMonthly);
+    return () => window.removeEventListener("alma:monthly-sponsorship", selectMonthly);
+  }, [channel, cause]);
   if (channel !== "sandbox")
     return <LegacyDonationCard lang={lang} compact={compact} />;
   const fmt = (v: number) =>

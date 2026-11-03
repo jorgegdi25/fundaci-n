@@ -3,7 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { Heart, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { donationRequest } from "./donation-checkout";
 import { href, type Lang } from "@/lib/i18n";
-import { ContributorRegistration } from "./contributor-registration";
+import {
+  ApprovedGiftFollowUp,
+  GiftSupport,
+  PersonalManagementLink,
+} from "./gift-follow-up";
 
 type GiftStatus = {
   id: string;
@@ -36,6 +40,7 @@ export function DonationResult({
     access?: string;
   } | null>(null);
   const [managementUrl, setManagementUrl] = useState("");
+  const [cancelReview, setCancelReview] = useState(false);
   const [inFlight, setInFlight] = useState(false);
   useEffect(() => {
     if (manage) {
@@ -51,7 +56,12 @@ export function DonationResult({
         );
     } else if (donation) {
       setIdentity({ id: donation });
-      const access = sessionStorage.getItem(`alma-gift-${donation}`);
+      let access: string | null = null;
+      try {
+        access = sessionStorage.getItem(`alma-gift-${donation}`);
+      } catch {
+        /* The private cookie can still authenticate this browser. */
+      }
       if (access)
         setManagementUrl(
           `${window.location.origin}/${lang}/donation/manage#${donation}.${access}`,
@@ -91,6 +101,7 @@ export function DonationResult({
     try {
       const response = await donationRequest({ action: "cancel", ...identity });
       setInFlight(response.inFlight);
+      setCancelReview(false);
       await refresh();
     } catch {
       setError(
@@ -109,8 +120,8 @@ export function DonationResult({
       : "Your monthly gift is cancelled."
     : approved
       ? es
-        ? "Tu aporte de prueba fue aprobado."
-        : "Your test gift was approved."
+        ? "¡Gracias de corazón! Tu aporte de prueba fue aprobado."
+        : "Thank you from the heart! Your test gift was approved."
       : failed
         ? es
           ? "Tu aporte de prueba no fue aprobado."
@@ -134,7 +145,13 @@ export function DonationResult({
         <span className="eyebrow">
           {es ? "TU APORTE · WOMPI" : "YOUR GIFT · WOMPI"}
         </span>
-        <h1>{title}</h1>
+        <h1>
+          {manage && !gift?.cancelled
+            ? es
+              ? "Gestión de tu aporte mensual"
+              : "Manage your monthly gift"
+            : title}
+        </h1>
         <p className="sandbox-notice">
           {es
             ? "Modo de pruebas. No se ha movido dinero real."
@@ -192,24 +209,45 @@ export function DonationResult({
               </p>
             )}
             {managementUrl && (
-              <div className="management-link">
+              <PersonalManagementLink
+                lang={lang}
+                url={managementUrl}
+                manage={manage}
+              />
+            )}
+            {cancelReview ? (
+              <div className="cancel-review">
                 <p>
                   {es
-                    ? "Guarda este enlace para consultar o cancelar tu aporte. Es personal: no lo compartas."
-                    : "Save this personal link to check or cancel your gift. Do not share it."}
+                    ? "¿Quieres cancelar los próximos aportes mensuales? Un aporte que ya esté en proceso podría completarse."
+                    : "Cancel future monthly gifts? A gift already processing may still complete."}
                 </p>
-                <a href={managementUrl}>
-                  {es ? "Mi enlace de gestión" : "My management link"}
-                </a>
+                <div className="button-row">
+                  <button
+                    className="button payment-cancel"
+                    disabled={busy}
+                    onClick={cancel}
+                  >
+                    {es ? "Confirmar cancelación" : "Confirm cancellation"}
+                  </button>
+                  <button
+                    className="button outline"
+                    disabled={busy}
+                    onClick={() => setCancelReview(false)}
+                  >
+                    {es ? "Mantener mi aporte" : "Keep my gift"}
+                  </button>
+                </div>
               </div>
+            ) : (
+              <button
+                className="button payment-cancel"
+                disabled={busy}
+                onClick={() => setCancelReview(true)}
+              >
+                {es ? "Cancelar mi aporte mensual" : "Cancel my monthly gift"}
+              </button>
             )}
-            <button
-              className="button payment-cancel"
-              disabled={busy}
-              onClick={cancel}
-            >
-              {es ? "Cancelar mi aporte mensual" : "Cancel my monthly gift"}
-            </button>
           </>
         )}
         {gift?.cancelled && (
@@ -244,15 +282,10 @@ export function DonationResult({
         <a className="payment-home-link" href={href(lang, "home")}>
           {es ? "Volver al inicio" : "Back to home"}
         </a>
-        <a
-          className="payment-home-link"
-          href="mailto:contacto@fundacionalmaarcoiris.org"
-        >
-          {es ? "Contactar a la fundación" : "Contact the foundation"}
-        </a>
+        <GiftSupport lang={lang} />
       </div>
       {!manage && approved && !gift?.cancelled && !error && (
-        <ContributorRegistration
+        <ApprovedGiftFollowUp
           lang={lang}
           provider="wompi"
           testMode={gift?.environment !== "production"}

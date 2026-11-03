@@ -1,3 +1,4 @@
+import { PageSchema } from "@/components/page-schema";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
@@ -28,6 +29,11 @@ export default async function Page({
   const mode = routedDonationChannel((await headers()).get("host"));
   return (
     <>
+      <PageSchema
+        lang={lang}
+        title={lang === "es" ? "Registro de tu aporte" : "Register your gift"}
+        path={`/${lang}/registro-aporte`}
+      />
       <Header
         lang={lang}
         alternate={`/${lang === "es" ? "en" : "es"}/registro-aporte`}

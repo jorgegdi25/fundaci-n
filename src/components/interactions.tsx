@@ -9,7 +9,7 @@ export function VideoCard({
   lang,
 }: {
   id: string;
-  image: string;
+  image?: string;
   title: string;
   lang: Lang;
 }) {
@@ -25,7 +25,9 @@ export function VideoCard({
           modal.current?.showModal();
         }}
         style={{
-          backgroundImage: `linear-gradient(0deg,rgba(20,28,18,.75),transparent 80%),url("${image}")`,
+          backgroundImage: image
+            ? `linear-gradient(0deg,rgba(20,28,18,.75),transparent 80%),url("${image}")`
+            : "linear-gradient(135deg,#304b3b,#534a8f)",
         }}
       >
         <span className="play-button">

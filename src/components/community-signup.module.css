@@ -31,6 +31,10 @@
   font-size: 1.125rem;
   color: #303b33;
 }
+.field input:disabled {
+  background: #f2f3ee;
+  cursor: not-allowed;
+}
 .consent {
   display: flex;
   align-items: flex-start;

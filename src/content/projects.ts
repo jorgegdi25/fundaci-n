@@ -30,8 +30,8 @@ export type Project = {
 const paymentFaq = {
   question: l("¿Cómo puedo donar?", "How can I donate?"),
   answer: l(
-    "Puedes elegir un aporte único o mensual y el proyecto que deseas apoyar. Estamos preparando la habilitación de los pagos en línea. Para recibir orientación, escríbenos a contacto@fundacionalmaarcoiris.org.",
-    "Choose a one-time or monthly gift and the project you would like to support. Online payments will be available soon. For guidance, contact contacto@fundacionalmaarcoiris.org.",
+    "Usa el botón de donación de esta página y revisa las condiciones del medio de pago. Para recibir orientación, escríbenos a contacto@fundacionalmaarcoiris.org.",
+    "Use this page’s donation button and review the payment method’s terms. For guidance, contact contacto@fundacionalmaarcoiris.org.",
   ),
 };
 export const projects: Project[] = [
@@ -40,20 +40,20 @@ export const projects: Project[] = [
     slug: "el-cairo",
     name: l("El Cairo", "El Cairo"),
     title: l(
-      "Emergencia Terremoto: Reconstrucción Sostenible en El Cairo, Valle del Cauca",
-      "Earthquake Emergency: Sustainable Rebuilding in El Cairo, Valle del Cauca",
+      "Respuesta humanitaria Emergencia tras Terremoto: Reconstrucción Sostenible y Apoyo Directo en El Cairo, Valle del Cauca",
+      "Humanitarian response after the earthquake: Sustainable Rebuilding and Direct Support in El Cairo, Valle del Cauca",
     ),
     subtitle: l(
-      "Tu aporte financia la reconstrucción segura de viviendas campesinas, recupera la arquitectura tradicional de bahareque y reactiva la autosostenibilidad de 20 familias afectadas en el Paisaje Cultural Cafetero.",
-      "Your support helps rebuild safe rural homes, preserve traditional bahareque architecture and restore the livelihoods of 20 affected families in Colombia’s Coffee Cultural Landscape.",
+      "Tu aporte financia la reconstrucción segura de la escuela de la comunidad Indígena Embera Chamí, recupera la arquitectura tradicional de bahareque y reactiva la autosostenibilidad de las familias indígenas afectadas en el Paisaje Cultural Cafetero.",
+      "Your gift funds the safe rebuilding of the Embera Chamí Indigenous community’s school, restores traditional bahareque architecture and supports the livelihoods of affected Indigenous families in Colombia’s Coffee Cultural Landscape.",
     ),
     location: l("Valle del Cauca, Colombia", "Valle del Cauca, Colombia"),
     category: l("Respuesta humanitaria", "Humanitarian response"),
     image: "/images/el-cairo.webp",
-    hero: "/images/el-cairo.webp",
+    hero: "/images/el-cairo-escuela.webp",
     alt: l(
-      "Calles y viviendas de El Cairo, Valle del Cauca",
-      "Streets and homes in El Cairo, Valle del Cauca",
+      "Escuela de la comunidad Embera Chamí en Doxura, El Cairo",
+      "The Embera Chamí community’s school in Doxura, El Cairo",
     ),
     color: "#a76443",
     modules: [
@@ -63,29 +63,18 @@ export const projects: Project[] = [
           "Safe, sustainable rebuilding",
         ),
         description: l(
-          "Modelos de vivienda que unen la arquitectura resistente con materiales locales como la guadua y el bahareque tradicional.",
-          "Housing models that combine resilient architecture with local materials, including guadua bamboo and traditional bahareque.",
+          "Implementación de modelos de construcción que unifican la arquitectura sísmicamente resistente con el uso de materiales locales como la guadua y tabla tradicional. La Escuela lo requiere urgente.",
+          "Building models that combine earthquake-resistant architecture with local materials such as guadua bamboo and traditional timber. The school urgently needs this work.",
         ),
       },
       {
         title: l(
-          "App móvil y pedagogía autónoma",
-          "Mobile learning and community skills",
+          "Apoyo directo y apadrinamiento escolar",
+          "Direct support and school sponsorship",
         ),
         description: l(
-          "Una propuesta de aplicación y talleres para compartir conocimientos de mantenimiento, prevención y autoconstrucción segura.",
-          "A proposed app and community workshops to share maintenance, prevention and safe self-building skills.",
-        ),
-        image: "/images/cairo-app.webp",
-      },
-      {
-        title: l(
-          "Mingas y turismo regenerativo",
-          "Community work and regenerative tourism",
-        ),
-        description: l(
-          "Trabajo comunitario para recuperar las viviendas y acompañar la reactivación económica de las familias.",
-          "Collective work to restore homes and support families as they rebuild their livelihoods.",
+          "Fortalecimiento de la autosostenibilidad y apoyo a las familias indígenas y campesinas para la reconstrucción de sus medios de vida y el aseguramiento educativo de la niñez Embera Chamí en Doxura.",
+          "Supporting Indigenous and rural families as they rebuild their livelihoods, strengthen self-sufficiency and secure education for Embera Chamí children in Doxura.",
         ),
       },
     ],
@@ -98,10 +87,10 @@ export const projects: Project[] = [
         ),
       },
       {
-        value: "20",
+        value: "+15",
         label: l(
-          "familias priorizadas en el proyecto",
-          "families prioritised by the project",
+          "familias beneficiadas directamente en El Cairo, Valle del Cauca",
+          "families directly supported in El Cairo, Valle del Cauca",
         ),
       },
     ],
@@ -111,8 +100,8 @@ export const projects: Project[] = [
     ),
     testimony: {
       quote: l(
-        "No es solo volver a levantar techos y paredes; es reconstruir nuestra identidad campesina con nuestras propias manos y los materiales de nuestra tierra.",
-        "It is more than rebuilding roofs and walls; it is rebuilding our rural identity with our own hands and the materials of our land.",
+        "No es solo volver a levantar techos y paredes; es reconstruir nuestra identidad indígena y campesina con nuestras propias manos y los materiales de nuestra tierra.",
+        "It is more than rebuilding roofs and walls; it is rebuilding our Indigenous and rural identity with our own hands and the materials of our land.",
       ),
       author: l(
         "Líder comunitario del Municipio de El Cairo, Valle del Cauca",
@@ -120,22 +109,32 @@ export const projects: Project[] = [
       ),
     },
     involvement: l(
-      "Súmate a las mingas de reconstrucción",
-      "Join the rebuilding mingas",
+      "Acompaña la reconstrucción sostenida: Conviértete en Padrino de la Escuela y las Familias",
+      "Support lasting rebuilding: Sponsor the School and Families",
     ),
     involvementText: l(
-      "Arquitectura, ingeniería, bioconstrucción y manos dispuestas a ayudar. Conoce cómo participar en las jornadas comunitarias junto a las familias de El Cairo.",
-      "Architecture, engineering, natural building and a willingness to help. Discover how to join community work alongside the families of El Cairo.",
+      "La recuperación total de la comunidad Embera Chamí requiere constancia. A través de nuestro programa de Apadrinamiento Directo, tus aportes mensuales se destinan al sostenimiento de la compra de materiales locales de bioconstrucción y a garantizar la permanencia escolar de los niños en la Escuela de Doxura sin interrupciones.",
+      "The Embera Chamí community’s full recovery requires continuity. Through our Direct Sponsorship programme, monthly contributions support local natural-building materials and help children continue their education at Doxura School without interruption.",
     ),
     faqs: [
+      {
+        question: l(
+          "¿Cómo garantiza el proyecto que las estructuras sean resistentes a futuros sismos?",
+          "How does the project make structures resistant to future earthquakes?",
+        ),
+        answer: l(
+          "Contamos con un equipo de expertos que integran los principios técnicos del bahareque encostillado y la guadua, reconocidos por su flexibilidad y comportamiento sismorresistente en el Paisaje Cultural Cafetero.",
+          "Our experts combine the technical principles of timber-framed bahareque and guadua bamboo, known for their flexibility and earthquake-resistant behaviour in the Coffee Cultural Landscape.",
+        ),
+      },
       {
         question: l(
           "¿A dónde se destina mi aporte?",
           "How will my gift be used?",
         ),
         answer: l(
-          "El proyecto contempla un modelo piloto de vivienda, materiales locales, formación comunitaria y reactivación económica. Compartiremos la ejecución y sus avances en los informes de transparencia.",
-          "The project covers a pilot home, local materials, community training and economic recovery. Progress and expenditure will be shared through our transparency reports.",
+          "Los fondos financian la ejecución del proyecto, la compra de materiales locales, el desarrollo pedagógico y la reactivación de la escuela de los niños en las familias indígenas afectadas.",
+          "Funds support project delivery, local materials, educational work and reopening the school for children from affected Indigenous families.",
         ),
       },
       paymentFaq,
@@ -391,7 +390,7 @@ export const projects: Project[] = [
     slug: "mhuysqa",
     name: l("Pueblo Mhuysqa", "Mhuysqa people"),
     title: l(
-      "Resurgimiento Mhuysqa: Fondo de Apoyo a las Sabedoras y Abuelas Ancestrales",
+      "Resurgimiento del Pueblo Mhuysqa: Fondo de Apoyo a las Sabedoras y Abuelas Ancestrales.",
       "Mhuysqa Renewal: Supporting Ancestral Women Knowledge Keepers and Grandmothers",
     ),
     subtitle: l(

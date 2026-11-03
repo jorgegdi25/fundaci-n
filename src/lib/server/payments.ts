@@ -1,3 +1,4 @@
+import { giftResultPath } from "../gift-result-path";
 import "server-only";
 import { randomBytes, randomUUID } from "node:crypto";
 import { neon } from "@neondatabase/serverless";
@@ -177,7 +178,7 @@ export async function createIntent(
     )}::jsonb)`;
   const reference = `ALMA-${id}-0`;
   await sql`INSERT INTO donation_attempts(reference,intent_id) VALUES (${reference},${id})`;
-  const resultPath = `/${body.lang}/donation/result?donation=${id}`;
+  const resultPath = giftResultPath(body.lang, "wompi", id);
   if (frequency === "monthly")
     return {
       id,
@@ -414,7 +415,7 @@ export async function finalizeMonthly(
     throw e;
   }
   return {
-    resultPath: `/${intent.lang}/donation/result?donation=${intent.id}`,
+    resultPath: giftResultPath(intent.lang, "wompi", intent.id),
   };
 }
 export async function intentStatus(

@@ -63,31 +63,6 @@ export function CommunitySignup({
       setState("error");
     }
   }
-  if (!configured)
-    return (
-      <div className={styles.form}>
-        <a
-          className="button gold"
-          href="https://chat.whatsapp.com/Kd38mXQ7kYgB1jdDkr6QBt"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {es ? "Unirme a la comunidad" : "Join the community"}
-          <ArrowRight size={20} aria-hidden="true" />
-        </a>
-        <p className={styles.privacy}>
-          {es
-            ? "Al registrarte, aceptas nuestra "
-            : "By signing up, you accept our "}
-          <Link href={href(lang, "privacy")}>
-            {es ? "Política de Privacidad" : "Privacy Policy"}
-          </Link>
-          {es
-            ? " y el tratamiento de datos para envío de comunicaciones. Puedes darte de baja en cualquier momento."
-            : " and the processing of your data for communications. You can unsubscribe at any time."}
-        </p>
-      </div>
-    );
   return (
     <form onSubmit={submit} className={styles.form}>
       {withName && (
@@ -100,6 +75,7 @@ export function CommunitySignup({
             value={name}
             onChange={(e) => setName(e.target.value)}
             maxLength={100}
+            disabled={!configured}
             required
           />
         </div>
@@ -117,6 +93,7 @@ export function CommunitySignup({
             setInvalid(false);
           }}
           maxLength={254}
+          disabled={!configured}
           required
           aria-invalid={invalid}
           aria-describedby={`${id}-status`}
@@ -127,6 +104,7 @@ export function CommunitySignup({
           type="checkbox"
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
+          disabled={!configured}
           required
         />
         <span>
@@ -168,10 +146,23 @@ export function CommunitySignup({
               : "Your sign-up was saved successfully."
             : state === "error" || !configured
               ? es
-                ? "El registro no está disponible en este momento."
-                : "Sign-up is not available at the moment."
+                ? "El registro por correo o WhatsApp está en preparación. Puedes unirte al grupo de WhatsApp."
+                : "Email or WhatsApp sign-up is being prepared. You can join the WhatsApp group."
               : ""}
       </p>
+      {!configured && (
+        <a
+          className="text-link"
+          href="https://chat.whatsapp.com/Kd38mXQ7kYgB1jdDkr6QBt"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {es
+            ? "Unirme a la comunidad de WhatsApp"
+            : "Join the WhatsApp community"}
+          <ArrowRight size={20} aria-hidden="true" />
+        </a>
+      )}
     </form>
   );
 }

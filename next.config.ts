@@ -7,6 +7,11 @@ const config: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/gracias-donacion",
+        destination: "/es/gracias-donacion",
+        permanent: false,
+      },
+      {
         source: "/gracias-por-tu-aporte",
         destination: "/es/registro-aporte",
         permanent: false,

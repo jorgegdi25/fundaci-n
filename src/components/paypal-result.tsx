@@ -3,7 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { CheckCircle2, Heart, RefreshCw } from "lucide-react";
 import { paypalRequest } from "@/lib/paypal-client";
 import { href, type Lang } from "@/lib/i18n";
-import { ContributorRegistration } from "./contributor-registration";
+import {
+  ApprovedGiftFollowUp,
+  GiftSupport,
+  PersonalManagementLink,
+} from "./gift-follow-up";
 type Gift = {
   id: string;
   amount: number;
@@ -116,17 +120,21 @@ export function PayPalResult({
             ? es
               ? "Tu aporte mensual está cancelado."
               : "Your monthly gift is cancelled."
-            : paid
+            : manage
               ? es
-                ? "Tu aporte de prueba fue confirmado."
-                : "Your test gift was confirmed."
-              : gift?.subscriptionState === "ACTIVE"
+                ? "Gestión de tu aporte mensual"
+                : "Manage your monthly gift"
+              : paid
                 ? es
-                  ? "Tu aporte mensual está autorizado."
-                  : "Your monthly gift is authorized."
-                : es
-                  ? "Revisemos el estado de tu aporte."
-                  : "Check your gift status."}
+                ? "¡Gracias de corazón! Tu aporte de prueba fue confirmado."
+                : "Thank you from the heart! Your test gift was confirmed."
+                : gift?.subscriptionState === "ACTIVE"
+                  ? es
+                    ? "Tu aporte mensual está autorizado."
+                    : "Your monthly gift is authorized."
+                  : es
+                    ? "Revisemos el estado de tu aporte."
+                    : "Check your gift status."}
         </h1>
         <p className="sandbox-notice">
           {es
@@ -196,16 +204,11 @@ export function PayPalResult({
                   </p>
                 )}
                 {link && (
-                  <div className="management-link">
-                    <p>
-                      {es
-                        ? "Guarda este enlace para consultar o cancelar tu aporte. Es personal: no lo compartas."
-                        : "Save this personal link to check or cancel your gift. Do not share it."}
-                    </p>
-                    <a href={link}>
-                      {es ? "Mi enlace de gestión" : "My management link"}
-                    </a>
-                  </div>
+                  <PersonalManagementLink
+                    lang={lang}
+                    url={link}
+                    manage={manage}
+                  />
                 )}
                 {["ACTIVE", "SUSPENDED"].includes(gift.subscriptionState) &&
                   (cancelReview ? (
@@ -272,15 +275,10 @@ export function PayPalResult({
         <a className="payment-home-link" href={href(lang, "home")}>
           {es ? "Volver al inicio" : "Back to home"}
         </a>
-        <a
-          className="payment-home-link"
-          href="mailto:contacto@fundacionalmaarcoiris.org"
-        >
-          {es ? "Contactar a la fundación" : "Contact the foundation"}
-        </a>
+        <GiftSupport lang={lang} />
       </div>
       {!manage && paid && !gift?.cancelled && !error && (
-        <ContributorRegistration
+        <ApprovedGiftFollowUp
           lang={lang}
           provider="paypal"
           testMode={gift?.environment !== "production"}

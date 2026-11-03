@@ -186,8 +186,8 @@ export function DonationCheckout({
           <div className="field">
             <label htmlFor={inputId}>
               {es
-                ? "Correo para tu aporte mensual"
-                : "Email for your monthly gift"}
+                ? "Correo para mantenerte informado sobre los avances del proyecto"
+                : "Email to keep you informed about project progress"}
             </label>
             <input
               id={inputId}

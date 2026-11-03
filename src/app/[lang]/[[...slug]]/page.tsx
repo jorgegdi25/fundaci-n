@@ -22,7 +22,7 @@ import { Header, Footer } from "@/components/site-shell";
 import { Consent } from "@/components/interactions";
 import { Studio } from "@/components/studio";
 import { MotionSurface } from "@/components/motion-surface";
-import { FoundationSchema } from "@/components/foundation-schema";
+import { PageSchema } from "@/components/page-schema";
 
 type Props = { params: Promise<{ lang: string; slug?: string[] }> };
 type Resolved =
@@ -185,7 +185,28 @@ export default async function Page({ params }: Props) {
     }
   return (
     <>
-      <FoundationSchema lang={r.lang} />
+      <PageSchema
+        lang={r.lang}
+        title={
+          r.kind === "project"
+            ? content.find((p) => p.slug === r.slug)!.title[r.lang]
+            : titles[r.page][r.lang]
+        }
+        path={
+          r.kind === "project"
+            ? projectHref(r.lang, r.slug)
+            : href(r.lang, r.page)
+        }
+        project={r.kind === "project"}
+        kind={
+          r.kind === "page" && r.page === "about"
+            ? "AboutPage"
+            : r.kind === "page" &&
+                (r.page === "projects" || r.page === "impact")
+              ? "CollectionPage"
+              : "WebPage"
+        }
+      />
       <Header lang={r.lang} alternate={alternate} />
       <MotionSurface key={`${lang}/${slug?.join("/") ?? ""}`}>
         <main id="contenido">{body}</main>

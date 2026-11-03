@@ -1,3 +1,4 @@
+import { PageSchema } from "@/components/page-schema";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/site-shell";
@@ -35,6 +36,15 @@ export default async function Page({
   const suffix = alternateQuery.size ? `?${alternateQuery}` : "";
   return (
     <>
+      <PageSchema
+        lang={lang}
+        title={
+          lang === "es"
+            ? "Estado y gestión del aporte"
+            : "Gift status and management"
+        }
+        path={`/${lang}/donation/${view}`}
+      />
       <Header
         lang={lang}
         alternate={`/${other}/donation/${view}${suffix}`}

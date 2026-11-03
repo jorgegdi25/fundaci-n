@@ -1,7 +1,7 @@
 "use client";
 
-import { useId, useState } from "react";
-import { ArrowUpRight, ClipboardList, ExternalLink, Info } from "lucide-react";
+import { useId } from "react";
+import { ClipboardList, ExternalLink, Info } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import styles from "./contributor-registration.module.css";
 
@@ -20,7 +20,6 @@ export function ContributorRegistration({
   const es = lang === "es";
   const headingId = useId();
   const frameId = useId();
-  const [open, setOpen] = useState(false);
 
   return (
     <section className={styles.card} aria-labelledby={headingId}>
@@ -33,7 +32,9 @@ export function ContributorRegistration({
             {es ? "TRANSPARENCIA Y REGISTRO" : "TRANSPARENCY AND REGISTRATION"}
           </span>
           <h2 id={headingId}>
-            {es ? "Registro de aportantes" : "Contributor registration"}
+            {es
+              ? "Un último paso importante para la transparencia"
+              : "One last important step for transparency"}
           </h2>
         </div>
       </div>
@@ -44,8 +45,8 @@ export function ContributorRegistration({
             ? "Aquí puedes revisar el formulario oficial de la fundación para el registro de participantes y la declaración de origen de fondos."
             : "You can review the foundation’s official form for participant registration and the declaration of source of funds here."
           : es
-            ? "Completa el formulario oficial de la fundación para registrar tus datos y declarar el origen de los fondos de tu aporte."
-            : "Complete the foundation’s official form to register your details and declare the source of funds for your gift."}
+            ? "Para registrar tu aporte y tramitar tu certificado, si lo solicitaste, la fundación requiere que completes este formulario de registro de participantes y declaración de origen de fondos (SARLAFT)."
+            : "To register your gift and process a certificate, if requested, the foundation requires you to complete this participant registration and declaration of source of funds form (SARLAFT)."}
       </p>
 
       {testMode && (
@@ -66,39 +67,17 @@ export function ContributorRegistration({
         <span>{es ? "Formulario de la fundación" : "Foundation’s form"}</span>
         <span>{es ? "Disponible en español" : "Available in Spanish"}</span>
       </div>
-      {provider === "paypal" && (
+      <p className={styles.paymentNote}>
+        {es ? "Medio de pago: " : "Payment method: "}
+        {provider === "paypal" ? "PayPal" : "Wompi"}
+      </p>
+      {!es && (
         <p className={styles.paymentNote}>
-          {es
-            ? "El formulario todavía no incluye PayPal entre sus medios de pago. Si tu aporte es por PayPal, consulta a la fundación antes de completar ese campo."
-            : "The form does not yet list PayPal as a payment method. If you contributed through PayPal, contact the foundation before completing that field."}{" "}
-          <a href="mailto:contacto@fundacionalmaarcoiris.org">
-            {es ? "Contactar a la fundación" : "Contact the foundation"}
-          </a>
+          The foundation’s form is currently available in Spanish. Contact us if
+          you need help completing it in English.
         </p>
       )}
-
       <div className={styles.actions}>
-        <button
-          type="button"
-          className="button purple"
-          aria-expanded={open}
-          aria-controls={frameId}
-          onClick={() => setOpen(true)}
-          disabled={open}
-        >
-          {open
-            ? es
-              ? "Formulario abierto"
-              : "Form opened"
-            : testMode
-              ? es
-                ? "Ver formulario oficial"
-                : "View official form"
-              : es
-                ? "Completar mi registro"
-                : "Complete my registration"}
-          <ArrowUpRight size={20} aria-hidden="true" />
-        </button>
         <a
           className={styles.external}
           href={formUrl}
@@ -132,7 +111,7 @@ export function ContributorRegistration({
       </p>
 
       <div id={frameId}>
-        {open && (
+        {
           <div className={styles.frame}>
             <iframe
               src={`${formUrl}?embedded=true`}
@@ -146,7 +125,7 @@ export function ContributorRegistration({
               referrerPolicy="no-referrer"
             />
           </div>
-        )}
+        }
       </div>
     </section>
   );

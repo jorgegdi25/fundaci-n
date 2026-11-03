@@ -15,3 +15,5 @@ logo versiones
 tmp
 .agents
 skills-lock.json
+
+!public/documentos/transparencia/*.pdf
