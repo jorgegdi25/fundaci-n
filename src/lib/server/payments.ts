@@ -13,6 +13,7 @@ import {
 } from "../wompi-security";
 import { validateDonation } from "../donations";
 import { matchesOrigin } from "../request-security";
+import { queueDonationNotice } from "./donation-communications";
 
 export class PaymentError extends Error {
   constructor(
@@ -250,6 +251,21 @@ export async function applyTransaction(
   const intentRows =
     await sql`SELECT * FROM donation_intents WHERE id=${rows[0].intent_id}`;
   const d = intentRows[0];
+  if (status === "APPROVED") {
+    await queueDonationNotice({
+      provider: "wompi",
+      reference,
+      amountMinor: cents,
+      currency,
+      frequency: d.frequency,
+      cause: d.cause,
+      lang: d.lang,
+      environment: d.environment,
+      email: transaction.customer_email ?? d.email ?? null,
+      occurredAt:
+        transaction.created_at ?? new Date(rows[0].due_at).toISOString(),
+    });
+  }
   if (d.frequency !== "monthly") return;
   if (status === "APPROVED") {
     const due = new Date(rows[0].due_at),

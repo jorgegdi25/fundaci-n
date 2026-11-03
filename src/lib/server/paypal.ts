@@ -3,6 +3,7 @@ import "server-only";
 import { randomBytes, randomUUID, createHmac } from "node:crypto";
 import { database, PaymentError, cookieName } from "./payments";
 import { sha256, secureEqual } from "../wompi-security";
+import { queueDonationNotice } from "./donation-communications";
 import {
   paypalConfig,
   validatePayPalGift,
@@ -216,7 +217,7 @@ function date(value: unknown) {
     throw new PaymentError("invalid_provider_contract", 502);
   return value;
 }
-async function storePayment(gift: Gift, p: any, money: any) {
+async function storePayment(gift: Gift, p: any, money: any, email: unknown) {
   if (
     !safePayPalId(p?.id) ||
     money?.currency_code !== gift.currency ||
@@ -238,7 +239,22 @@ async function storePayment(gift: Gift, p: any, money: any) {
     ].includes(p.status)
   )
     throw new PaymentError("invalid_provider_contract", 502);
-  await database()`INSERT INTO paypal_payments(id,gift_id,amount,currency,status,paid_at,updated_at) VALUES(${p.id},${gift.id},${gift.amount},${gift.currency},${p.status},${paid},${updated}) ON CONFLICT(id) DO UPDATE SET status=EXCLUDED.status,updated_at=EXCLUDED.updated_at WHERE paypal_payments.gift_id=EXCLUDED.gift_id AND paypal_payments.updated_at<=EXCLUDED.updated_at`;
+  const stored =
+    await database()`INSERT INTO paypal_payments(id,gift_id,amount,currency,status,paid_at,updated_at) VALUES(${p.id},${gift.id},${gift.amount},${gift.currency},${p.status},${paid},${updated}) ON CONFLICT(id) DO UPDATE SET status=EXCLUDED.status,updated_at=EXCLUDED.updated_at WHERE paypal_payments.gift_id=EXCLUDED.gift_id AND paypal_payments.updated_at<=EXCLUDED.updated_at RETURNING status`;
+  if (stored[0]?.status === "COMPLETED") {
+    await queueDonationNotice({
+      provider: "paypal",
+      reference: p.id,
+      amountMinor: gift.amount,
+      currency: gift.currency,
+      frequency: gift.frequency,
+      cause: gift.cause,
+      lang: gift.lang,
+      environment: "sandbox",
+      email: typeof email === "string" ? email : null,
+      occurredAt: paid,
+    });
+  }
 }
 async function syncOrder(gift: Gift) {
   const order = await api(`/v2/checkout/orders/${gift.order_id}`);
@@ -253,7 +269,12 @@ async function syncOrder(gift: Gift) {
       canonical.supplementary_data?.related_ids?.order_id !== gift.order_id
     )
       throw new PaymentError("invalid_provider_contract", 502);
-    await storePayment(gift, canonical, canonical.amount);
+    await storePayment(
+      gift,
+      canonical,
+      canonical.amount,
+      order.payer?.email_address,
+    );
   }
   const updated = date(order.update_time ?? order.create_time);
   await database()`UPDATE paypal_gifts SET status=${order.status},provider_updated_at=${updated} WHERE id=${gift.id} AND (provider_updated_at IS NULL OR provider_updated_at<=${updated}::timestamptz)`;
@@ -287,6 +308,7 @@ async function syncSubscription(gift: Gift) {
         gift,
         payment,
         payment.amount_with_breakdown?.gross_amount,
+        sub.subscriber?.email_address,
       );
   }
   return sub;

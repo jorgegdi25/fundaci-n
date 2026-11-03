@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-03",
+  "scope": "Preparación y validación en Sandbox. No habilita pagos reales ni envíos a donantes reales.",
+  "resend": {
+    "account": "webmaster@fundacionalmaarcoiris.org",
+    "accountCreatedByUser": true,
+    "domain": "fundacionalmaarcoiris.org",
+    "domainId": "cf291052-a4b4-46fb-9932-fb5847725325",
+    "status": "Verified en Resend; DKIM y los dos CNAME verificados",
+    "dns": [
+      {
+        "type": "TXT",
+        "name": "resend._domainkey",
+        "value": "Clave pública DKIM generada por Resend, comprobada en DNS autoritativo",
+        "ttl": 3600
+      },
+      {
+        "type": "CNAME",
+        "name": "rsend",
+        "value": "rsend-euw1.forge.rmta.net",
+        "ttl": 3600
+      },
+      {
+        "type": "CNAME",
+        "name": "send",
+        "value": "send.forge.rmta.net",
+        "ttl": 3600
+      }
+    ],
+    "approval": "Cliente autorizó explícitamente estos tres registros el 3 de noviembre de 2026.",
+    "preserved": "Cinco MX de Google, DKIM de Google, SPF existente, registros de Brevo y dirección A de la web conservados.",
+    "apiKey": {
+      "id": "65873a19-0018-46f2-aa2a-4b176edde6c4",
+      "name": "Alma Arcoíris Web Sandbox",
+      "created": true,
+      "permission": "Sending access, fundacionalmaarcoiris.org only",
+      "creationAndSingleTestApprovedByUser": true,
+      "storedInVercel": false,
+      "pending": "Vercel mostró configuración de doble factor. La revisión automática rechazó omitirla; el cliente aplazó resolver esa pantalla. No se intentó eludirla por otro medio."
+    },
+    "emailSent": false,
+    "chargesOrPaidPlans": "Ninguno contratado durante esta configuración"
+  },
+  "implemented": [
+    "Plantillas ES y EN para confirmación al donante y aviso interno, basadas en el documento de noviembre",
+    "Enlaces al formulario SARLAFT, comunidad y soporte sin prometer certificados automáticos",
+    "Avisos generados exclusivamente desde pagos canónicos verificados de Wompi o PayPal",
+    "Cola persistente con exclusión de ejecuciones concurrentes y estado individual por destinatario",
+    "Clave de idempotencia en Resend y revisión manual de intentos inciertos después de 23 horas",
+    "Envío después de responder al pago mediante Next.js after; endpoint privado para reintentos",
+    "Todas las comunicaciones de Sandbox se redirigen a un único destinatario de pruebas",
+    "Sin activación por la sola presencia de una API key; exige indicador Sandbox, destinatario, remitente y fecha de corte"
+  ],
+  "activationOrder": [
+    "Confirmar dominio Verified en Resend",
+    "Probar scripts/communications-schema.sql en una rama aislada de la base de datos Sandbox; no se ha aplicado una migración durante esta preparación",
+    "Guardar la clave restringida ya creada en las variables privadas de Preview, después de que el cliente resuelva la pantalla de seguridad de Vercel; mantener DONATION_EMAILS_ENABLED vacío hasta la prueba autorizada",
+    "Fijar DONATION_EMAIL_START_AT para impedir envíos históricos y DONATION_TEST_RECIPIENT para concentrar las pruebas en una sola cuenta",
+    "Autorizar y probar un aporte Sandbox verificado, recepción de los dos mensajes y ausencia de duplicados al repetir la notificación",
+    "Programar y comprobar los reintentos con el endpoint privado antes de dar por cerrada la automatización"
+  ],
+  "googleSheets": {
+    "community": "Formulario, API y Apps Script preparados; falta configurar el receptor de la fundación y comprobar sus encabezados",
+    "photoIndex": "La hoja de fotografías no es la base de registros",
+    "donations": "Receptor Apps Script preparado para pagos verificados; falta desplegarlo y conectarlo. No afirma registro SARLAFT completado.",
+    "abandonedAttempts": "Pendiente de captura inicial con consentimiento y regla de seguimiento; no se envían alertas de abandono por un simple cierre del navegador",
+    "sarLaftMatching": "Pendiente conciliar las respuestas reales del formulario con referencias de pago; el iframe no demuestra envío del formulario"
+  },
+  "validation": {
+    "typecheck": "passed",
+    "tests": "36 passed, including mocked Resend transport and Apps Script contract; no real emails sent",
+    "database": "Migration and queue execution against an isolated Sandbox database pending",
+    "emailPreviews": "tmp/noviembre-2026/correos: donor-es.html, donor-en.html, foundation-es.html, foundation-en.html"
+  },
+  "sources": [
+    "Ajuste general nov 2 2026.pdf, páginas 2-3, 8-9 y 28-30",
+    "https://resend.com/docs/api-reference/emails/send-email",
+    "https://resend.com/docs/dashboard/emails/idempotency-keys",
+    "node_modules/next/dist/docs/01-app/03-api-reference/04-functions/after.md"
+  ]
+}

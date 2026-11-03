@@ -9,9 +9,11 @@ connection.hostname = connection.hostname.replace("-pooler.", ".");
 const sql = neon(connection.href);
 const source = await readFile(
   new URL(
-    process.argv[2] === "paypal"
-      ? "./paypal-schema.sql"
-      : "./payments-schema.sql",
+    process.argv[2] === "communications"
+      ? "./communications-schema.sql"
+      : process.argv[2] === "paypal"
+        ? "./paypal-schema.sql"
+        : "./payments-schema.sql",
     import.meta.url,
   ),
   "utf8",
