@@ -117,7 +117,15 @@
       "PageSpeed on updated site: preview requires Vercel authentication for unauthenticated requests"
     ],
     "localServer": "Two startup attempts stopped; no development server left running",
-    "browserAssets": "pending review of new image deployment"
+    "browserAssets": {
+      "deployment": "dpl_dBr7XjLK1SD1yhwpd9vuX4QtR1R8",
+      "codeCommit": "730fc8ea2f494463a2b0187ce2f72cc66fde7e4b",
+      "desktop": "1280px: institutional background, portraits, General Fund photo and school images rendered without horizontal overflow",
+      "mobile": "390px: English About page and opened biography; visible portrait loaded; no horizontal overflow",
+      "video": "Local MP4 source, controls, muted, no autoplay and preload none in rendered markup",
+      "assets": "31 optimized original client images; static paths present; no console errors observed",
+      "documents": "RUT, legal registration and RSPC originals copied byte-for-byte to the public library"
+    }
   },
   "release": {
     "scope": "preview only; public site unchanged",
@@ -125,7 +133,10 @@
     "codeCommit": "e00ed0a4d9e5c6ca040d8754b9cedc02b285d649",
     "verifiedDeployment": "dpl_DKt8JqYJ4pjkmTuMR829AhkY9B6D",
     "verifiedUrl": "https://fundacion-alma-arcoiris-8docbrf7k-jorges-projects-fa9fcc5f.vercel.app/es",
-    "assetUpdate": "prepared on the same preview branch; public site unchanged"
+    "assetUpdate": "READY in preview; official public domain unchanged",
+    "assetCommit": "730fc8ea2f494463a2b0187ce2f72cc66fde7e4b",
+    "assetDeployment": "dpl_dBr7XjLK1SD1yhwpd9vuX4QtR1R8",
+    "assetUrl": "https://fundacion-alma-arcoiris-2jtswhud6-jorges-projects-fa9fcc5f.vercel.app/es/conocenos"
   },
   "accessUpdate": {
     "date": "2026-11-03",

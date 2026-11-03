@@ -869,8 +869,8 @@ export function AboutPage({ lang }: { lang: Lang }) {
           </Link>
           <p className="source-note">
             {es
-              ? "Los certificados oficiales se incorporarán a la biblioteca cuando estén disponibles."
-              : "Official certificates will be added to the library when available."}
+              ? "Consulta los certificados oficiales en la biblioteca de Impacto y transparencia."
+              : "Read the official certificates in the Impact and transparency library."}
           </p>
         </div>
       </section>
