@@ -35,10 +35,27 @@
       "created": true,
       "permission": "Sending access, fundacionalmaarcoiris.org only",
       "creationAndSingleTestApprovedByUser": true,
-      "storedInVercel": false,
-      "pending": "Vercel mostró configuración de doble factor. La revisión automática rechazó omitirla; el cliente aplazó resolver esa pantalla. No se intentó eludirla por otro medio."
+      "storedInVercel": true,
+      "vercelType": "Secret",
+      "vercelTarget": "preview",
+      "gitBranch": "codex/ajustes-noviembre-2026",
+      "securityPrompt": "Al retomar la configuración Vercel permitió abrir el formulario normal. Se guardó la clave desde la interfaz privada, sin omitir el aviso de seguridad."
     },
-    "emailSent": false,
+    "emailSent": true,
+    "connectionTest": {
+      "count": 1,
+      "recipient": "webmaster@fundacionalmaarcoiris.org",
+      "subject": "Prueba de conexión — Fundación Alma Arcoíris",
+      "id": "01a1a2a9-9a0f-7dd3-a08b-c012b9e883d2",
+      "status": "Delivered, verificado en el panel de Resend",
+      "scope": "Prueba de conexión al proveedor. No corresponde a una donación ni confirma el recorrido completo de pago y correo.",
+      "temporaryCredentialFileDeleted": true
+    },
+    "previewVariables": [
+      "RESEND_API_KEY",
+      "DONATION_EMAIL_FROM",
+      "DONATION_TEST_RECIPIENT"
+    ],
     "chargesOrPaidPlans": "Ninguno contratado durante esta configuración"
   },
   "implemented": [
@@ -54,7 +71,7 @@
   "activationOrder": [
     "Confirmar dominio Verified en Resend",
     "Probar scripts/communications-schema.sql en una rama aislada de la base de datos Sandbox; no se ha aplicado una migración durante esta preparación",
-    "Guardar la clave restringida ya creada en las variables privadas de Preview, después de que el cliente resuelva la pantalla de seguridad de Vercel; mantener DONATION_EMAILS_ENABLED vacío hasta la prueba autorizada",
+    "Clave, remitente y destinatario de prueba ya guardados, limitados a la rama de revisión; mantener DONATION_EMAILS_ENABLED vacío hasta preparar y validar la base",
     "Fijar DONATION_EMAIL_START_AT para impedir envíos históricos y DONATION_TEST_RECIPIENT para concentrar las pruebas en una sola cuenta",
     "Autorizar y probar un aporte Sandbox verificado, recepción de los dos mensajes y ausencia de duplicados al repetir la notificación",
     "Programar y comprobar los reintentos con el endpoint privado antes de dar por cerrada la automatización"
@@ -69,7 +86,7 @@
   "validation": {
     "typecheck": "passed",
     "tests": "36 passed, including mocked Resend transport and Apps Script contract; no real emails sent",
-    "database": "Migration and queue execution against an isolated Sandbox database pending",
+    "database": "Migración y ejecución de cola pendientes. La revisión automática rechazó el uso temporal de la conexión de Neon sin autorización explícita; se solicitó permiso al cliente y no se ha continuado con esa extracción.",
     "emailPreviews": "tmp/noviembre-2026/correos: donor-es.html, donor-en.html, foundation-es.html, foundation-en.html"
   },
   "sources": [

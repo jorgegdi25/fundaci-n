@@ -65,7 +65,7 @@
     },
     {
       "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
-      "dependency": "Cuenta gratuita Resend creada con webmaster y dominio verificado. Plantillas ES/EN, cola y envío Sandbox preparados y probados con transporte simulado. Clave de envío restringida creada; guardado en Vercel y prueba real pendientes de que el cliente resuelva el aviso de 2FA (aplazado por el cliente). Falta migración de cola en base Sandbox aislada, activar configuración y validar el recorrido completo."
+      "dependency": "Resend creado y dominio verificado. Clave restringida guardada como Secret en Preview, solo rama de revisión; remitente y destinatario configurados. Una prueba de conexión autorizada entregada a webmaster (Delivered en Resend). Plantillas ES/EN y cola preparadas. Falta autorizar y validar la preparación de la base Sandbox, activar la cola y verificar el recorrido completo de pago y correo. Los avisos automáticos permanecen desactivados."
     },
     {
       "item": "Google Sheets de comunidad y conciliación de intentos/pagos/registro",
