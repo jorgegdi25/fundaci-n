@@ -99,7 +99,30 @@
     "unitResult": "passed",
     "typecheck": "passed",
     "localImages": "no missing referenced files",
-    "browser": "pending"
+    "browser": {
+      "home": "ES + EN reviewed",
+      "mobile": "390px, no horizontal overflow; faces visible in Home",
+      "projects": "new navigation reaches El Cairo header; sponsorship selects monthly",
+      "team": "9 biographies; accordion opens and closes",
+      "videos": "3 launch buttons; no iframe before click; modal closes",
+      "thankYou": "approved=true alone does not show approval or registration; noindex confirmed",
+      "schema": "NGO and page-specific WebPage observed; no private query in schema",
+      "documents": "2025 financial statements downloaded through authenticated browser; SHA-256 identical to original",
+      "console": "no errors observed in checked preview pages"
+    },
+    "build": "Vercel READY; production build completed",
+    "notVerified": [
+      "Complete payment and recurring charge cycle on this preview: payment environment variables are not configured for Preview",
+      "Automated emails, Sheets and English registration form: dependencies pending",
+      "PageSpeed on updated site: preview requires Vercel authentication for unauthenticated requests"
+    ],
+    "localServer": "Two startup attempts stopped; no development server left running"
   },
-  "release": "pending"
+  "release": {
+    "scope": "preview only; public site unchanged",
+    "branch": "codex/ajustes-noviembre-2026",
+    "codeCommit": "e00ed0a4d9e5c6ca040d8754b9cedc02b285d649",
+    "verifiedDeployment": "dpl_DKt8JqYJ4pjkmTuMR829AhkY9B6D",
+    "verifiedUrl": "https://fundacion-alma-arcoiris-8docbrf7k-jorges-projects-fa9fcc5f.vercel.app/es"
+  }
 }
