@@ -1,4 +1,5 @@
 "use client";
+import { MonthlyCancellationNotice } from "./monthly-cancellation-notice";
 import Script from "next/script";
 import { useEffect, useId, useState } from "react";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
@@ -234,6 +235,7 @@ export function DonationCheckout({
             </span>
           </label>
         )}
+        {monthly && <MonthlyCancellationNotice lang={lang} testMode />}
         {intent?.contracts && (
           <>
             <label className="checkout-consent">

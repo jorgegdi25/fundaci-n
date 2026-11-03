@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  cancellationEmail,
+  monthlyCancellationNotice,
+  sandboxCancellationNotice,
+} from "@/content/donation-policy";
 import type { Lang } from "@/lib/i18n";
 import { useDonationChannel } from "./donation-channel";
 
@@ -71,13 +76,13 @@ export function DonationQuestions({
       es
         ? "¿Cómo puedo cancelar o modificar mi donación mensual recurrente?"
         : "How can I cancel or change my recurring monthly donation?",
-      sandbox
-        ? es
-          ? "Guarda tu enlace personal de gestión al autorizar el aporte de prueba. Allí puedes consultar su estado y confirmar la cancelación de futuros aportes. Para cambios de monto o pausas, consulta al equipo por WhatsApp (+57 304 498 9707) o correo electrónico."
-          : "Save your personal management link when authorizing the test gift. There you can check its status and confirm cancellation of future gifts. For amount changes or pauses, contact the team on WhatsApp (+57 304 498 9707) or by email."
-        : es
-          ? "El botón público actual recibe aportes únicos. Para consultar un aporte mensual existente o solicitar un cambio, contacta al equipo por WhatsApp (+57 304 498 9707) o en contacto@fundacionalmaarcoiris.org."
-          : "The current public payment button receives one-time gifts. To ask about an existing monthly gift or request a change, contact the team on WhatsApp (+57 304 498 9707) or at contacto@fundacionalmaarcoiris.org.",
+      `${monthlyCancellationNotice[lang]} ${es ? "Envía tu solicitud a" : "Send your request to"} ${cancellationEmail}. ${
+        sandbox
+          ? `${sandboxCancellationNotice[lang]} ${es ? "Guarda el enlace personal de gestión para consultar tu aporte de prueba." : "Save your personal management link to check your test gift."}`
+          : es
+            ? "El botón público actual recibe aportes únicos. Para consultar un aporte mensual existente, comunícate con la fundación."
+            : "The current public payment button receives one-time gifts. Contact the foundation about an existing monthly gift."
+      }`,
     ],
     [
       es

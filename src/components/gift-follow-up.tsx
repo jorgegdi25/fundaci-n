@@ -5,15 +5,18 @@ import { Copy, Mail, MessageCircle } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import { ContributorRegistration } from "./contributor-registration";
 import { CommunitySignup } from "./community-signup";
+import { MonthlyCancellationNotice } from "./monthly-cancellation-notice";
 
 export function PersonalManagementLink({
   lang,
   url,
   manage,
+  testMode,
 }: {
   lang: Lang;
   url: string;
   manage: boolean;
+  testMode: boolean;
 }) {
   const es = lang === "es";
   const id = useId();
@@ -48,6 +51,7 @@ export function PersonalManagementLink({
             ? "Guarda este enlace para consultar o cancelar tu aporte mensual. Es personal: no lo compartas."
             : "Save this link to check or cancel your monthly gift. It is personal: do not share it."}
       </p>
+      <MonthlyCancellationNotice lang={lang} testMode={testMode} />
       <label htmlFor={id}>{es ? "Enlace privado" : "Private link"}</label>
       <input
         id={id}

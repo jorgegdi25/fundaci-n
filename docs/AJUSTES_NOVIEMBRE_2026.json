@@ -36,7 +36,8 @@
       "Registro SARLAFT embebido después de aprobación verificada; aviso en Sandbox y de idioma español",
       "Certificados sin promesa automática; comunidad y opciones de compartir",
       "Retirada dirección interna de notificaciones de la página",
-      "Fotografía GRUPAL FAA 2026 recibida e incorporada en Fondo General"
+      "Fotografía GRUPAL FAA 2026 recibida e incorporada en Fondo General",
+      "Aviso de solicitud de cancelación con cinco días hábiles antes del cobro automático; ES y EN"
     ],
     "transparency": [
       "Nueve PDF originales recibidos el 2 de octubre con hashes de procedencia",
@@ -59,7 +60,7 @@
   "pending": [
     {
       "item": "Términos de donaciones actualizados",
-      "dependency": "Documento accesible y leído desde la sesión webmaster. Pendiente conciliar dos diferencias: primer trimestre frente a enero para certificados; solicitud de cancelación por correo con 5 días hábiles frente a la gestión directa disponible en Sandbox. Se conservó el texto existente y no se activó la nueva política."
+      "dependency": "Cancelación confirmada por el cliente: solicitar por correo al menos cinco días hábiles antes del próximo cobro automático. Se incorporó el aviso en ES y EN. Sigue pendiente conciliar el plazo de certificados: primer trimestre en términos frente a enero en el documento de noviembre."
     },
     {
       "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
@@ -153,5 +154,19 @@
       "preload": "none"
     },
     "linkCorrection": "El enlace 1yHKN4cRz_J0Psus0RScbPkz6wRjmzXV_ abre Dictamen Revisor Fiscal 2025.pdf. La foto Comunidad Kogui 2026.heic corresponde al enlace 1iNmFhFHKH08yw517i-vG_qH5U-orGGm8."
+  },
+  "confirmedCancellationPolicy": {
+    "noticeDays": 5,
+    "dayType": "business days, as stated in the client terms",
+    "requestEmail": "contacto@fundacionalmaarcoiris.org",
+    "confirmedByUser": true,
+    "date": "2026-11-03",
+    "appliedTo": [
+      "shared donation FAQ",
+      "monthly authorization in Wompi and PayPal",
+      "personal management link",
+      "terms page"
+    ],
+    "scope": "Informational policy update. Sandbox cancellation APIs remain immediate for testing; no live billing activation or changes."
   }
 }

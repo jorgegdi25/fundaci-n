@@ -213,6 +213,7 @@ export function DonationResult({
                 lang={lang}
                 url={managementUrl}
                 manage={manage}
+                testMode={gift.environment !== "production"}
               />
             )}
             {cancelReview ? (

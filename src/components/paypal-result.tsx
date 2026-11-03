@@ -126,8 +126,8 @@ export function PayPalResult({
                 : "Manage your monthly gift"
               : paid
                 ? es
-                ? "¡Gracias de corazón! Tu aporte de prueba fue confirmado."
-                : "Thank you from the heart! Your test gift was confirmed."
+                  ? "¡Gracias de corazón! Tu aporte de prueba fue confirmado."
+                  : "Thank you from the heart! Your test gift was confirmed."
                 : gift?.subscriptionState === "ACTIVE"
                   ? es
                     ? "Tu aporte mensual está autorizado."
@@ -208,6 +208,7 @@ export function PayPalResult({
                     lang={lang}
                     url={link}
                     manage={manage}
+                    testMode={gift.environment !== "production"}
                   />
                 )}
                 {["ACTIVE", "SUSPENDED"].includes(gift.subscriptionState) &&

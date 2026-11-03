@@ -1,4 +1,5 @@
 "use client";
+import { MonthlyCancellationNotice } from "./monthly-cancellation-notice";
 import { useEffect, useRef, useState } from "react";
 import type { PayPalButtonsComponent, OnInitActions } from "@paypal/paypal-js";
 import { LockKeyhole } from "lucide-react";
@@ -238,6 +239,7 @@ export function PayPalCheckout({
           </span>
         </label>
       )}
+      {monthly && <MonthlyCancellationNotice lang={lang} testMode />}
       <p>
         {es
           ? "Continúa con una cuenta personal de PayPal Sandbox."

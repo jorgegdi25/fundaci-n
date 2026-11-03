@@ -1255,3 +1255,26 @@
     padding: 16px;
   }
 }
+
+.monthly-cancellation-notice {
+  margin: 20px 0;
+  padding: 18px;
+  border: 1px solid #ded8e9;
+  border-radius: 12px;
+  background: #f8f6fc;
+  color: #373246;
+}
+.monthly-cancellation-notice p {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+.monthly-cancellation-notice p + p {
+  margin-top: 10px;
+}
+.monthly-cancellation-notice a {
+  color: #51458b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}

@@ -3,6 +3,7 @@ import { href, type Lang, type PageKey } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { ProjectCards, Closing } from "./content-blocks";
 import { CurrentDonationScope } from "./donation-channel";
+import { MonthlyCancellationNotice } from "./monthly-cancellation-notice";
 
 const contact = "mailto:contacto@fundacionalmaarcoiris.org";
 export function ProjectsIndex({
@@ -136,6 +137,16 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         )}
         <h2>{es ? "Alcance actual" : "Current scope"}</h2>
         <CurrentDonationScope lang={lang} />
+        {kind === "terms" && (
+          <>
+            <h2>
+              {es
+                ? "Cancelación de aportes mensuales"
+                : "Monthly gift cancellation"}
+            </h2>
+            <MonthlyCancellationNotice lang={lang} />
+          </>
+        )}
         <h2>
           {cookies
             ? es
