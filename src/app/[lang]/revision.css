@@ -1100,3 +1100,14 @@
   line-height: 1.6;
   text-align: center;
 }
+
+.project-hero-el-cairo .project-hero-copy {
+  align-self: start;
+}
+.project-hero-el-cairo h1 {
+  font-size: clamp(2rem, 3.1vw, 2.75rem);
+  line-height: 1.2;
+}
+.project-hero-el-cairo .breadcrumb {
+  margin-bottom: 24px;
+}

@@ -4,20 +4,43 @@ import { usePathname } from "next/navigation";
 
 export function RoutePosition() {
   const pathname = usePathname();
-  const restoredPath = useRef<string | null>(null);
+  const clickedPath = useRef<string | null>(null);
   useEffect(() => {
-    const markRestoration = () => {
-      restoredPath.current = window.location.pathname;
+    const markNavigation = (event: MouseEvent) => {
+      if (
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      const target =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+      if (
+        !(target instanceof HTMLAnchorElement) ||
+        target.download ||
+        (target.target && target.target !== "_self")
+      )
+        return;
+      const url = new URL(target.href, window.location.href);
+      if (
+        url.origin === window.location.origin &&
+        !url.hash &&
+        url.pathname !== window.location.pathname
+      )
+        clickedPath.current = url.pathname;
     };
-    window.addEventListener("popstate", markRestoration);
-    return () => window.removeEventListener("popstate", markRestoration);
+    document.addEventListener("click", markNavigation, true);
+    return () => document.removeEventListener("click", markNavigation, true);
   }, []);
   useEffect(() => {
-    // Keep explicit section links and native back/forward restoration intact.
-    const restored = restoredPath.current === pathname;
-    restoredPath.current = null;
-    if (restored) return;
-    if (window.location.hash) return;
+    // Only new link navigations force the top. Back/forward and explicit section
+    // links retain the browser/Next.js restoration behaviour.
+    if (clickedPath.current !== pathname || window.location.hash) return;
+    clickedPath.current = null;
     const frame = requestAnimationFrame(() =>
       window.scrollTo({ top: 0, left: 0, behavior: "instant" }),
     );

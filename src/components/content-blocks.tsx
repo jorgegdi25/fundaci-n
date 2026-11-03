@@ -504,7 +504,7 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
               <ArrowRight size={18} />
             </Link>
             <a
-              href="https://drive.google.com/file/d/1QH-6DW6tGbCWiwBMXX7P64GhGa9VpyLz/view?usp=drive_link"
+              href="/wp-content/uploads/2026/03/4-2025-REPORTE-DE-GESTION-final.pdf"
               target="_blank"
               rel="noreferrer"
               className="text-link light-link"
@@ -517,7 +517,7 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
           </div>
           <a
             className="text-link light-link"
-            href="https://drive.google.com/file/d/10b0yQ183pwdhK7gs7n1wpA1S6peH3J7Z/view?usp=drive_link"
+            href="/documentos/transparencia/estados-financieros-2025.pdf"
             target="_blank"
             rel="noreferrer"
           >
@@ -526,7 +526,7 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
           </a>
           <a
             className="text-link light-link"
-            href="https://drive.google.com/file/d/1RorNR6htOTf_Wr9Enni-agJ3C3g4K-Ek/view?usp=drive_link"
+            href="/documentos/transparencia/certificado-gobernacion-2026.pdf"
             target="_blank"
             rel="noreferrer"
           >
@@ -683,7 +683,7 @@ export function ProjectPage({
   const es = lang === "es";
   return (
     <>
-      <section className="project-hero">
+      <section className={`project-hero project-hero-${p.slug}`}>
         <Photo src={p.hero} alt={p.alt[lang]} priority />
         <div className="project-hero-inner section">
           <div className="project-hero-copy">
