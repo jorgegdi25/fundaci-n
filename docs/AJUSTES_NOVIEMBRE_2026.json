@@ -37,7 +37,8 @@
       "Certificados sin promesa automática; comunidad y opciones de compartir",
       "Retirada dirección interna de notificaciones de la página",
       "Fotografía GRUPAL FAA 2026 recibida e incorporada en Fondo General",
-      "Aviso de solicitud de cancelación con cinco días hábiles antes del cobro automático; ES y EN"
+      "Aviso de solicitud de cancelación con cinco días hábiles antes del cobro automático; ES y EN",
+      "Certificado anual: aportes de 2027 acreditados en el certificado expedido en 2028, con ejemplo en ES y EN; mes exacto de entrega pendiente"
     ],
     "transparency": [
       "Nueve PDF originales recibidos el 2 de octubre con hashes de procedencia",
@@ -60,7 +61,7 @@
   "pending": [
     {
       "item": "Términos de donaciones actualizados",
-      "dependency": "Cancelación confirmada por el cliente: solicitar por correo al menos cinco días hábiles antes del próximo cobro automático. Se incorporó el aviso en ES y EN. Sigue pendiente conciliar el plazo de certificados: primer trimestre en términos frente a enero en el documento de noviembre."
+      "dependency": "Cancelación confirmada por el cliente: solicitar por correo al menos cinco días hábiles antes del próximo cobro automático. Se incorporó el aviso en ES y EN. Atribución anual del certificado confirmada: donaciones de 2027 se certifican en 2028 como aportes del año gravable 2027. Sigue pendiente conciliar el mes de entrega: primer trimestre en términos frente a enero en el documento de noviembre; el texto visible indica el año siguiente sin fijar un mes no confirmado."
     },
     {
       "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
@@ -154,6 +155,14 @@
       "preload": "none"
     },
     "linkCorrection": "El enlace 1yHKN4cRz_J0Psus0RScbPkz6wRjmzXV_ abre Dictamen Revisor Fiscal 2025.pdf. La foto Comunidad Kogui 2026.heic corresponde al enlace 1iNmFhFHKH08yw517i-vG_qH5U-orGGm8."
+  },
+  "confirmedAnnualCertificatePeriod": {
+    "confirmedByUser": true,
+    "date": "2026-11-03",
+    "example": "Aportes de enero, febrero y marzo de 2027: certificado expedido en 2028 que acredita donaciones del año gravable 2027.",
+    "deliveryMonth": "Pendiente de conciliar entre documentos; esta aclaración confirma la vigencia certificada, no un mes de entrega.",
+    "reference": "https://normograma.dian.gov.co/dian/compilacion/docs/oficio_dian_903536_2022.htm",
+    "scope": "Texto ES y EN en Donar, FAQ compartida y seguimiento de aportes aprobados. Sin generación automática de certificados ni cambios de pagos."
   },
   "confirmedCancellationPolicy": {
     "noticeDays": 5,

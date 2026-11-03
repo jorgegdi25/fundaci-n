@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { Copy, Mail, MessageCircle } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
+import { annualCertificatePeriod } from "@/content/donation-policy";
 import { ContributorRegistration } from "./contributor-registration";
 import { CommunitySignup } from "./community-signup";
 import { MonthlyCancellationNotice } from "./monthly-cancellation-notice";
@@ -159,9 +160,10 @@ export function ApprovedGiftFollowUp({
               ? "Este aporte es una prueba y no genera certificado tributario."
               : "This gift is a test and does not generate a tax certificate."
             : es
-              ? "Si solicitaste un certificado tributario, será emitido a tu correo a nombre de Fundación Alma Arcoíris (NIT 901784588-0), a más tardar en enero del año siguiente a tu donación, conforme a la política de la fundación."
-              : "If you requested a tax certificate, it will be issued by email in the name of Fundación Alma Arcoíris (NIT 901784588-0), no later than January of the year following your donation, under the foundation’s policy."}
+              ? "Si solicitaste un certificado tributario, la Fundación Alma Arcoíris (NIT 901784588-0) tramitará tu solicitud conforme a su política."
+              : "If you requested a tax certificate, Fundación Alma Arcoíris (NIT 901784588-0) will process your request under its policy."}
         </p>
+        {!testMode && <p>{annualCertificatePeriod[lang]}</p>}
         <a href="mailto:certificados@fundacionalmaarcoiris.org">
           certificados@fundacionalmaarcoiris.org
         </a>

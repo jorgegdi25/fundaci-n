@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  annualCertificatePeriod,
   cancellationEmail,
   monthlyCancellationNotice,
   sandboxCancellationNotice,
@@ -24,13 +25,15 @@ export function DonationQuestions({
       es
         ? "¿Recibo certificado de donación?"
         : "Will I receive a donation certificate?",
-      sandbox
-        ? es
-          ? "Los aportes de Sandbox son pruebas y no generan certificados tributarios. Para donaciones reales, puedes solicitar el certificado a certificados@fundacionalmaarcoiris.org; se tramita conforme a la política de la fundación, a más tardar en enero del año siguiente."
-          : "Sandbox gifts are tests and do not generate tax certificates. For real donations, request a certificate at certificados@fundacionalmaarcoiris.org; it is processed under the foundation’s policy, no later than January of the following year."
-        : es
-          ? "Puedes solicitar tu certificado a certificados@fundacionalmaarcoiris.org y completar el registro de aportantes. Se tramita conforme a la política de la fundación, a más tardar en enero del año siguiente."
-          : "Request your certificate at certificados@fundacionalmaarcoiris.org and complete contributor registration. It is processed under the foundation’s policy, no later than January of the following year.",
+      `${
+        sandbox
+          ? es
+            ? "Los aportes de Sandbox son pruebas y no generan certificados tributarios. Para donaciones reales, puedes solicitar el certificado a certificados@fundacionalmaarcoiris.org y completar el registro de aportantes."
+            : "Sandbox gifts are tests and do not generate tax certificates. For real donations, request a certificate at certificados@fundacionalmaarcoiris.org and complete contributor registration."
+          : es
+            ? "Puedes solicitar tu certificado a certificados@fundacionalmaarcoiris.org y completar el registro de aportantes."
+            : "Request your certificate at certificados@fundacionalmaarcoiris.org and complete contributor registration."
+      } ${annualCertificatePeriod[lang]}`,
     ],
     ...(fundDetails
       ? [

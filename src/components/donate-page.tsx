@@ -17,6 +17,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
+import { annualCertificatePeriod } from "@/content/donation-policy";
 import { DonationForm } from "./donation-form";
 import { CommunitySignup } from "./community-signup";
 import styles from "./donate-page.module.css";
@@ -320,9 +321,10 @@ export function DonatePage({ lang }: { lang: Lang }) {
               <h3>{es ? "Certificado de Donación" : "Donation Certificate"}</h3>
               <p>
                 {es
-                  ? "Si eres contribuyente en Colombia y lo solicitas al donar, la Fundación emitirá un certificado oficial conforme a la ley (a más tardar en enero del año siguiente). Este documento te da derecho a un descuento tributario del 25% del valor donado (art. 257 E.T.) en tu declaración de renta (con los límites que establece la norma)."
-                  : "If you are a taxpayer in Colombia and request it when donating, the Foundation will issue an official certificate in accordance with the law, no later than January of the following year. This document entitles you to a tax credit of 25% of the donated amount (Article 257 of the Tax Statute) in your income tax return, subject to the statutory limits."}
+                  ? "Si eres contribuyente en Colombia y lo solicitas al donar, la Fundación emitirá un certificado oficial conforme a la ley. Este documento sirve como soporte para solicitar el descuento tributario del 25% del valor donado (art. 257 E.T.), sujeto al cumplimiento de los requisitos y límites de la norma."
+                  : "If you are a taxpayer in Colombia and request it when donating, the Foundation will issue an official certificate in accordance with the law. This document supports a claim for a tax credit of 25% of the donated amount (Article 257 of the Tax Statute), subject to the applicable requirements and statutory limits."}
               </p>
+              <p>{annualCertificatePeriod[lang]}</p>
               <a
                 href="mailto:certificados@fundacionalmaarcoiris.org"
                 className={styles.certificateLink}
@@ -393,8 +395,8 @@ export function DonatePage({ lang }: { lang: Lang }) {
             [
               "Recibe tu Certificado (Únicamente en Colombia) y Reportes",
               "Receive Your Certificate (Colombia Only) and Reports",
-              "Solicita tu certificado en certificados@fundacionalmaarcoiris.org. Se emite conforme a la ley, a más tardar en enero del año siguiente.",
-              "Request your certificate at certificados@fundacionalmaarcoiris.org. It is issued in accordance with the law, no later than January of the following year.",
+              `Solicita tu certificado en certificados@fundacionalmaarcoiris.org. ${annualCertificatePeriod.es}`,
+              `Request your certificate at certificados@fundacionalmaarcoiris.org. ${annualCertificatePeriod.en}`,
             ],
           ].map(([a, b, c, d], index) => (
             <article key={a} data-reveal>
