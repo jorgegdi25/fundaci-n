@@ -1,10 +1,11 @@
 import { l } from "../lib/i18n.ts";
 
 // Names, roles and biographies: Ajuste general nov 2 2026, pp. 25–27.
-// Portraits are added only after receiving the specific client files.
+// Portraits: exact client files received from Drive on 3 November 2026.
 export const teamProfiles = [
   {
     name: "Claudia Pavas",
+    image: "/images/revision-2026/perfil-claudia.webp",
     group: "leadership",
     role: l(
       "CEO / Fundadora / Representante Legal y Liderazgo Estratégico",
@@ -17,6 +18,7 @@ export const teamProfiles = [
   },
   {
     name: "Alejandro Hernández",
+    image: "/images/revision-2026/perfil-alejandro.webp",
     group: "leadership",
     role: l(
       "COO / Cofundador · Dirección de Operaciones y Comunicación",
@@ -29,6 +31,7 @@ export const teamProfiles = [
   },
   {
     name: "Ana Zivkovic",
+    image: "/images/revision-2026/perfil-ana.webp",
     group: "leadership",
     role: l(
       "Enlace Internacional y Desarrollo de Fondos",
@@ -41,6 +44,7 @@ export const teamProfiles = [
   },
   {
     name: "Óscar Cortés Arenas",
+    image: "/images/revision-2026/perfil-oscar.webp",
     group: "operations",
     role: l(
       "Dirección y Estructuración de Proyectos de Arte y Cultura",
@@ -53,6 +57,7 @@ export const teamProfiles = [
   },
   {
     name: "Tatiana Cárdenas",
+    image: "/images/revision-2026/perfil-tatiana.webp",
     group: "operations",
     role: l(
       "Sostenibilidad y Diseño de Proyectos",
@@ -65,6 +70,7 @@ export const teamProfiles = [
   },
   {
     name: "Julián Méndez",
+    image: "/images/revision-2026/perfil-julian.webp",
     group: "operations",
     role: l(
       "Licenciado en Etnoeducación y Guía de Campo",
@@ -77,6 +83,7 @@ export const teamProfiles = [
   },
   {
     name: "Sospkwachiswa Yeison Márquez",
+    image: "/images/revision-2026/perfil-yeison.webp",
     group: "operations",
     role: l(
       "Líder Juvenil Mhuysqa · Resguardo de Sesquilé y Guía Territorial",
@@ -89,6 +96,7 @@ export const teamProfiles = [
   },
   {
     name: "Jorge González",
+    image: null,
     group: "operations",
     role: l(
       "Desarrollador Web y Arquitectura Digital",
@@ -101,6 +109,7 @@ export const teamProfiles = [
   },
   {
     name: "SEMbox España",
+    image: "/images/revision-2026/logo-sembox.webp",
     group: "operations",
     role: l(
       "Gestión Google Ad Grants y Estrategia SEM",

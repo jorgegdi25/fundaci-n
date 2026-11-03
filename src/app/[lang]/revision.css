@@ -1111,3 +1111,147 @@
 .project-hero-el-cairo .breadcrumb {
   margin-bottom: 24px;
 }
+
+/* Exact photographs supplied through the client's Drive, November 2026. */
+.institutional-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 24px;
+  margin-top: 24px;
+  padding: clamp(48px, 7vw, 100px) clamp(24px, 6vw, 76px);
+  background: #24382c;
+  color: #fff;
+}
+.institutional-hero > .photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  z-index: -2;
+}
+.institutional-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, #172b21ed, #172b21a8);
+  z-index: -1;
+}
+.institutional-hero .eyebrow {
+  color: #ead582;
+}
+.institutional-hero > p {
+  color: #f3f4ed;
+}
+.institutional-hero .button.outline {
+  border-color: #ffffffad;
+  color: white;
+}
+.participation-card > .photo {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.community-grid article > .photo {
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+.ancestral-grid article > .photo {
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  background: #f4f5ef;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+.team-photo {
+  display: block;
+  height: 300px;
+  margin: -28px -28px 26px;
+  width: calc(100% + 56px);
+  background: #f3f1f8;
+  overflow: hidden;
+}
+.team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+}
+.team-photo.team-logo img {
+  object-fit: contain;
+  padding: 32px;
+}
+.project-partners ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+.project-partners li {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  background: white;
+  display: grid;
+  align-items: center;
+  text-align: center;
+}
+.project-partners li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.project-partners img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+}
+.school-video {
+  margin-top: 32px;
+  max-width: 450px;
+}
+.school-video video {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: #101b14;
+  border: 1px solid #ffffff40;
+}
+.school-video figcaption {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #edf0e7;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .project-partners ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .team-photo {
+    margin: -24px -24px 24px;
+    width: calc(100% + 48px);
+  }
+  .institutional-hero {
+    margin-top: 16px;
+    border-radius: 18px;
+  }
+  .participation-card > .photo {
+    height: 220px;
+  }
+  .project-partners li {
+    font-size: 1rem;
+    padding: 16px;
+  }
+}

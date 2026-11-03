@@ -11,18 +11,21 @@
       "El Cairo centrado en la escuela, sin módulos de app ni mingas",
       "Apadrinamiento: selecciona mensual en Sandbox; consulta por WhatsApp en canal público",
       "Título Mhuysqa actualizado",
-      "FAQ de donación compartidas y enlaces de aliados"
+      "FAQ de donación compartidas y enlaces de aliados",
+      "Fotos exactas de El Cairo y Sierra Nevada; video local de Escuela Doxura con preload none"
     ],
     "join": [
       "Videos de caminatas, Cóndor y encuentros con carga al hacer clic",
-      "Enlace de comunidad general y mensaje WhatsApp de encuentros"
+      "Enlace de comunidad general y mensaje WhatsApp de encuentros",
+      "Cuatro fotos de participación y fotos de Comunidad, EFIS, Cóndor y encuentros incorporadas"
     ],
     "about": [
       "Biografías del documento, agrupadas y desplegables",
       "Valores solo en acordeones",
       "Acuerdo Escuela Embera Chamí y garantía cultural",
       "Nota de voluntariado sin repetir la referencia legal pendiente de validación",
-      "Enlaces Pech y Casa Santuario; imágenes aún pendientes"
+      "Enlaces Pech y Casa Santuario; imágenes aún pendientes",
+      "Fondo, acuerdos, siete retratos y logos Pech, Casa Santuario y SEMbox recibidos e incorporados"
     ],
     "donations": [
       "Rótulo de correo actualizado",
@@ -32,12 +35,14 @@
       "Nueva ruta noindex gracias-donacion con verificación privada; rutas anteriores compatibles",
       "Registro SARLAFT embebido después de aprobación verificada; aviso en Sandbox y de idioma español",
       "Certificados sin promesa automática; comunidad y opciones de compartir",
-      "Retirada dirección interna de notificaciones de la página"
+      "Retirada dirección interna de notificaciones de la página",
+      "Fotografía GRUPAL FAA 2026 recibida e incorporada en Fondo General"
     ],
     "transparency": [
       "Nueve PDF originales recibidos el 2 de octubre con hashes de procedencia",
       "Biblioteca por vigencias, dictámenes y certificado de Gobernación",
-      "ODS ampliados con los textos de noviembre; sin cambiar porcentajes pendientes"
+      "ODS ampliados con los textos de noviembre; sin cambiar porcentajes pendientes",
+      "RUT septiembre 2026, existencia agosto 2026 y certificado RSPC recibidos e incorporados"
     ],
     "technical": [
       "Restauración de scroll diferenciando navegación nueva, anclas y atrás/adelante",
@@ -53,13 +58,8 @@
   ],
   "pending": [
     {
-      "item": "Fotos, retratos, logos y MP4 exactos",
-      "dependency": "Descargas del usuario; enlaces Drive inaccesibles para la cuenta conectada",
-      "handling": "Sin fotos sustitutas inventadas; se conserva material verificado o fondo neutro"
-    },
-    {
       "item": "Términos de donaciones actualizados",
-      "dependency": "Documento aprobado de Drive por descargar"
+      "dependency": "Documento accesible y leído desde la sesión webmaster. Pendiente conciliar dos diferencias: primer trimestre frente a enero para certificados; solicitud de cancelación por correo con 5 días hábiles frente a la gestión directa disponible en Sandbox. Se conservó el texto existente y no se activó la nueva política."
     },
     {
       "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
@@ -86,12 +86,12 @@
       "dependency": "Validar Ley 1500 de 2012 indicada en el PDF; se omitió la cita no verificada"
     },
     {
-      "item": "RUT, existencia y representación, RSPC",
-      "dependency": "Archivos exactos nuevos por descargar"
-    },
-    {
       "item": "PageSpeed público y prueba completa de pagos recurrentes",
       "dependency": "Versión revisable desplegada y servicios pendientes conectados"
+    },
+    {
+      "item": "Retrato de Jorge González",
+      "dependency": "El PDF no aporta foto o logo para ese perfil; se conservan iniciales sin inventar un retrato"
     }
   ],
   "validation": {
@@ -116,13 +116,31 @@
       "Automated emails, Sheets and English registration form: dependencies pending",
       "PageSpeed on updated site: preview requires Vercel authentication for unauthenticated requests"
     ],
-    "localServer": "Two startup attempts stopped; no development server left running"
+    "localServer": "Two startup attempts stopped; no development server left running",
+    "browserAssets": "pending review of new image deployment"
   },
   "release": {
     "scope": "preview only; public site unchanged",
     "branch": "codex/ajustes-noviembre-2026",
     "codeCommit": "e00ed0a4d9e5c6ca040d8754b9cedc02b285d649",
     "verifiedDeployment": "dpl_DKt8JqYJ4pjkmTuMR829AhkY9B6D",
-    "verifiedUrl": "https://fundacion-alma-arcoiris-8docbrf7k-jorges-projects-fa9fcc5f.vercel.app/es"
+    "verifiedUrl": "https://fundacion-alma-arcoiris-8docbrf7k-jorges-projects-fa9fcc5f.vercel.app/es",
+    "assetUpdate": "prepared on the same preview branch; public site unchanged"
+  },
+  "accessUpdate": {
+    "date": "2026-11-03",
+    "browserAccount": "webmaster@fundacionalmaarcoiris.org",
+    "sheet": "1ud_7ygpl27uDtAqqGmItsFT2U3pqNGkyFMJ1pd2L9Ag",
+    "connector": "Sigue respondiendo NOT_FOUND; lectura y descarga resueltas mediante la sesión de navegador autorizada",
+    "images": 31,
+    "imageSourceBytes": 109587102,
+    "imageWebBytes": 10655914,
+    "video": {
+      "driveId": "1zY8SFPYbVOZVApkmqLul3MBqBHBC-gYU",
+      "path": "/videos/cairo-escuela.mp4",
+      "bytes": 11473150,
+      "preload": "none"
+    },
+    "linkCorrection": "El enlace 1yHKN4cRz_J0Psus0RScbPkz6wRjmzXV_ abre Dictamen Revisor Fiscal 2025.pdf. La foto Comunidad Kogui 2026.heic corresponde al enlace 1iNmFhFHKH08yw517i-vG_qH5U-orGGm8."
   }
 }

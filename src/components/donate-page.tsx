@@ -27,7 +27,7 @@ import { LegacyDonationPage } from "./legacy-donation";
 const causes = [
   {
     id: "general",
-    image: null,
+    image: "/images/revision-2026/fondo-general.webp",
     name: ["Fondo General de Misión", "General Mission Fund"],
     focus: [
       "Flexibilidad operativa para respuesta inmediata y logística territorial.",

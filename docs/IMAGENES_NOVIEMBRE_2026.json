@@ -1,0 +1,467 @@
+[
+  {
+    "role": "fondo-general",
+    "driveId": "1BYBZYZHc1Bi7x3AHDkOd_ffQXi6hZ167",
+    "name": "GRUPAL FAA 2026.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/GRUPAL FAA 2026.jpg",
+    "sourceSha256": "54551acaf867a19341684009e4b66d41c05443cdb4198b7312109f4c650ab9ef",
+    "publicPath": "/images/revision-2026/fondo-general.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 440990,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "cairo-hero",
+    "driveId": "1QNcYCWGAvOinNPuipZ9D4nWReufPduL7",
+    "name": "el cairo collage-2.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/el cairo collage-2.png",
+    "sourceSha256": "6ea920779ff36b07bd1ee44dd87ebcedb4b66a425c3a591caa2574b5b8e0f7dc",
+    "publicPath": "/images/revision-2026/cairo-hero.webp",
+    "width": 800,
+    "height": 558,
+    "bytes": 142174,
+    "sourceDimensions": [
+      800,
+      558
+    ]
+  },
+  {
+    "role": "cairo-reconstruccion",
+    "driveId": "1wE2qFL7VApaz2qMvnzskffO9PW99g0uE",
+    "name": "escuela embera doxura tablero.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/escuela embera doxura tablero.jpg",
+    "sourceSha256": "7e8bdadcd270f68110c5068c20fbfd7a423bd227ffef8bb24c507195a2980f48",
+    "publicPath": "/images/revision-2026/cairo-reconstruccion.webp",
+    "width": 1350,
+    "height": 1800,
+    "bytes": 561664,
+    "sourceDimensions": [
+      3024,
+      4032
+    ]
+  },
+  {
+    "role": "cairo-apoyo",
+    "driveId": "1J1RUyxpRWqDzZhrutXpuxHSdc5xXdf9-",
+    "name": "IMG_9350.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/IMG_9350.JPG",
+    "sourceSha256": "f192e75178899118d86d6e1929a99b98027b245c7544e297f74da5bc8d451dc4",
+    "publicPath": "/images/revision-2026/cairo-apoyo.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 639762,
+    "sourceDimensions": [
+      3600,
+      2400
+    ]
+  },
+  {
+    "role": "impacto-raiz",
+    "driveId": "1hG_PsMGUoDohdw80DUyQBd7x6WVlrV-l",
+    "name": "permisos kogui.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/permisos kogui.jpg",
+    "sourceSha256": "af24b7fae0e1485a52c01656713ae110b223ae2e5be42aec8a5486790334940b",
+    "publicPath": "/images/revision-2026/impacto-raiz.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 474704,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "sumate-voluntariado",
+    "driveId": "1Hswmhwh6yfYVIqWeW9dkT0AjYSEHFLH4",
+    "name": "voluntariado.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/voluntariado.jpg",
+    "sourceSha256": "2a5c1d017aa559f66825d68cb34ed6d658c4d74a1409544e17e202fd36ef5899",
+    "publicPath": "/images/revision-2026/sumate-voluntariado.webp",
+    "width": 1200,
+    "height": 1800,
+    "bytes": 432802,
+    "sourceDimensions": [
+      3456,
+      5184
+    ]
+  },
+  {
+    "role": "sumate-caminatas",
+    "driveId": "1a9E39umx3HApXkbJGWLduMa4-AeYPs4y",
+    "name": "camintas.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/camintas.JPG",
+    "sourceSha256": "279cd01fe569bdbc2a7ec04f6ce23580058c539b3e5ce63cd6c720fd714d51ca",
+    "publicPath": "/images/revision-2026/sumate-caminatas.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 627774,
+    "sourceDimensions": [
+      3600,
+      2400
+    ]
+  },
+  {
+    "role": "sumate-circulos",
+    "driveId": "1pG-f8rRHBQGfwbabQDoJAqIajT7WJgyU",
+    "name": "sostenimiento.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/sostenimiento.JPG",
+    "sourceSha256": "e17ea985022b1fae9a2ec1af1da92ace07bfd68a3c4c8ec4b24e7c86b0aaea18",
+    "publicPath": "/images/revision-2026/sumate-circulos.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 513096,
+    "sourceDimensions": [
+      3600,
+      2400
+    ]
+  },
+  {
+    "role": "sumate-cultura",
+    "driveId": "1PtiX1F1BULmvUSuZSZupBcOLWVSPNopK",
+    "name": "cultura Faa.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/cultura Faa.JPG",
+    "sourceSha256": "591525253b1385f22dc11578e7ac3198b70e5b02ecd2a5e2931a7262eda2cdc9",
+    "publicPath": "/images/revision-2026/sumate-cultura.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 322746,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "comunidad-general",
+    "driveId": "1HXhaT8aT1GiPQovKIcdZBuNzev-LU0lJ",
+    "name": "comunidad G.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/comunidad G.JPG",
+    "sourceSha256": "c8cab455cdf2567cfd9373fbeb725876cea333051781b5259e4acbbb2bdf8a47",
+    "publicPath": "/images/revision-2026/comunidad-general.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 261150,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "comunidad-efis",
+    "driveId": "1sKN2u09peyr2vGTJebWM-CZ8Tt17nZ4L",
+    "name": "EFIS.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/EFIS.JPG",
+    "sourceSha256": "5a6a7963d6a55dcaf1b21b1bc91c77b946b9809eb1557d107f23696386401d85",
+    "publicPath": "/images/revision-2026/comunidad-efis.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 515208,
+    "sourceDimensions": [
+      6000,
+      4000
+    ]
+  },
+  {
+    "role": "comunidad-condor",
+    "driveId": "15A8viTDNlHWq0rsi7gcAjwxVwwR-fETz",
+    "name": "hermandad del condor.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/hermandad del condor.JPG",
+    "sourceSha256": "6eb89be7f5716a91b22dc27691b337daf41062f2b972194083e93c4d317025d0",
+    "publicPath": "/images/revision-2026/comunidad-condor.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 773332,
+    "sourceDimensions": [
+      3600,
+      2400
+    ]
+  },
+  {
+    "role": "sumate-encuentros",
+    "driveId": "1j3Rrb01ynWfXh4UPFRjiYA3I4d4PgoKI",
+    "name": "compartir con sabedores.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/compartir con sabedores.jpg",
+    "sourceSha256": "3ef4606c199c1f13a552c62bf9131dc1dfa50a59b82a2bbccb3a54afd1e5be60",
+    "publicPath": "/images/revision-2026/sumate-encuentros.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 520226,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "conocenos-fondo",
+    "driveId": "1nhjabp7Jji6fuN7_1wVlhOnBQ3MgO5fx",
+    "name": "fondo equipo conocenos.JPG",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/fondo equipo conocenos.JPG",
+    "sourceSha256": "7be97f18a3fba8f6c74dad579ecb5f5c42a009a18a3f7ba7d7b59596b0d9e03f",
+    "publicPath": "/images/revision-2026/conocenos-fondo.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 492204,
+    "sourceDimensions": [
+      3600,
+      2400
+    ]
+  },
+  {
+    "role": "acuerdo-kogui",
+    "driveId": "1kGGDdu9U0EiluvemiQ3dF7JRNkzYFJVv",
+    "name": "acuerdo kogui con logo.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/acuerdo kogui con logo.png",
+    "sourceSha256": "207a362702cf790afbf54e138b9c2fec960313fa79d0a861b0d3de55f7e342d0",
+    "publicPath": "/images/revision-2026/acuerdo-kogui.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 354830,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "acuerdo-mhuysqa",
+    "driveId": "1wvaMXtj2UAIVvq5nIRf5rIZ4_vqjJt6d",
+    "name": "acuerdo Mhuysqa.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/acuerdo Mhuysqa.jpg",
+    "sourceSha256": "65acf7cb5e714aa9117a7ed7d0d19cd3770b1548b57a7893518c652dc4a0808f",
+    "publicPath": "/images/revision-2026/acuerdo-mhuysqa.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 307154,
+    "sourceDimensions": [
+      5184,
+      3456
+    ]
+  },
+  {
+    "role": "acuerdo-tikuna",
+    "driveId": "1XKvteHX4Dd0lDVOj9NnGXu1Az9jNZyYM",
+    "name": "Amazonas acuerdo.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Amazonas acuerdo.jpg",
+    "sourceSha256": "94c23bd115b637af56da55307aebc678b40213781e0677c48ca8a10e49968281",
+    "publicPath": "/images/revision-2026/acuerdo-tikuna.webp",
+    "width": 1800,
+    "height": 1200,
+    "bytes": 795218,
+    "sourceDimensions": [
+      2048,
+      1365
+    ]
+  },
+  {
+    "role": "acuerdo-embera",
+    "driveId": "1_n_4WKCPwjACnfgsIzRjNT_5rDgF-Gwe",
+    "name": "Escuela provisional Embera Chami.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Escuela provisional Embera Chami.jpg",
+    "sourceSha256": "08f3c92a4ce2172115ab518dcdbcbc64843594c0e92a949fbfb3f2507b07b11c",
+    "publicPath": "/images/revision-2026/acuerdo-embera.webp",
+    "width": 1220,
+    "height": 853,
+    "bytes": 220150,
+    "sourceDimensions": [
+      1220,
+      853
+    ]
+  },
+  {
+    "role": "perfil-claudia",
+    "driveId": "112xZT7YrYPNmUP25Uj-bb9854hpqxu9n",
+    "name": "Claudia Pavas 3.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Claudia Pavas 3.jpg",
+    "sourceSha256": "89e1e11d604752ab2775d1cf3ac56b3688b96a9fb76435c54e9d1baafa46cf7a",
+    "publicPath": "/images/revision-2026/perfil-claudia.webp",
+    "width": 600,
+    "height": 900,
+    "bytes": 59518,
+    "sourceDimensions": [
+      3456,
+      5184
+    ]
+  },
+  {
+    "role": "perfil-alejandro",
+    "driveId": "1GvNOHF08OCR4z777PnOlUsjo7jpciyQr",
+    "name": "Alejandro Hernandez.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Alejandro Hernandez.jpg",
+    "sourceSha256": "e1c0def0145b15748ba25985c49a1a29cca00bb2f2d822bc552398178209d804",
+    "publicPath": "/images/revision-2026/perfil-alejandro.webp",
+    "width": 600,
+    "height": 900,
+    "bytes": 90948,
+    "sourceDimensions": [
+      3456,
+      5184
+    ]
+  },
+  {
+    "role": "perfil-ana",
+    "driveId": "1DI6bkPExOH0YbgnJwkH8sJJGYnD6SRj6",
+    "name": "foto Ana Zivkovic.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/foto Ana Zivkovic.jpg",
+    "sourceSha256": "4cf2c4b99057e843b817e50d2905f2de9cd433d8115c53e1c9eea13709b95142",
+    "publicPath": "/images/revision-2026/perfil-ana.webp",
+    "width": 900,
+    "height": 900,
+    "bytes": 33520,
+    "sourceDimensions": [
+      1079,
+      1079
+    ]
+  },
+  {
+    "role": "perfil-oscar",
+    "driveId": "1-zSgOcqH88RFzbVXn9ILGJrb1ZjUar1J",
+    "name": "Oscar Cortés A - 1.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Oscar Cortés A - 1.jpg",
+    "sourceSha256": "5e618b8814db175fc9a12ebe3ed51d3714266917afaae6e1acf5a1562961233a",
+    "publicPath": "/images/revision-2026/perfil-oscar.webp",
+    "width": 900,
+    "height": 506,
+    "bytes": 94196,
+    "sourceDimensions": [
+      4160,
+      2340
+    ]
+  },
+  {
+    "role": "perfil-julian",
+    "driveId": "1joF60Y96DXeVsxsgsvBQD63B9QWQhSiq",
+    "name": "Julian Mendez foto perfil.jpeg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Julian Mendez foto perfil.jpeg",
+    "sourceSha256": "cd37ccfafd28412411bdb5cbf14c82395e69bdaa19f058a87c63b05242b3e754",
+    "publicPath": "/images/revision-2026/perfil-julian.webp",
+    "width": 600,
+    "height": 900,
+    "bytes": 107240,
+    "sourceDimensions": [
+      1066,
+      1600
+    ]
+  },
+  {
+    "role": "perfil-yeison",
+    "driveId": "1nONionAZm7az-ddvp8S8jrJj7SGP2PzC",
+    "name": "Yeison Marquez foto.jpeg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Yeison Marquez foto.jpeg",
+    "sourceSha256": "fdcf770f9f8d2fed6b78f49cc9f75e0912a518919dc92bbb27ead801df33f027",
+    "publicPath": "/images/revision-2026/perfil-yeison.webp",
+    "width": 586,
+    "height": 790,
+    "bytes": 165806,
+    "sourceDimensions": [
+      586,
+      790
+    ]
+  },
+  {
+    "role": "logo-sembox",
+    "driveId": "1LY4m7bvBGaHP5V-Dm056A75_AK1Aa5tX",
+    "name": "logo-Sembox.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/logo-Sembox.png",
+    "sourceSha256": "bb58d4a46b69f36c515258457f2b392dc700db496698ab53eb04c0ae38583ce0",
+    "publicPath": "/images/revision-2026/logo-sembox.webp",
+    "width": 640,
+    "height": 207,
+    "bytes": 8192,
+    "sourceDimensions": [
+      1840,
+      595
+    ]
+  },
+  {
+    "role": "logo-pech",
+    "driveId": "1Tb2M4dOfbZeiOybRM28-DB8rF_x4rQv-",
+    "name": "logo fundacion pech.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/logo fundacion pech.png",
+    "sourceSha256": "be827414900207072940eee8b2db0d17b1dab85c489c07889ac8c91cb2f315e5",
+    "publicPath": "/images/revision-2026/logo-pech.webp",
+    "width": 312,
+    "height": 209,
+    "bytes": 8730,
+    "sourceDimensions": [
+      312,
+      209
+    ]
+  },
+  {
+    "role": "logo-casa-santuario",
+    "driveId": "1eSPADSVjWaO-pP3ZAMHZnBhiQsT3jj9d",
+    "name": "casa santuario Bogota.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/casa santuario Bogota.png",
+    "sourceSha256": "e00ea021efc4ab236e0c2fa8a9f9474b26015ec3211d98e99efd387445e4b8e6",
+    "publicPath": "/images/revision-2026/logo-casa-santuario.webp",
+    "width": 227,
+    "height": 217,
+    "bytes": 8244,
+    "sourceDimensions": [
+      227,
+      217
+    ]
+  },
+  {
+    "role": "logo-santuario",
+    "driveId": "1E332GZXAHF5yV_Hmwh-pUNerkEia5_JR",
+    "name": "Copia de Santuario-Logo GRIS.png",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Copia de Santuario-Logo GRIS.png",
+    "sourceSha256": "e6522c3293cceffe80ceebd81d4835e227fb124060b5c30edaf906057af91e08",
+    "publicPath": "/images/revision-2026/logo-santuario.webp",
+    "width": 640,
+    "height": 640,
+    "bytes": 24868,
+    "sourceDimensions": [
+      1080,
+      1080
+    ]
+  },
+  {
+    "role": "kogui-hero",
+    "driveId": "1vwt_CSpfI_7JWWMUgheXFvgXK1Fhj6Kn",
+    "name": "Niños Kogui 2026.HEIC",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Niños Kogui 2026.HEIC",
+    "sourceSha256": "928c4fa009fc059883b2e42ec52766acdfc1fbe05b20224e9c22380a81959e17",
+    "publicPath": "/images/revision-2026/kogui-hero.webp",
+    "width": 1350,
+    "height": 1800,
+    "bytes": 656756,
+    "sourceDimensions": [
+      3024,
+      4032
+    ]
+  },
+  {
+    "role": "impacto-testimonio",
+    "driveId": "1iNmFhFHKH08yw517i-vG_qH5U-orGGm8",
+    "name": "Comunidad Kogui 2026.heic",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Comunidad Kogui 2026.heic",
+    "sourceSha256": "e7b6d303ae232b5311769f01762744b9dd4b4b7a24336d8f806c1cbc89c97d2a",
+    "publicPath": "/images/revision-2026/impacto-testimonio.webp",
+    "width": 1800,
+    "height": 1721,
+    "bytes": 944258,
+    "sourceDimensions": [
+      3024,
+      2892
+    ]
+  },
+  {
+    "role": "perfil-tatiana",
+    "driveId": "1ztnIxU7Rt2bXQYCFhQN8FGENUbW1wxRT",
+    "name": "Tatiana  Cárdenas - 2.jpg",
+    "source": "FOTOS Y VIDEOS/RECIBIDOS 2026-11-03/Tatiana  Cárdenas - 2.jpg",
+    "sourceSha256": "4f437fc31fcb9ddb067ecc63e39525bf447c2dcd75af41365bb8827844fdf7a9",
+    "publicPath": "/images/revision-2026/perfil-tatiana.webp",
+    "width": 900,
+    "height": 600,
+    "bytes": 58454,
+    "sourceDimensions": [
+      1600,
+      1067
+    ]
+  }
+]

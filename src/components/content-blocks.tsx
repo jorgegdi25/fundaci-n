@@ -700,6 +700,35 @@ export function ProjectPage({
               <ShieldCheck size={17} />
               Fundación Alma Arcoíris · NIT 901784588-0
             </span>
+            {p.statusVideo && (
+              <figure className="school-video">
+                <video
+                  controls
+                  loop
+                  muted
+                  playsInline
+                  preload="none"
+                  poster="/images/revision-2026/acuerdo-embera.webp"
+                  aria-label={
+                    es
+                      ? "Estado actual de la Escuela Doxura, El Cairo"
+                      : "Current condition of Doxura School, El Cairo"
+                  }
+                >
+                  <source src={p.statusVideo} type="video/mp4" />
+                  <a href={p.statusVideo}>
+                    {es
+                      ? "Abrir el video de la escuela"
+                      : "Open the school video"}
+                  </a>
+                </video>
+                <figcaption>
+                  {es
+                    ? "Estado actual de la Escuela Doxura · El Cairo"
+                    : "Current condition of Doxura School · El Cairo"}
+                </figcaption>
+              </figure>
+            )}
           </div>
           <DonationForm key={p.slug} lang={lang} cause={p.slug} compact />
         </div>
@@ -791,6 +820,13 @@ export function ProjectPage({
                   target="_blank"
                   rel="noreferrer"
                 >
+                  <Image
+                    src="/images/revision-2026/logo-santuario.webp"
+                    alt=""
+                    width={220}
+                    height={120}
+                    sizes="220px"
+                  />
                   Santuario Playa Bonita ↗
                 </a>
               </li>
@@ -800,6 +836,13 @@ export function ProjectPage({
                   target="_blank"
                   rel="noreferrer"
                 >
+                  <Image
+                    src="/images/revision-2026/logo-pech.webp"
+                    alt=""
+                    width={220}
+                    height={120}
+                    sizes="220px"
+                  />
                   Fundación Pech ↗
                 </a>
               </li>
@@ -809,6 +852,13 @@ export function ProjectPage({
                   target="_blank"
                   rel="noreferrer"
                 >
+                  <Image
+                    src="/images/revision-2026/logo-casa-santuario.webp"
+                    alt=""
+                    width={220}
+                    height={120}
+                    sizes="220px"
+                  />
                   Casa Santuario Bogotá ↗
                 </a>
               </li>
@@ -941,7 +991,20 @@ export function ImpactPage({ lang }: { lang: Lang }) {
                 ][i]
               }
             </p>
-            <a className="text-link" href="#memorias">
+            <a
+              className="text-link"
+              href={
+                [
+                  "/documentos/transparencia/rut-vigente.pdf",
+                  "/documentos/transparencia/certificado-gobernacion-2026.pdf",
+                  "/documentos/transparencia/existencia-representacion-2026.pdf",
+                  "/documentos/transparencia/certificado-rspc-2025.pdf",
+                  "/documentos/transparencia/estados-financieros-2025.pdf",
+                ][i]
+              }
+              target="_blank"
+              rel="noreferrer"
+            >
               {es ? "Consultar documentos" : "Explore records"}
               <ArrowUpRight size={16} />
             </a>
@@ -961,7 +1024,7 @@ export function ImpactPage({ lang }: { lang: Lang }) {
       </section>
       <section className="section root-story">
         <Photo
-          src="/images/permisos-kogui.webp"
+          src="/images/revision-2026/impacto-raiz.webp"
           alt={
             es
               ? "Encuentro con autoridades Kogui"
@@ -1037,7 +1100,7 @@ export function ImpactPage({ lang }: { lang: Lang }) {
         <VideoCard
           lang={lang}
           id="xxoat0t-AQM"
-          image="/images/sierra-educacion.webp"
+          image="/images/revision-2026/impacto-testimonio.webp"
           title={
             es
               ? "El primer paso es el respeto por el territorio"
@@ -1192,27 +1255,45 @@ export function ImpactPage({ lang }: { lang: Lang }) {
           <div className="archive-body">
             <p>
               {es
-                ? "Certificado de inspección, vigilancia y control de la Gobernación de Cundinamarca disponible para consulta. El RUT vigente, el certificado de existencia y representación y el certificado de Rendición Social Pública de Cuentas se incorporarán al recibir los archivos."
-                : "The Cundinamarca Government oversight certificate is available. Current tax registration, legal registration and public social accountability certificates will be added when the files are received."}
+                ? "Documentos oficiales de la fundación disponibles para consulta."
+                : "Official foundation records available to read."}
             </p>
-            <a
-              className="text-link"
-              href="/documentos/transparencia/certificado-gobernacion-2026.pdf"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FileText size={18} />
-              {es
-                ? "Certificado de la Gobernación · PDF"
-                : "Government oversight certificate · PDF (Spanish)"}
-            </a>
-            <a
-              className="text-link"
-              href="mailto:contacto@fundacionalmaarcoiris.org"
-            >
-              {es ? "Contactar" : "Contact us"}
-              <ArrowUpRight size={16} />
-            </a>
+            <div className="archive-downloads">
+              {[
+                [
+                  "rut-vigente.pdf",
+                  "RUT vigente · Septiembre 2026",
+                  "Current tax registration · September 2026",
+                ],
+                [
+                  "existencia-representacion-2026.pdf",
+                  "Existencia y representación legal · Agosto 2026",
+                  "Legal registration and representation · August 2026",
+                ],
+                [
+                  "certificado-gobernacion-2026.pdf",
+                  "Certificado de inspección, vigilancia y control",
+                  "Government oversight certificate",
+                ],
+                [
+                  "certificado-rspc-2025.pdf",
+                  "Certificación de Rendición Social Pública de Cuentas",
+                  "Public social accountability certificate",
+                ],
+              ].map(([file, titleEs, titleEn]) => (
+                <a
+                  className="text-link"
+                  href={`/documentos/transparencia/${file}`}
+                  key={file}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FileText size={18} />
+                  {es ? titleEs : titleEn} · PDF{!es && " (Spanish)"}
+                  <ArrowUpRight size={17} />
+                </a>
+              ))}
+            </div>
           </div>
         </details>
       </section>

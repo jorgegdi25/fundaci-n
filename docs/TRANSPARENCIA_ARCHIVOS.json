@@ -52,5 +52,26 @@
     "publicPath": "/documentos/transparencia/certificado-gobernacion-2026.pdf",
     "sha256": "e1b6f750fed59455eb78cc6abd772bfa282ce91403850bf4d288780dc9b3cf1f",
     "received": "2026-10-02"
+  },
+  {
+    "source": "CERTIFICADO DE EXISTENCIA Y RL F Alma Arcoiris Agost 14 2026.pdf",
+    "driveId": "1_Ik12SqIYN2umBK-BQ5fbWf9kMCNnNhi",
+    "publicPath": "/documentos/transparencia/existencia-representacion-2026.pdf",
+    "sha256": "6a821a279c78d75a65295534972a24a604b96b4aa5c513c8dbb3394124de1175",
+    "received": "2026-11-03"
+  },
+  {
+    "source": "Certificación RSPC -  ALMA_ARCOIRIS.pdf",
+    "driveId": "1g8fd8dCyk-Z_MVCDZH_tY2L8Mv-lQ1He",
+    "publicPath": "/documentos/transparencia/certificado-rspc-2025.pdf",
+    "sha256": "c7e2cf343148842e4b1f6d826dc441ffae9201dc4f4a26744ff1df058fb8616f",
+    "received": "2026-11-03"
+  },
+  {
+    "source": "RUT  r 55 y rte sept 2026.pdf",
+    "driveId": "1uHqes9lGXemDaBt3Aosm4Nu3d8E_63ef",
+    "publicPath": "/documentos/transparencia/rut-vigente.pdf",
+    "sha256": "b036f841403faa626e6939202fbae54bc072b5f550debed6ae20c51eacbea4c5",
+    "received": "2026-11-03"
   }
 ]

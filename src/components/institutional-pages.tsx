@@ -62,6 +62,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
   const routes = [
     {
       id: "expediciones",
+      image: "/images/revision-2026/sumate-voluntariado.webp",
       icon: HandHeart,
       title: es ? "Voluntariado y misiones" : "Volunteering and missions",
       text: es
@@ -70,6 +71,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
     },
     {
       id: "caminatas",
+      image: "/images/revision-2026/sumate-caminatas.webp",
       icon: Footprints,
       title: es ? "Caminatas conscientes" : "Mindful walks",
       text: es
@@ -78,6 +80,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
     },
     {
       id: "circulos",
+      image: "/images/revision-2026/sumate-circulos.webp",
       icon: Users,
       title: es ? "Círculos de sostenimiento" : "Community circles",
       text: es
@@ -86,6 +89,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
     },
     {
       id: "encuentros",
+      image: "/images/revision-2026/sumate-cultura.webp",
       icon: Leaf,
       title: es ? "Eventos y foros culturales" : "Cultural events and forums",
       text: es
@@ -137,6 +141,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
               key={r.id}
               data-reveal
             >
+              <Photo src={r.image} alt={r.title} />
               <r.icon size={30} />
               <h3>{r.title}</h3>
               <p>{r.text}</p>
@@ -233,7 +238,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
         <article className="feature-row">
           <VideoCard
             id="LR6hMrAQRq8"
-            image="/images/caminatas.webp"
+            image="/images/revision-2026/sumate-caminatas.webp"
             title={
               es
                 ? "Espiral Hacia El Centro · Caminatas Conscientes"
@@ -310,6 +315,10 @@ export function JoinPage({ lang }: { lang: Lang }) {
             ],
           ].map(([title, text], index) => (
             <article key={title}>
+              <Photo
+                src={`/images/revision-2026/comunidad-${["general", "efis", "condor"][index]}.webp`}
+                alt={title}
+              />
               <MessageCircle size={28} />
               <h3>{title}</h3>
               <p>{text}</p>
@@ -335,6 +344,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
               {index === 2 && (
                 <VideoCard
                   id="MLh43Zdps9E"
+                  image="/images/revision-2026/comunidad-condor.webp"
                   title={
                     es
                       ? "El Cóndor y el Colibrí volando juntos · Documental 2025"
@@ -351,7 +361,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
         <article className="feature-row">
           <VideoCard
             id="Vfe8aNpbU2c"
-            image="/images/mhuysqa-agua.webp"
+            image="/images/revision-2026/sumate-encuentros.webp"
             title={
               es
                 ? "Activación del Sagrado Corazón · Video oficial"
@@ -471,8 +481,11 @@ const allianceGroups = [
     en: "Regenerative centres and networks",
     items: [
       ["santuario", "Santuario Centros Regenerativos"],
-      ["", "Fundación Pech · Bogotá"],
-      ["", "Casa Santuario · Bogotá"],
+      ["/images/revision-2026/logo-pech.webp", "Fundación Pech · Bogotá"],
+      [
+        "/images/revision-2026/logo-casa-santuario.webp",
+        "Casa Santuario · Bogotá",
+      ],
     ],
   },
 ];
@@ -480,7 +493,12 @@ export function AboutPage({ lang }: { lang: Lang }) {
   const es = lang === "es";
   return (
     <>
-      <section className="section page-intro">
+      <section className="section page-intro institutional-hero">
+        <Photo
+          src="/images/revision-2026/conocenos-fondo.webp"
+          alt=""
+          priority
+        />
         <span className="eyebrow">
           {es ? "GOBERNANZA, RAÍZ Y EQUIPO" : "GOVERNANCE, ROOTS AND TEAM"}
         </span>
@@ -588,6 +606,7 @@ export function AboutPage({ lang }: { lang: Lang }) {
         />
         <div className="ancestral-grid">
           <article data-reveal>
+            <Photo src="/images/revision-2026/acuerdo-kogui.webp" alt="" />
             <span className="eyebrow">Sierra Nevada</span>
             <h3>{es ? "Pueblo Kogui" : "Kogui people"}</h3>
             <p>
@@ -602,6 +621,7 @@ export function AboutPage({ lang }: { lang: Lang }) {
             </p>
           </article>
           <article data-reveal>
+            <Photo src="/images/revision-2026/acuerdo-mhuysqa.webp" alt="" />
             <span className="eyebrow">Cundinamarca</span>
             <h3>{es ? "Pueblo Mhuysqa" : "Mhuysqa people"}</h3>
             <p>
@@ -616,6 +636,7 @@ export function AboutPage({ lang }: { lang: Lang }) {
             </p>
           </article>
           <article data-reveal>
+            <Photo src="/images/revision-2026/acuerdo-tikuna.webp" alt="" />
             <span className="eyebrow">Amazonas</span>
             <h3>{es ? "Pueblo Tikuna" : "Tikuna people"}</h3>
             <p>
@@ -625,6 +646,7 @@ export function AboutPage({ lang }: { lang: Lang }) {
             </p>
           </article>
           <article data-reveal>
+            <Photo src="/images/revision-2026/acuerdo-embera.webp" alt="" />
             <span className="eyebrow">Valle del Cauca</span>
             <h3>
               {es
@@ -696,13 +718,32 @@ export function AboutPage({ lang }: { lang: Lang }) {
                 .map((person) => (
                   <details className="team-card team-profile" key={person.name}>
                     <summary>
-                      <span className="team-initials" aria-hidden="true">
-                        {person.name
-                          .split(" ")
-                          .slice(0, 2)
-                          .map((word) => word[0])
-                          .join("")}
-                      </span>
+                      {person.image ? (
+                        <span
+                          className={`team-photo ${person.name === "SEMbox España" ? "team-logo" : ""}`}
+                        >
+                          <Image
+                            src={person.image}
+                            alt={person.name}
+                            width={600}
+                            height={450}
+                            sizes="(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 380px"
+                            style={
+                              person.name === "Julián Méndez"
+                                ? { objectPosition: "center 70%" }
+                                : undefined
+                            }
+                          />
+                        </span>
+                      ) : (
+                        <span className="team-initials" aria-hidden="true">
+                          {person.name
+                            .split(" ")
+                            .slice(0, 2)
+                            .map((word) => word[0])
+                            .join("")}
+                        </span>
+                      )}
                       <h4>{person.name}</h4>
                       <p>{person.role[lang]}</p>
                       <span className="text-link">
@@ -739,7 +780,11 @@ export function AboutPage({ lang }: { lang: Lang }) {
                 <div key={name}>
                   {file && (
                     <Image
-                      src={`/images/ally-${file}.webp`}
+                      src={
+                        file.startsWith("/")
+                          ? file
+                          : `/images/ally-${file}.webp`
+                      }
                       alt={name}
                       width={240}
                       height={120}

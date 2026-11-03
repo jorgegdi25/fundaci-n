@@ -23,6 +23,7 @@ export type Project = {
   testimony?: { quote: Localized; author: Localized };
   video?: string;
   videoImage?: string;
+  statusVideo?: string;
   involvement: Localized;
   involvementText: Localized;
   faqs: { question: Localized; answer: Localized }[];
@@ -50,7 +51,8 @@ export const projects: Project[] = [
     location: l("Valle del Cauca, Colombia", "Valle del Cauca, Colombia"),
     category: l("Respuesta humanitaria", "Humanitarian response"),
     image: "/images/el-cairo.webp",
-    hero: "/images/el-cairo-escuela.webp",
+    hero: "/images/revision-2026/cairo-hero.webp",
+    statusVideo: "/videos/cairo-escuela.mp4",
     alt: l(
       "Escuela de la comunidad Embera Chamí en Doxura, El Cairo",
       "The Embera Chamí community’s school in Doxura, El Cairo",
@@ -62,6 +64,8 @@ export const projects: Project[] = [
           "Reconstrucción sostenible y segura",
           "Safe, sustainable rebuilding",
         ),
+        image: "/images/revision-2026/cairo-reconstruccion.webp",
+        portrait: true,
         description: l(
           "Implementación de modelos de construcción que unifican la arquitectura sísmicamente resistente con el uso de materiales locales como la guadua y tabla tradicional. La Escuela lo requiere urgente.",
           "Building models that combine earthquake-resistant architecture with local materials such as guadua bamboo and traditional timber. The school urgently needs this work.",
@@ -72,6 +76,7 @@ export const projects: Project[] = [
           "Apoyo directo y apadrinamiento escolar",
           "Direct support and school sponsorship",
         ),
+        image: "/images/revision-2026/cairo-apoyo.webp",
         description: l(
           "Fortalecimiento de la autosostenibilidad y apoyo a las familias indígenas y campesinas para la reconstrucción de sus medios de vida y el aseguramiento educativo de la niñez Embera Chamí en Doxura.",
           "Supporting Indigenous and rural families as they rebuild their livelihoods, strengthen self-sufficiency and secure education for Embera Chamí children in Doxura.",
@@ -155,10 +160,10 @@ export const projects: Project[] = [
     location: l("Sierra Nevada de Santa Marta", "Sierra Nevada de Santa Marta"),
     category: l("Territorio y saberes", "Land and ancestral knowledge"),
     image: "/images/sierra-nevada.webp",
-    hero: "/images/sierra-nevada.webp",
+    hero: "/images/revision-2026/kogui-hero.webp",
     alt: l(
-      "Encuentro de la comunidad Kogui y participantes de la fundación",
-      "A gathering of the Kogui community and foundation participants",
+      "Niños de la comunidad Kogui en su territorio",
+      "Children of the Kogui community in their territory",
     ),
     color: "#416448",
     modules: [
