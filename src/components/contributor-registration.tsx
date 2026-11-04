@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
-import { CheckCircle2, ClipboardList, ExternalLink, Info } from "lucide-react";
+import {
+  ArrowDown,
+  CheckCircle2,
+  ClipboardList,
+  ExternalLink,
+  Info,
+} from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import styles from "./contributor-registration.module.css";
 
@@ -104,6 +110,16 @@ export function ContributorRegistration({
         </p>
       )}
       <div className={styles.actions}>
+        <a className="button purple" href={`#${frameId}`}>
+          {testMode
+            ? es
+              ? "Ver formulario de registro"
+              : "View the registration form"
+            : es
+              ? "Completar formulario ahora"
+              : "Complete the form now"}
+          <ArrowDown size={20} aria-hidden="true" />
+        </a>
         <a
           className={styles.external}
           href={formUrl}
@@ -117,7 +133,7 @@ export function ContributorRegistration({
         </a>
       </div>
 
-      <div id={frameId}>
+      <div id={frameId} className={styles.formTarget} tabIndex={-1}>
         {
           <div className={styles.frame}>
             <iframe
