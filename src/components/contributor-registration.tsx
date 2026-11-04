@@ -151,6 +151,17 @@ export function ContributorRegistration({
           {es ? "Consultar privacidad" : "Read about privacy"}
         </a>
       </p>
+      <p className={styles.paymentNote}>
+        <a href="mailto:certificados@fundacionalmaarcoiris.org">
+          {es
+            ? "Solicitar certificado de donación"
+            : "Request a donation certificate"}
+        </a>
+        {testMode &&
+          (es
+            ? " · En Sandbox no se emiten certificados tributarios."
+            : " · Sandbox gifts do not receive tax certificates.")}
+      </p>
     </section>
   );
 }
