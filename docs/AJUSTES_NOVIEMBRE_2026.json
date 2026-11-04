@@ -65,7 +65,7 @@
     },
     {
       "item": "Correo de confirmación, recordatorio SARLAFT y aviso interno a donaciones@fundacionalmaarcoiris.org",
-      "dependency": "Resend creado y dominio verificado. Clave restringida guardada como Secret en Preview, solo rama de revisión; remitente y destinatario configurados. Una prueba de conexión autorizada entregada a webmaster (Delivered en Resend). Plantillas ES/EN y cola preparadas. Falta autorizar y validar la preparación de la base Sandbox, activar la cola y verificar el recorrido completo de pago y correo. Los avisos automáticos permanecen desactivados."
+      "dependency": "Resend y dominio verificados; prueba de conexión entregada a webmaster. El cliente autorizó el uso temporal de Neon: base Sandbox comprobada, tabla creada y seis verificaciones SQL aprobadas con reversión de datos ficticios y eliminación de la conexión temporal. Cola activada solo en la rama Preview para futuros pagos Sandbox, con avisos redirigidos a webmaster. Sigue pendiente verificar un recorrido completo de pago y correo y programar los reintentos."
     },
     {
       "item": "Google Sheets de comunidad y conciliación de intentos/pagos/registro",

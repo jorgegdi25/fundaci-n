@@ -1,5 +1,5 @@
--- Apply to an isolated Sandbox branch before enabling DONATION_EMAILS_ENABLED.
--- Only whitelisted receipt fields are stored; no card data or access tokens.
+-- Apply only to a verified Sandbox database before enabling donation emails.
+-- Only whitelisted receipt fields are stored. No card data or access tokens.
 CREATE TABLE IF NOT EXISTS donation_communications (
   event_key text PRIMARY KEY,
   payload jsonb NOT NULL,

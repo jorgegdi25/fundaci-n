@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "scope": "Preparación y validación en Sandbox. No habilita pagos reales ni envíos a donantes reales.",
   "resend": {
     "account": "webmaster@fundacionalmaarcoiris.org",
@@ -68,12 +68,40 @@
     "Todas las comunicaciones de Sandbox se redirigen a un único destinatario de pruebas",
     "Sin activación por la sola presencia de una API key; exige indicador Sandbox, destinatario, remitente y fecha de corte"
   ],
+  "databaseSetup": {
+    "date": "2026-11-04",
+    "explicitTemporaryCredentialUseApproved": true,
+    "sandboxEnvironmentConstraintsVerified": true,
+    "nonSandboxDonationRecordsDetected": false,
+    "communicationsTableCreated": true,
+    "schemaVerified": true,
+    "tests": [
+      "deduplicación por evento",
+      "reserva exclusiva de un aviso",
+      "reserva activa no reclamable",
+      "avisos completados u omitidos no se repiten",
+      "intentos inciertos pasan a revisión después de 23 horas",
+      "reversión del registro ficticio"
+    ],
+    "fixtureRowsRemaining": 0,
+    "temporaryCredentialFileDeleted": true,
+    "donorDataRead": false,
+    "emailsSentDuringDatabaseTests": false
+  },
+  "previewEmailActivation": {
+    "enabled": "sandbox",
+    "target": "preview",
+    "branch": "codex/ajustes-noviembre-2026",
+    "startAt": "2026-11-04T10:24:10.000Z",
+    "recipient": "webmaster@fundacionalmaarcoiris.org",
+    "scope": "Solo futuros pagos verificados en Sandbox. Los dos tipos de aviso se redirigen a la cuenta de prueba; no se envían a los donantes."
+  },
   "activationOrder": [
     "Confirmar dominio Verified en Resend",
-    "Probar scripts/communications-schema.sql en una rama aislada de la base de datos Sandbox; no se ha aplicado una migración durante esta preparación",
-    "Clave, remitente y destinatario de prueba ya guardados, limitados a la rama de revisión; mantener DONATION_EMAILS_ENABLED vacío hasta preparar y validar la base",
-    "Fijar DONATION_EMAIL_START_AT para impedir envíos históricos y DONATION_TEST_RECIPIENT para concentrar las pruebas en una sola cuenta",
-    "Autorizar y probar un aporte Sandbox verificado, recepción de los dos mensajes y ausencia de duplicados al repetir la notificación",
+    "Base Sandbox comprobada, tabla creada y consultas probadas con datos ficticios revertidos",
+    "Clave, remitente y destinatario guardados; activación Sandbox y fecha de corte configuradas solo en la rama de revisión",
+    "Desplegar la configuración y comprobar los medios de pago disponibles en la nueva vista previa",
+    "Prueba del recorrido completo pendiente: aporte Sandbox verificado, recepción de los dos mensajes y ausencia de duplicados al repetir la notificación",
     "Programar y comprobar los reintentos con el endpoint privado antes de dar por cerrada la automatización"
   ],
   "googleSheets": {
@@ -85,8 +113,8 @@
   },
   "validation": {
     "typecheck": "passed",
-    "tests": "36 passed, including mocked Resend transport and Apps Script contract; no real emails sent",
-    "database": "Migración y ejecución de cola pendientes. La revisión automática rechazó el uso temporal de la conexión de Neon sin autorización explícita; se solicitó permiso al cliente y no se ha continuado con esa extracción.",
+    "tests": "39 passed, including temporary credential cleanup, mocked Resend transport and Apps Script contract",
+    "database": "Sandbox verificado. Tabla creada y seis verificaciones SQL aprobadas; registros ficticios revertidos y conexión temporal eliminada.",
     "emailPreviews": "tmp/noviembre-2026/correos: donor-es.html, donor-en.html, foundation-es.html, foundation-en.html"
   },
   "sources": [
