@@ -148,118 +148,132 @@ export function ApprovedGiftFollowUp({
   }
   return (
     <div className="approved-gift-follow-up">
-      <section className="gift-certificate">
-        <h2>
-          {es
-            ? "Sobre tu certificado de donación"
-            : "About your donation certificate"}
-        </h2>
-        <p>
-          {testMode
-            ? es
-              ? "Este aporte es una prueba y no genera certificado tributario."
-              : "This gift is a test and does not generate a tax certificate."
-            : es
-              ? "Si solicitaste un certificado tributario, la Fundación Alma Arcoíris (NIT 901784588-0) tramitará tu solicitud conforme a su política."
-              : "If you requested a tax certificate, Fundación Alma Arcoíris (NIT 901784588-0) will process your request under its policy."}
-        </p>
-        {!testMode && <p>{annualCertificatePeriod[lang]}</p>}
-        <a href="mailto:certificados@fundacionalmaarcoiris.org">
-          certificados@fundacionalmaarcoiris.org
-        </a>
-      </section>
       <ContributorRegistration
         lang={lang}
         provider={provider}
         testMode={testMode}
+        afterPayment
       />
-      <section className="gift-community">
-        <h2>
+      <details className="gift-extra-options">
+        <summary>
           {es
-            ? "La transformación no termina aquí. ¡Súmate a la tribu!"
-            : "The transformation continues. Join the community!"}
-        </h2>
-        <p>
-          {es
-            ? "Queremos mantenerte cerca. Entérate de primera mano cómo se ejecuta tu aporte en el territorio, asiste a nuestras caminatas conscientes o participa en espacios de conexión con los saberes ancestrales."
-            : "Stay close to our work. Learn how gifts are used in the communities, join mindful walks or take part in gatherings with ancestral knowledge keepers."}
-        </p>
-        <CommunitySignup lang={lang} withName />
-        <div className="button-row">
-          <a
-            className="button outline"
-            href={`https://wa.me/573044989707?text=${encodeURIComponent("Quiero unirme al Círculo Femenino de Integración Sagrada (EFIS)")}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {es ? "Solicitar acceso a EFIS" : "Request access to EFIS"}
-          </a>
-          <a
-            className="button outline"
-            href={`https://wa.me/573044989707?text=${encodeURIComponent("Quiero unirme a la Hermandad del Cóndor")}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+            ? "Certificado, comunidad y otras opciones"
+            : "Certificate, community and other options"}
+        </summary>
+        <section className="gift-certificate">
+          <h2>
             {es
-              ? "Solicitar acceso a la Hermandad"
-              : "Request access to the Brotherhood"}
+              ? "Sobre tu certificado de donación"
+              : "About your donation certificate"}
+          </h2>
+          <p>
+            {testMode
+              ? es
+                ? "Este aporte es una prueba y no genera certificado tributario."
+                : "This gift is a test and does not generate a tax certificate."
+              : es
+                ? "Si solicitaste un certificado tributario, la Fundación Alma Arcoíris (NIT 901784588-0) tramitará tu solicitud conforme a su política."
+                : "If you requested a tax certificate, Fundación Alma Arcoíris (NIT 901784588-0) will process your request under its policy."}
+          </p>
+          {!testMode && <p>{annualCertificatePeriod[lang]}</p>}
+          <a href="mailto:certificados@fundacionalmaarcoiris.org">
+            certificados@fundacionalmaarcoiris.org
           </a>
-        </div>
-      </section>
-      <section className="gift-share">
-        <h2>
-          {es
-            ? "Invita a un amigo a sembrar esta semilla."
-            : "Invite a friend to plant this seed."}
-        </h2>
-        <div className="button-row">
-          <a
-            className="button outline"
-            href={`https://wa.me/?text=${encodeURIComponent(`${text} ${donationUrl}`)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            WhatsApp
-          </a>
-          <a
-            className="button outline"
-            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(donationUrl)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Facebook
-          </a>
-          <a
-            className="button outline"
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(donationUrl)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-          <button className="button outline" type="button" onClick={share}>
-            {es ? "Compartir invitación" : "Share invitation"}
-          </button>
-        </div>
-        <p role="status">{shareMessage}</p>
-        <p>
-          <a
-            href="https://www.youtube.com/@FundacionAlmaArcoiris"
-            target="_blank"
-            rel="noreferrer"
-          >
-            YouTube ↗
-          </a>{" "}
-          ·{" "}
-          <a
-            href="https://www.instagram.com/almaarcoiris_org"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Instagram ↗
-          </a>
-        </p>
-      </section>
+        </section>
+        <section className="gift-community">
+          <h2>
+            {es
+              ? "La transformación no termina aquí. ¡Súmate a la tribu!"
+              : "The transformation continues. Join the community!"}
+          </h2>
+          <p>
+            {es
+              ? "Queremos mantenerte cerca. Entérate de primera mano cómo se ejecuta tu aporte en el territorio, asiste a nuestras caminatas conscientes o participa en espacios de conexión con los saberes ancestrales."
+              : "Stay close to our work. Learn how gifts are used in the communities, join mindful walks or take part in gatherings with ancestral knowledge keepers."}
+          </p>
+          <CommunitySignup lang={lang} withName />
+          <div className="button-row">
+            <a
+              className="button outline"
+              href={`https://wa.me/573044989707?text=${encodeURIComponent("Quiero unirme al Círculo Femenino de Integración Sagrada (EFIS)")}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {es ? "Solicitar acceso a EFIS" : "Request access to EFIS"}
+            </a>
+            <a
+              className="button outline"
+              href={`https://wa.me/573044989707?text=${encodeURIComponent("Quiero unirme a la Hermandad del Cóndor")}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {es
+                ? "Solicitar acceso a la Hermandad"
+                : "Request access to the Brotherhood"}
+            </a>
+          </div>
+        </section>
+        <section className="gift-share">
+          <h2>
+            {es
+              ? "Invita a un amigo a sembrar esta semilla."
+              : "Invite a friend to plant this seed."}
+          </h2>
+          <div className="button-row">
+            <a
+              className="button outline"
+              href={`https://wa.me/?text=${encodeURIComponent(`${text} ${donationUrl}`)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              WhatsApp
+            </a>
+            <a
+              className="button outline"
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(donationUrl)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              className="button outline"
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(donationUrl)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+            </a>
+            <button className="button outline" type="button" onClick={share}>
+              {es ? "Compartir invitación" : "Share invitation"}
+            </button>
+          </div>
+          <p role="status">{shareMessage}</p>
+          <p>
+            <a
+              href="https://www.youtube.com/@FundacionAlmaArcoiris"
+              target="_blank"
+              rel="noreferrer"
+            >
+              YouTube ↗
+            </a>{" "}
+            ·{" "}
+            <a
+              href="https://www.instagram.com/almaarcoiris_org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram ↗
+            </a>
+          </p>
+        </section>
+      </details>
+      <div className="gift-registration-footer">
+        <GiftSupport lang={lang} />
+        <a className="payment-home-link" href={href(lang, "home")}>
+          {es ? "Volver al inicio" : "Back to home"}
+        </a>
+      </div>
     </div>
   );
 }

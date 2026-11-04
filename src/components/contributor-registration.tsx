@@ -1,7 +1,7 @@
 "use client";
 
-import { useId } from "react";
-import { ClipboardList, ExternalLink, Info } from "lucide-react";
+import { useEffect, useId, useRef } from "react";
+import { CheckCircle2, ClipboardList, ExternalLink, Info } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import styles from "./contributor-registration.module.css";
 
@@ -12,17 +12,49 @@ export function ContributorRegistration({
   lang,
   provider,
   testMode = true,
+  afterPayment = false,
 }: {
   lang: Lang;
   provider: "wompi" | "paypal";
   testMode?: boolean;
+  afterPayment?: boolean;
 }) {
   const es = lang === "es";
   const headingId = useId();
   const frameId = useId();
+  const heading = useRef<HTMLHeadingElement>(null);
+  const section = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!afterPayment) return;
+    // This component is mounted only after the private API confirms payment.
+    // Focus the next step once, without stealing focus on status refreshes.
+    heading.current?.focus({ preventScroll: true });
+    section.current?.scrollIntoView({ block: "start", behavior: "instant" });
+  }, [afterPayment]);
 
   return (
-    <section className={styles.card} aria-labelledby={headingId}>
+    <section
+      ref={section}
+      id={afterPayment ? "registro-aportante" : undefined}
+      className={styles.card}
+      aria-labelledby={headingId}
+    >
+      {afterPayment && (
+        <ol
+          className={styles.steps}
+          aria-label={es ? "Pasos de tu aporte" : "Your gift steps"}
+        >
+          <li>
+            <CheckCircle2 size={22} aria-hidden="true" />
+            {es ? "1. Pago aprobado" : "1. Payment approved"}
+          </li>
+          <li aria-current="step">
+            <ClipboardList size={22} aria-hidden="true" />
+            {es ? "2. Registro de aportante" : "2. Contributor registration"}
+          </li>
+        </ol>
+      )}
       <div className={styles.heading}>
         <span className={styles.icon} aria-hidden="true">
           <ClipboardList size={28} />
@@ -31,22 +63,22 @@ export function ContributorRegistration({
           <span className={styles.eyebrow}>
             {es ? "TRANSPARENCIA Y REGISTRO" : "TRANSPARENCY AND REGISTRATION"}
           </span>
-          <h2 id={headingId}>
+          <h2
+            ref={heading}
+            id={headingId}
+            tabIndex={afterPayment ? -1 : undefined}
+          >
             {es
-              ? "Un último paso importante para la transparencia"
-              : "One last important step for transparency"}
+              ? "Completa el registro de tu aporte"
+              : "Complete your gift registration"}
           </h2>
         </div>
       </div>
 
       <p className={styles.intro}>
-        {testMode
-          ? es
-            ? "Aquí puedes revisar el formulario oficial de la fundación para el registro de participantes y la declaración de origen de fondos."
-            : "You can review the foundation’s official form for participant registration and the declaration of source of funds here."
-          : es
-            ? "Para registrar tu aporte y tramitar tu certificado, si lo solicitaste, la fundación requiere que completes este formulario de registro de participantes y declaración de origen de fondos (SARLAFT)."
-            : "To register your gift and process a certificate, if requested, the foundation requires you to complete this participant registration and declaration of source of funds form (SARLAFT)."}
+        {es
+          ? "El siguiente paso es completar el formulario oficial de participantes y declaración de origen de fondos (SARLAFT). Llena todos los campos obligatorios y pulsa «Enviar» al final del formulario."
+          : "Next, complete the foundation’s participant registration and declaration of source of funds form (SARLAFT). Fill in all required fields and select “Submit” at the end of the form."}
       </p>
 
       {testMode && (
@@ -54,23 +86,17 @@ export function ContributorRegistration({
           <Info size={22} aria-hidden="true" />
           <p>
             <strong>
-              {es ? "Vista previa · Aporte de prueba" : "Preview · Test gift"}
+              {es
+                ? "Formulario real · Aporte de prueba"
+                : "Real form · Test gift"}
             </strong>
             {es
-              ? "Puedes revisar el formulario, pero no lo rellenes ni envíes datos reales durante esta prueba."
-              : "You can review the form, but do not fill it in or submit real information during this test."}
+              ? "En Sandbox revisa este paso sin enviar datos reales ni ficticios al registro de la fundación."
+              : "In Sandbox, review this step without submitting real or fictitious information to the foundation’s register."}
           </p>
         </div>
       )}
 
-      <div className={styles.details}>
-        <span>{es ? "Formulario de la fundación" : "Foundation’s form"}</span>
-        <span>{es ? "Disponible en español" : "Available in Spanish"}</span>
-      </div>
-      <p className={styles.paymentNote}>
-        {es ? "Medio de pago: " : "Payment method: "}
-        {provider === "paypal" ? "PayPal" : "Wompi"}
-      </p>
       {!es && (
         <p className={styles.paymentNote}>
           The foundation’s form is currently available in Spanish. Contact us if
@@ -84,31 +110,12 @@ export function ContributorRegistration({
           target="_blank"
           rel="noopener noreferrer"
         >
-          {es ? "Abrir en otra pestaña" : "Open in another tab"}
+          {es
+            ? "¿No ves el formulario? Ábrelo en otra pestaña"
+            : "Can’t see the form? Open it in another tab"}
           <ExternalLink size={18} aria-hidden="true" />
         </a>
       </div>
-
-      <p className={styles.paymentNote}>
-        <a href="mailto:certificados@fundacionalmaarcoiris.org">
-          {es
-            ? "Solicitar certificado de donación"
-            : "Request a donation certificate"}
-        </a>
-        {testMode &&
-          (es
-            ? " · En Sandbox no se emiten certificados tributarios."
-            : " · Sandbox gifts do not receive tax certificates.")}
-      </p>
-
-      <p className={styles.privacy}>
-        {es
-          ? "El formulario se aloja en Google Forms. Si lo completas y lo envías, tus respuestas se remiten al formulario de la fundación en Google."
-          : "This form is hosted on Google Forms. If you complete and submit it, your answers are sent to the foundation’s form on Google."}{" "}
-        <a href={href(lang, "privacy")}>
-          {es ? "Consultar privacidad" : "Read about privacy"}
-        </a>
-      </p>
 
       <div id={frameId}>
         {
@@ -121,12 +128,29 @@ export function ContributorRegistration({
                   : "Fundación Alma Arcoíris participant registration and declaration of source of funds (in Spanish)"
               }
               lang="es"
-              loading="lazy"
+              loading={afterPayment ? "eager" : "lazy"}
               referrerPolicy="no-referrer"
             />
           </div>
         }
       </div>
+      <p className={styles.completion}>
+        {es
+          ? "El registro se envía con el botón «Enviar» de Google Forms. Abrir esta página no confirma que hayas completado el formulario."
+          : "Use the “Submit” button in Google Forms to send your registration. Opening this page does not confirm that the form has been completed."}
+      </p>
+      <div className={styles.details}>
+        <span>{provider === "paypal" ? "PayPal" : "Wompi"}</span>
+        <span>{es ? "Formulario en español" : "Form in Spanish"}</span>
+      </div>
+      <p className={styles.privacy}>
+        {es
+          ? "Tus respuestas se envían al formulario de la fundación en Google."
+          : "Your answers are sent to the foundation’s form on Google."}{" "}
+        <a href={href(lang, "privacy")}>
+          {es ? "Consultar privacidad" : "Read about privacy"}
+        </a>
+      </p>
     </section>
   );
 }

@@ -113,6 +113,7 @@ export function DonationResult({
     }
   }
   const approved = gift?.status === "APPROVED";
+  const showRegistration = !manage && approved && !gift?.cancelled && !error;
   const failed = ["DECLINED", "ERROR", "VOIDED"].includes(gift?.status ?? "");
   const title = gift?.cancelled
     ? es
@@ -186,6 +187,20 @@ export function DonationResult({
               ? "Todavía no tenemos una aprobación confirmada. Consulta el estado antes de iniciar otro aporte."
               : "Approval has not been confirmed yet. Check the status before starting another gift."}
           </p>
+        )}
+        {showRegistration && (
+          <div className="gift-registration-next">
+            <p>
+              {es
+                ? "Tu pago fue aprobado. Ahora completa el registro de tu aporte en el formulario de la fundación."
+                : "Your payment was approved. Now complete your gift registration in the foundation’s form."}
+            </p>
+            <a className="button purple full" href="#registro-aportante">
+              {es
+                ? "Ir al formulario de registro"
+                : "Go to the registration form"}
+            </a>
+          </div>
         )}
         {gift?.frequency === "monthly" && !gift.cancelled && (
           <>
@@ -268,7 +283,7 @@ export function DonationResult({
             {error}
           </p>
         )}
-        {identity && (
+        {!showRegistration && identity && (
           <button className="button purple" disabled={busy} onClick={refresh}>
             <RefreshCw size={18} />
             {busy
@@ -280,12 +295,16 @@ export function DonationResult({
                 : "Refresh status"}
           </button>
         )}
-        <a className="payment-home-link" href={href(lang, "home")}>
-          {es ? "Volver al inicio" : "Back to home"}
-        </a>
-        <GiftSupport lang={lang} />
+        {!showRegistration && (
+          <>
+            <a className="payment-home-link" href={href(lang, "home")}>
+              {es ? "Volver al inicio" : "Back to home"}
+            </a>
+            <GiftSupport lang={lang} />
+          </>
+        )}
       </div>
-      {!manage && approved && !gift?.cancelled && !error && (
+      {showRegistration && (
         <ApprovedGiftFollowUp
           lang={lang}
           provider="wompi"

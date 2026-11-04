@@ -101,6 +101,7 @@ export function PayPalResult({
     }
   }
   const paid = gift?.status === "COMPLETED";
+  const showRegistration = !manage && paid && !gift?.cancelled && !error;
   const labels: Record<string, string> = {
     general: es ? "Donde más se necesite" : "Where it is needed most",
     "el-cairo": "El Cairo",
@@ -261,7 +262,21 @@ export function PayPalResult({
             {error}
           </p>
         )}
-        {identity && (
+        {showRegistration && (
+          <div className="gift-registration-next">
+            <p>
+              {es
+                ? "Tu pago fue aprobado. Ahora completa el registro de tu aporte en el formulario de la fundación."
+                : "Your payment was approved. Now complete your gift registration in the foundation’s form."}
+            </p>
+            <a className="button purple full" href="#registro-aportante">
+              {es
+                ? "Ir al formulario de registro"
+                : "Go to the registration form"}
+            </a>
+          </div>
+        )}
+        {!showRegistration && identity && (
           <button className="button purple" disabled={busy} onClick={refresh}>
             <RefreshCw size={18} />
             {busy
@@ -273,12 +288,16 @@ export function PayPalResult({
                 : "Refresh status"}
           </button>
         )}
-        <a className="payment-home-link" href={href(lang, "home")}>
-          {es ? "Volver al inicio" : "Back to home"}
-        </a>
-        <GiftSupport lang={lang} />
+        {!showRegistration && (
+          <>
+            <a className="payment-home-link" href={href(lang, "home")}>
+              {es ? "Volver al inicio" : "Back to home"}
+            </a>
+            <GiftSupport lang={lang} />
+          </>
+        )}
       </div>
-      {!manage && paid && !gift?.cancelled && !error && (
+      {showRegistration && (
         <ApprovedGiftFollowUp
           lang={lang}
           provider="paypal"

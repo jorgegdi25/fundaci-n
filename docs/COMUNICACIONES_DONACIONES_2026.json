@@ -111,6 +111,16 @@
     "abandonedAttempts": "Pendiente de captura inicial con consentimiento y regla de seguimiento; no se envían alertas de abandono por un simple cierre del navegador",
     "sarLaftMatching": "Pendiente conciliar las respuestas reales del formulario con referencias de pago; el iframe no demuestra envío del formulario"
   },
+  "postPaymentRegistration": {
+    "request": "Cliente solicita que el formulario sea el siguiente paso visible después del pago, el 4 de noviembre de 2026.",
+    "providers": ["Wompi", "PayPal"],
+    "languages": ["es", "en"],
+    "flow": "Solo después de la aprobación de la API privada, se enfoca el encabezado del registro y se desplaza la página al formulario oficial. Indicador: pago aprobado y registro de aportante como paso actual.",
+    "hierarchy": "El formulario precede al certificado y la comunidad. Las opciones secundarias quedan en un desplegable después del registro.",
+    "completion": "La persona debe pulsar Enviar dentro de Google Forms. No se deduce que completó el formulario por abrir el iframe ni se cambia el estado del pago.",
+    "sandbox": "La vista previa conserva el aviso de no enviar datos reales ni ficticios al formulario real de la fundación.",
+    "formLanguage": "El formulario de la fundación continúa en español; la interfaz explica esta disponibilidad en inglés."
+  },
   "validation": {
     "typecheck": "passed",
     "tests": "39 passed, including temporary credential cleanup, mocked Resend transport and Apps Script contract",

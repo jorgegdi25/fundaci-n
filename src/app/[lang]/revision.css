@@ -890,6 +890,30 @@
   max-width: 750px;
   margin: 24px auto 0;
 }
+.gift-registration-next {
+  margin-top: 1.5rem;
+}
+.gift-registration-next .button {
+  margin-top: 1rem;
+  white-space: normal;
+}
+.gift-extra-options {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+.gift-extra-options > summary {
+  color: var(--purple-dark);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.6;
+  cursor: pointer;
+}
+.gift-registration-footer {
+  padding: 0 1.25rem;
+}
 .gift-certificate,
 .gift-community,
 .gift-share {
