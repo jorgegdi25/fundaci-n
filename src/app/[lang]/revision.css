@@ -110,14 +110,22 @@
   padding: 0;
 }
 .full-photo-hero {
+  --home-hero-min-height: 500px;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: end;
-  min-height: clamp(500px, calc(100svh - 147px), 780px);
+  min-height: clamp(
+    var(--home-hero-min-height),
+    calc(100svh - var(--home-header-height, 147px)),
+    780px
+  );
   overflow: hidden;
   background: #26352d;
   isolation: isolate;
+}
+body:has(> .donation-review-banner) .full-photo-hero {
+  --home-header-height: 202px;
 }
 .full-photo-hero > .photo {
   width: 100%;
@@ -524,7 +532,7 @@
     grid-template-columns: 1fr;
   }
   .full-photo-hero {
-    min-height: clamp(570px, calc(100svh - 147px), 780px);
+    --home-hero-min-height: 570px;
   }
   .hero-purpose {
     gap: 32px;
