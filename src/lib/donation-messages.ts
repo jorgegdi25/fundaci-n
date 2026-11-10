@@ -1,5 +1,18 @@
+import { donationEmail } from "./donations.ts";
+
 // Transactional copy based on the November client brief. No automatic tax
 // certificate, tax benefit or completed SARLAFT registration is promised.
+export const wompiTransactionStatuses = [
+  "PENDING",
+  "APPROVED",
+  "DECLINED",
+  "ERROR",
+  "VOIDED",
+] as const;
+export type WompiTransactionStatus = (typeof wompiTransactionStatuses)[number];
+type NoticeStatus = WompiTransactionStatus | "ABANDONED";
+type Audience = "donor" | "foundation";
+
 export type DonationNotice = {
   provider: "wompi" | "paypal";
   reference: string;
@@ -11,7 +24,21 @@ export type DonationNotice = {
   environment: "sandbox";
   email: string | null;
   occurredAt: string;
+  status?: NoticeStatus;
 };
+
+export function donationNoticeKey(gift: DonationNotice) {
+  const reference = `${gift.provider}/${gift.reference}`;
+  return !gift.status || gift.status === "APPROVED"
+    ? reference
+    : `${reference}/${gift.status.toLowerCase()}`;
+}
+
+function intendedAudience(status: NoticeStatus, audience: Audience) {
+  if (status === "APPROVED") return true;
+  return audience === (status === "ABANDONED" ? "foundation" : "donor");
+}
+
 export function validNotice(input: unknown): DonationNotice | null {
   if (!input || typeof input !== "object" || Array.isArray(input)) return null;
   const v = input as Record<string, unknown>;
@@ -32,10 +59,13 @@ export function validNotice(input: unknown): DonationNotice | null {
     v.environment !== "sandbox" ||
     typeof v.occurredAt !== "string" ||
     !Number.isFinite(Date.parse(v.occurredAt)) ||
-    (v.email !== null &&
-      (typeof v.email !== "string" ||
-        v.email.length > 254 ||
-        !/^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(v.email)))
+    (v.email !== null && donationEmail(v.email) !== v.email) ||
+    (v.status !== undefined &&
+      (v.provider !== "wompi" ||
+        ![...wompiTransactionStatuses, "ABANDONED"].includes(
+          v.status as NoticeStatus,
+        ))) ||
+    (v.status === "ABANDONED" && (v.frequency !== "monthly" || !v.email))
   )
     return null;
   // Whitelist fields; never retain raw provider responses, tokens or card data.
@@ -50,6 +80,7 @@ export function validNotice(input: unknown): DonationNotice | null {
     environment: "sandbox",
     email: v.email,
     occurredAt: new Date(v.occurredAt).toISOString(),
+    ...(v.status !== undefined ? { status: v.status } : {}),
   } as DonationNotice;
 }
 const escape = (value: string) =>
@@ -60,13 +91,11 @@ const escape = (value: string) =>
         c
       ]!,
   );
-export function donationMessage(
-  input: DonationNotice,
-  audience: "donor" | "foundation",
-) {
+export function donationMessage(input: DonationNotice, audience: Audience) {
   const gift = validNotice(input);
   if (!gift) throw new Error("invalid_donation_notice");
   const es = gift.lang === "es";
+  const status = gift.status ?? "APPROVED";
   const names = {
     general: es ? "Fondo General" : "General Fund",
     "el-cairo": "El Cairo",
@@ -78,7 +107,7 @@ export function donationMessage(
     style: "currency",
     currency: gift.currency,
   }).format(gift.amountMinor / 100);
-  const title =
+  const approvedTitle =
     audience === "foundation"
       ? es
         ? "Aporte de prueba confirmado"
@@ -86,6 +115,54 @@ export function donationMessage(
       : es
         ? "¡Gracias de corazón! Tu aporte de prueba fue aprobado."
         : "Thank you from the heart! Your test gift was approved.";
+  const statusCopy = {
+    PENDING: es
+      ? [
+          "Tu aporte de prueba está en validación.",
+          "Wompi sigue procesando tu aporte. Consulta el estado antes de intentar otro pago.",
+        ]
+      : [
+          "Your test gift is being verified.",
+          "Wompi is still processing your gift. Check its status before making another payment.",
+        ],
+    DECLINED: es
+      ? [
+          "Tu aporte de prueba fue rechazado.",
+          "Wompi rechazó el aporte. Si necesitas ayuda para volver a intentarlo, escríbenos.",
+        ]
+      : [
+          "Your test gift was declined.",
+          "Wompi declined the gift. Contact us if you need help trying again.",
+        ],
+    ERROR: es
+      ? [
+          "Tu aporte de prueba no se completó.",
+          "Wompi informó un error al procesar el aporte. Si necesitas ayuda, escríbenos.",
+        ]
+      : [
+          "Your test gift could not be completed.",
+          "Wompi reported a processing error. Contact us if you need help.",
+        ],
+    VOIDED: es
+      ? [
+          "Tu aporte de prueba fue anulado.",
+          "Wompi confirmó la anulación del aporte. Si tienes preguntas, escríbenos.",
+        ]
+      : [
+          "Your test gift was voided.",
+          "Wompi confirmed that the gift was voided. Contact us if you have questions.",
+        ],
+    ABANDONED: es
+      ? [
+          "Un aporte mensual de prueba quedó sin completar.",
+          "Venció el plazo para autorizar este aporte. El intento quedó registrado sin iniciar un cobro.",
+        ]
+      : [
+          "A test monthly gift was left incomplete.",
+          "The time to authorize this gift expired. The attempt was recorded without starting a charge.",
+        ],
+  };
+  const title = status === "APPROVED" ? approvedTitle : statusCopy[status][0];
   const warning = es
     ? "PRUEBA SANDBOX: no se ha movido dinero real. Este mensaje no es un certificado tributario."
     : "SANDBOX TEST: no real money has moved. This message is not a tax certificate.";
@@ -109,14 +186,16 @@ export function donationMessage(
     [es ? "Referencia" : "Reference", gift.reference],
   ];
   const explanation =
-    audience === "foundation"
-      ? es
-        ? "La pasarela confirmó este aporte de prueba. El pago y el registro SARLAFT se verifican por separado; este mensaje no acredita que el formulario esté completado."
-        : "The payment provider confirmed this test gift. Payment and SARLAFT registration are verified separately; this message does not confirm that the form has been completed."
-      : es
-        ? "Para registrar una donación real y tramitar un certificado, si lo solicitaste, la fundación requiere completar el formulario de participantes y declaración de origen de fondos (SARLAFT). En esta prueba puedes revisar el formulario, sin enviar datos ficticios ni información personal al registro real."
-        : "To register a real gift and process a certificate, if requested, the foundation requires the participant registration and declaration of source of funds form (SARLAFT). For this test, review the form without submitting fictitious or personal information to the real register. The current form is in Spanish.";
-  const links = [
+    status !== "APPROVED"
+      ? statusCopy[status][1]
+      : audience === "foundation"
+        ? es
+          ? "La pasarela confirmó este aporte de prueba. El pago y el registro SARLAFT se verifican por separado; este mensaje no acredita que el formulario esté completado."
+          : "The payment provider confirmed this test gift. Payment and SARLAFT registration are verified separately; this message does not confirm that the form has been completed."
+        : es
+          ? "Para registrar una donación real y tramitar un certificado, si lo solicitaste, la fundación requiere completar el formulario de participantes y declaración de origen de fondos (SARLAFT). En esta prueba puedes revisar el formulario, sin enviar datos ficticios ni información personal al registro real."
+          : "To register a real gift and process a certificate, if requested, the foundation requires the participant registration and declaration of source of funds form (SARLAFT). For this test, review the form without submitting fictitious or personal information to the real register. The current form is in Spanish.";
+  const approvedLinks = [
     [
       es ? "Revisar formulario SARLAFT" : "Review the SARLAFT form",
       "https://forms.gle/7DTsXPsm93ZMJby17",
@@ -125,6 +204,9 @@ export function donationMessage(
       es ? "Unirme a la comunidad" : "Join the community",
       "https://chat.whatsapp.com/Kd38mXQ7kYgB1jdDkr6QBt",
     ],
+  ];
+  const links = [
+    ...(status === "APPROVED" ? approvedLinks : []),
     [
       es ? "Contactar por WhatsApp" : "Contact us on WhatsApp",
       "https://wa.me/573044989707",
@@ -150,7 +232,7 @@ export function donationEmailSettings(env: Record<string, string | undefined>) {
   // Separate opt-in from payment credentials. A configured API key alone never
   // enables mail. This implementation only permits a sandbox test recipient.
   const email = (v: string | undefined): v is string =>
-    Boolean(v && v.length <= 254 && /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(v));
+    typeof v === "string" && donationEmail(v) === v;
   if (
     env.DONATION_EMAILS_ENABLED !== "sandbox" ||
     !env.RESEND_API_KEY ||
@@ -170,7 +252,7 @@ export function donationEmailSettings(env: Record<string, string | undefined>) {
 
 export async function deliverDonationEmail(
   gift: DonationNotice,
-  audience: "donor" | "foundation",
+  audience: Audience,
   env: Record<string, string | undefined>,
   fetcher: typeof fetch = fetch,
 ) {
@@ -178,7 +260,10 @@ export async function deliverDonationEmail(
     valid = validNotice(gift);
   if (!c || !valid || Date.parse(valid.occurredAt) < c.start)
     return { status: "disabled" as const };
-  if (audience === "donor" && !valid.email)
+  if (
+    !intendedAudience(valid.status ?? "APPROVED", audience) ||
+    (audience === "donor" && !valid.email)
+  )
     return { status: "skipped" as const };
   const response = await fetcher("https://api.resend.com/emails", {
     method: "POST",
@@ -187,7 +272,7 @@ export async function deliverDonationEmail(
     headers: {
       Authorization: `Bearer ${c.key}`,
       "Content-Type": "application/json",
-      "Idempotency-Key": `alma/${valid.provider}/${valid.reference}/${audience}/v1`,
+      "Idempotency-Key": `alma/${donationNoticeKey(valid)}/${audience}/v1`,
     },
     body: JSON.stringify({
       from: `Fundación Alma Arcoíris <${c.from}>`,

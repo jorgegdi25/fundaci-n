@@ -19,11 +19,13 @@ export function ContributorRegistration({
   provider,
   testMode = true,
   afterPayment = false,
+  project,
 }: {
   lang: Lang;
   provider: "wompi" | "paypal";
   testMode?: boolean;
   afterPayment?: boolean;
+  project?: { name: string; href: string };
 }) {
   const es = lang === "es";
   const headingId = useId();
@@ -81,10 +83,18 @@ export function ContributorRegistration({
         </div>
       </div>
 
+      {project && (
+        <p className={styles.paymentNote}>
+          {es
+            ? "Gracias por elegir apoyar a "
+            : "Thank you for choosing to support "}
+          <a href={project.href}>{project.name}</a>.
+        </p>
+      )}
       <p className={styles.intro}>
         {es
-          ? "El siguiente paso es completar el formulario oficial de participantes y declaración de origen de fondos (SARLAFT). Llena todos los campos obligatorios y pulsa «Enviar» al final del formulario."
-          : "Next, complete the foundation’s participant registration and declaration of source of funds form (SARLAFT). Fill in all required fields and select “Submit” at the end of the form."}
+          ? "Por favor, completa el formulario de registro y declaración de origen de fondos (SARLAFT). En un aporte real, estos datos permiten a la fundación conciliar tu donación y tramitar el certificado si lo solicitas."
+          : "Please complete the registration and declaration of source of funds form (SARLAFT). For a real gift, these details let the foundation match your registration to your donation and process a certificate if you request one."}
       </p>
 
       {testMode && (

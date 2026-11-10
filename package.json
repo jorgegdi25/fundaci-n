@@ -34,7 +34,8 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sanity": "^6.14.1",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.5.3",
+    "workflow": "5.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.20.3",

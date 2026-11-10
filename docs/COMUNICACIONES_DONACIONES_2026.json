@@ -108,8 +108,15 @@
     "community": "Formulario, API y Apps Script preparados; falta configurar el receptor de la fundación y comprobar sus encabezados",
     "photoIndex": "La hoja de fotografías no es la base de registros",
     "donations": "Receptor Apps Script preparado para pagos verificados; falta desplegarlo y conectarlo. No afirma registro SARLAFT completado.",
-    "abandonedAttempts": "Pendiente de captura inicial con consentimiento y regla de seguimiento; no se envían alertas de abandono por un simple cierre del navegador",
+    "abandonedAttempts": "La captura y los avisos internos de intentos mensuales se gestionan en la base de pruebas y Resend. El registro de estos intentos en Sheets sigue pendiente.",
     "sarLaftMatching": "Pendiente conciliar las respuestas reales del formulario con referencias de pago; el iframe no demuestra envío del formulario"
+  },
+  "wompiFollowUp": {
+    "scope": "Vista previa de pruebas. El primer paso registra el correo con autorización para aportes únicos y mensuales.",
+    "abandonment": "Vercel Workflows comprueba al vencer una hora. Solo avisa si el aporte mensual no inició autorización, no tiene transacción y no fue cancelado. El aviso es interno y se dirige al buzón de pruebas configurado.",
+    "statuses": "Wompi: en validación, aprobado, rechazado, error y anulado. Cada estado tiene una clave independiente. Solo aprobación y abandono generan aviso interno; abandono no genera correo al donante.",
+    "recovery": "El endpoint privado de comunicaciones busca también intentos mensuales vencidos. La consulta de estado puede recuperar avisos finales de los nuevos aportes registrados si la notificación llegó a un despliegue anterior.",
+    "verification": "Consultas y envíos simulados con PostgreSQL en memoria y datos ficticios. Entrega real y ejecución diferida por confirmar con una prueba de Wompi y el buzón de pruebas."
   },
   "postPaymentRegistration": {
     "request": "Cliente solicita que el formulario sea el siguiente paso visible después del pago, el 4 de noviembre de 2026.",

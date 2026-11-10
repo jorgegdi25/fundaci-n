@@ -1,5 +1,8 @@
 import { secureEqual } from "@/lib/wompi-security";
-import { flushDonationNotices } from "@/lib/server/donation-communications";
+import {
+  flushDonationNotices,
+  queueAbandonedMonthlyNotices,
+} from "@/lib/server/donation-communications";
 
 export const maxDuration = 300;
 export async function GET(request: Request) {
@@ -10,6 +13,7 @@ export async function GET(request: Request) {
   )
     return new Response("Unauthorized", { status: 401 });
   try {
+    await queueAbandonedMonthlyNotices();
     return Response.json(await flushDonationNotices(), {
       headers: { "Cache-Control": "no-store" },
     });

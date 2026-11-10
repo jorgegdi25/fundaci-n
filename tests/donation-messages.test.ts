@@ -146,3 +146,70 @@ test("an unsuccessful provider request never reports delivery or exposes its res
     /^Error: donation_email_delivery_failed$/,
   );
 });
+
+test("Wompi status changes have separate messages and never reuse an approval key", async () => {
+  const sent: { subject: string; text: string; key: string | null }[] = [];
+  const mock: typeof fetch = async (_url, options) => {
+    const body = JSON.parse(String(options?.body));
+    assert.deepEqual(body.to, [env.DONATION_TEST_RECIPIENT]);
+    sent.push({
+      ...body,
+      key: new Headers(options?.headers).get("Idempotency-Key"),
+    });
+    return Response.json({ id: "fake-resend-id" });
+  };
+
+  for (const status of ["PENDING", "DECLINED", "ERROR", "VOIDED"] as const) {
+    await deliverDonationEmail({ ...gift, status }, "donor", env, mock);
+    assert.equal(
+      (await deliverDonationEmail({ ...gift, status }, "foundation", env, mock))
+        .status,
+      "skipped",
+    );
+  }
+  await deliverDonationEmail(
+    { ...gift, status: "APPROVED" },
+    "donor",
+    env,
+    mock,
+  );
+  await deliverDonationEmail(gift, "donor", env, mock);
+  assert.equal(sent.length, 6);
+  assert.equal(new Set(sent.map(({ key }) => key)).size, 5);
+  assert.equal(sent[4].key, sent[5].key);
+  assert.match(sent[0].subject, /validación/);
+  assert.match(sent[1].subject, /rechazado/);
+  assert.ok(sent.slice(0, 4).every(({ text }) => !text.includes("forms.gle")));
+  assert.match(sent[4].text, /forms\.gle/);
+});
+
+test("only a monthly Wompi abandonment can send an internal notice", async () => {
+  const abandoned = { ...gift, status: "ABANDONED" } as const;
+  assert.equal(validNotice({ ...abandoned, frequency: "once" }), null);
+  assert.equal(
+    validNotice({ ...abandoned, provider: "paypal", currency: "USD" }),
+    null,
+  );
+  assert.equal(validNotice({ ...abandoned, email: null }), null);
+  assert.equal(
+    (
+      await deliverDonationEmail(abandoned, "donor", env, async () => {
+        throw new Error("unexpected donor email");
+      })
+    ).status,
+    "skipped",
+  );
+  await deliverDonationEmail(
+    abandoned,
+    "foundation",
+    env,
+    async (_url, options) => {
+      const body = JSON.parse(String(options?.body));
+      assert.deepEqual(body.to, [env.DONATION_TEST_RECIPIENT]);
+      assert.match(body.subject, /quedó sin completar/);
+      assert.match(body.text, /sin iniciar un cobro/);
+      assert.ok(!body.text.includes(gift.email!));
+      return Response.json({ id: "fake-resend-id" });
+    },
+  );
+});

@@ -110,10 +110,12 @@ export function ApprovedGiftFollowUp({
   lang,
   provider,
   testMode,
+  project,
 }: {
   lang: Lang;
   provider: "wompi" | "paypal";
   testMode: boolean;
+  project?: { name: string; href: string };
 }) {
   const es = lang === "es";
   const [shareMessage, setShareMessage] = useState("");
@@ -152,6 +154,7 @@ export function ApprovedGiftFollowUp({
         lang={lang}
         provider={provider}
         testMode={testMode}
+        project={project}
         afterPayment
       />
       <details className="gift-extra-options">

@@ -74,14 +74,19 @@ export function DonationCheckout({
   }, []);
   const showError = (e: unknown) => {
     const pending = e instanceof Error && e.message === "confirmation_pending";
+    const invalidEmail = e instanceof Error && e.message === "invalid_email";
     setError(
-      pending
+      invalidEmail
         ? es
-          ? "Wompi todavía no confirmó el resultado. Revisa el estado de tu aporte antes de volver a intentarlo."
-          : "Wompi has not confirmed the result. Check your gift status before trying again."
-        : es
-          ? "No pudimos continuar. Inténtalo más tarde o contacta a la fundación."
-          : "We could not continue. Try again later or contact the foundation.",
+          ? "Introduce un correo electrónico válido."
+          : "Enter a valid email address."
+        : pending
+          ? es
+            ? "Wompi todavía no confirmó el resultado. Revisa el estado de tu aporte antes de volver a intentarlo."
+            : "Wompi has not confirmed the result. Check your gift status before trying again."
+          : es
+            ? "No pudimos continuar. Inténtalo más tarde o contacta a la fundación."
+            : "We could not continue. Try again later or contact the foundation.",
     );
     setBusy(false);
   };
@@ -95,6 +100,7 @@ export function DonationCheckout({
         frequency,
         cause,
         lang,
+        email,
         agreeFoundation: foundation,
       });
       if (!monthly) {
@@ -104,7 +110,11 @@ export function DonationCheckout({
         window.location.assign(url.href);
         return;
       }
-      sessionStorage.setItem(`alma-gift-${created.id}`, created.token);
+      try {
+        sessionStorage.setItem(`alma-gift-${created.id}`, created.token);
+      } catch {
+        // The private session cookie still lets this browser manage the gift.
+      }
       setIntent(created);
       setBusy(false);
     } catch (e) {
@@ -183,44 +193,55 @@ export function DonationCheckout({
           : "Test mode · No real money is charged. Use test data only."}
       </p>
       <form onSubmit={intent ? openAuthorization : prepare}>
-        {monthly && (
+        {!intent && (
           <div className="field">
             <label htmlFor={inputId}>
               {es
-                ? "Correo para mantenerte informado sobre los avances del proyecto"
-                : "Email to keep you informed about project progress"}
+                ? "Correo electrónico para registrar tu donación"
+                : "Email address to register your donation"}
             </label>
             <input
               id={inputId}
               type="email"
               autoComplete="email"
+              maxLength={254}
+              aria-describedby={`${inputId}-help`}
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={busy}
             />
+            <p id={`${inputId}-help`} className="small-note">
+              {es
+                ? "Al continuar, guardaremos el correo con tu intento de donación para poder consultar su estado."
+                : "When you continue, we’ll save the email with your donation attempt so we can check its status."}
+            </p>
           </div>
         )}
-        <label className="checkout-consent">
-          <input
-            type="checkbox"
-            required
-            checked={foundation}
-            onChange={(e) => setFoundation(e.target.checked)}
-          />{" "}
-          <span>
-            {es ? "He leído las " : "I have read the "}
-            <a href={href(lang, "terms")} target="_blank" rel="noopener">
-              {es ? "condiciones de donación" : "donation terms"}
-            </a>
-            {es ? " y la " : " and "}
-            <a href={href(lang, "privacy")} target="_blank" rel="noopener">
-              {es ? "política de privacidad" : "privacy policy"}
-            </a>
-            .
-          </span>
-        </label>
-        {monthly && (
+        {!intent && (
+          <label className="checkout-consent">
+            <input
+              type="checkbox"
+              required
+              checked={foundation}
+              onChange={(e) => setFoundation(e.target.checked)}
+            />{" "}
+            <span>
+              {es ? "He leído las " : "I have read the "}
+              <a href={href(lang, "terms")} target="_blank" rel="noopener">
+                {es ? "condiciones de donación" : "donation terms"}
+              </a>
+              {es ? " y la " : " and "}
+              <a href={href(lang, "privacy")} target="_blank" rel="noopener">
+                {es ? "política de privacidad" : "privacy policy"}
+              </a>
+              {es
+                ? " y autorizo guardar mi correo con este intento."
+                : " and authorize storing my email with this attempt."}
+            </span>
+          </label>
+        )}
+        {intent && (
           <label className="checkout-consent">
             <input
               type="checkbox"
@@ -230,12 +251,12 @@ export function DonationCheckout({
             />
             <span>
               {es
-                ? `Autorizo un aporte de prueba de $${new Intl.NumberFormat("es-CO").format(amount)} COP ahora y cada mes, hasta que lo cancele. Recibiré un enlace para gestionar mi aporte.`
-                : `I authorize a test gift of COP ${new Intl.NumberFormat("en-US").format(amount)} now and each month until I cancel. I will receive a link to manage my gift.`}
+                ? `Autorizo un aporte de prueba de $${new Intl.NumberFormat("es-CO").format(amount)} COP ahora y cada mes, hasta que lo cancele.`
+                : `I authorize a test gift of COP ${new Intl.NumberFormat("en-US").format(amount)} now and each month until I cancel.`}
             </span>
           </label>
         )}
-        {monthly && <MonthlyCancellationNotice lang={lang} testMode />}
+        {intent && <MonthlyCancellationNotice lang={lang} testMode />}
         {intent?.contracts && (
           <>
             <label className="checkout-consent">

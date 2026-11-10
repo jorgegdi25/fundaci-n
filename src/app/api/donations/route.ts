@@ -1,4 +1,8 @@
+import { after } from "next/server";
+import { start } from "workflow/api";
 import { sandboxConfig } from "@/lib/wompi-security";
+import { donationEmailSettings } from "@/lib/donation-messages";
+import { checkAbandonedMonthlyGift } from "@/lib/workflows/abandoned-monthly-gift";
 import { requestDonationChannel } from "@/lib/server/donation-channel";
 import { legacyDonationUrl } from "@/lib/donation-channel";
 import {
@@ -50,11 +54,27 @@ export async function POST(request: Request) {
     await limited(request, String(action), action === "status" ? 120 : 15);
     let data: unknown, cookie: string | undefined;
     if (action === "create") {
-      const intent = await createIntent(body, request.headers.get("origin")!);
+      const { reference, ...intent } = await createIntent(
+        body,
+        request.headers.get("origin")!,
+      );
       cookie = cookieHeader(intent.id, intent.token, request);
       // The cookie keeps the browser's result lookup private. The access token is
       // also provided for the donor's own monthly cancellation link.
       data = intent;
+      if (
+        reference &&
+        process.env.VERCEL_ENV === "preview" &&
+        donationEmailSettings(process.env)
+      ) {
+        after(async () => {
+          try {
+            await start(checkAbandonedMonthlyGift, [reference]);
+          } catch {
+            console.error("wompi_abandonment_schedule_failed");
+          }
+        });
+      }
     } else if (action === "authorize")
       data = await finalizeMonthly(request, body);
     else if (action === "status") data = await intentStatus(request, body);

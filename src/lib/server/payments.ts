@@ -11,7 +11,15 @@ import {
   colombiaDateParts,
   sameContract,
 } from "../wompi-security";
-import { validateDonation } from "../donations";
+import {
+  donationEmail,
+  monthlyAuthorizationMinutes,
+  validateDonation,
+} from "../donations";
+import {
+  wompiTransactionStatuses,
+  type WompiTransactionStatus,
+} from "../donation-messages";
 import { matchesOrigin } from "../request-security";
 import { queueDonationNotice } from "./donation-communications";
 
@@ -154,15 +162,19 @@ export async function createIntent(
     throw new PaymentError("invalid_language", 400);
   if (body.agreeFoundation !== true)
     throw new PaymentError("consent_required", 400);
+  const email = donationEmail(body.email);
+  if (!email) throw new PaymentError("invalid_email", 400);
   const c = config(),
     sql = database(),
     id = randomUUID(),
     token = randomBytes(32).toString("hex");
   const { amount, cause, frequency } = checked.donation;
   const contracts = frequency === "monthly" ? await merchantContracts() : null;
+  const acceptedAt = new Date().toISOString();
   const consent = {
     foundation: `/${body.lang}/${body.lang === "es" ? "condiciones" : "terms"}`,
-    acceptedAt: new Date().toISOString(),
+    acceptedAt,
+    emailCapturedAt: acceptedAt,
     version: "sandbox-2026-10-06",
     ...(contracts
       ? {
@@ -173,17 +185,19 @@ export async function createIntent(
         }
       : {}),
   };
-  await sql`INSERT INTO donation_intents(id,access_hash,amount,cause,frequency,lang,consent)
-    VALUES (${id},${sha256(token)},${amount},${cause},${frequency},${body.lang},${JSON.stringify(
-      consent,
-    )}::jsonb)`;
   const reference = `ALMA-${id}-0`;
-  await sql`INSERT INTO donation_attempts(reference,intent_id) VALUES (${reference},${id})`;
+  await sql`WITH created AS (
+    INSERT INTO donation_intents(id,access_hash,amount,cause,frequency,lang,email,consent)
+    VALUES (${id},${sha256(token)},${amount},${cause},${frequency},${body.lang},${email},${JSON.stringify(consent)}::jsonb)
+    RETURNING id
+  )
+  INSERT INTO donation_attempts(reference,intent_id) SELECT ${reference},id FROM created`;
   const resultPath = giftResultPath(body.lang, "wompi", id);
   if (frequency === "monthly")
     return {
       id,
       token,
+      reference,
       environment: "sandbox",
       publicKey: c.publicKey,
       contracts: {
@@ -221,6 +235,35 @@ export async function createIntent(
   };
 }
 
+async function queueWompiNotice(
+  intent: Record<string, any>,
+  reference: string,
+  status: WompiTransactionStatus,
+  occurredAt: string,
+  customerEmail?: unknown,
+) {
+  // Older payment attempts are eligible only for the original approval notice.
+  if (status !== "APPROVED" && !intent.consent?.emailCapturedAt) return;
+  try {
+    await queueDonationNotice({
+      provider: "wompi",
+      reference,
+      amountMinor: intent.amount * 100,
+      currency: "COP",
+      frequency: intent.frequency,
+      cause: intent.cause,
+      lang: intent.lang,
+      environment: intent.environment,
+      email: donationEmail(intent.email) ?? donationEmail(customerEmail),
+      occurredAt,
+      status,
+    });
+  } catch {
+    // A mail outage must not interrupt the payment or the recurring schedule.
+    console.error("wompi_notice_queue_failed");
+  }
+}
+
 export async function applyTransaction(
   transaction: Record<string, any>,
   timestamp = 0,
@@ -237,7 +280,7 @@ export async function applyTransaction(
     typeof reference !== "string" ||
     currency !== "COP" ||
     !Number.isSafeInteger(cents) ||
-    !["PENDING", "APPROVED", "DECLINED", "ERROR", "VOIDED"].includes(status)
+    !wompiTransactionStatuses.includes(status)
   )
     throw new PaymentError("invalid_transaction", 400);
   const sql = database();
@@ -251,32 +294,26 @@ export async function applyTransaction(
   const intentRows =
     await sql`SELECT * FROM donation_intents WHERE id=${rows[0].intent_id}`;
   const d = intentRows[0];
-  if (status === "APPROVED") {
-    await queueDonationNotice({
-      provider: "wompi",
-      reference,
-      amountMinor: cents,
-      currency,
-      frequency: d.frequency,
-      cause: d.cause,
-      lang: d.lang,
-      environment: d.environment,
-      email: transaction.customer_email ?? d.email ?? null,
-      occurredAt:
-        transaction.created_at ?? new Date(rows[0].due_at).toISOString(),
-    });
-  }
-  if (d.frequency !== "monthly") return;
-  if (status === "APPROVED") {
+  if (d.frequency === "monthly" && status === "APPROVED") {
     const due = new Date(rows[0].due_at),
       anchor = d.anchor_day ?? colombiaDateParts(due).day;
     const next = nextMonthlyDate(due, anchor).toISOString();
     await sql`UPDATE donation_intents SET subscription_state='active',anchor_day=${anchor},next_charge_at=${next}
       WHERE id=${d.id} AND cancelled_at IS NULL AND subscription_state IN ('pending','active')
       AND (next_charge_at IS NULL OR next_charge_at<=${next}::timestamptz)`;
-  } else if (["DECLINED", "ERROR", "VOIDED"].includes(status)) {
+  } else if (
+    d.frequency === "monthly" &&
+    ["DECLINED", "ERROR", "VOIDED"].includes(status)
+  ) {
     await sql`UPDATE donation_intents SET subscription_state='paused' WHERE id=${d.id} AND cancelled_at IS NULL`;
   }
+  await queueWompiNotice(
+    d,
+    reference,
+    status,
+    transaction.created_at ?? new Date(rows[0].due_at).toISOString(),
+    transaction.customer_email,
+  );
 }
 export async function reconcile(transactionId: string) {
   if (!/^[a-zA-Z0-9-]{1,100}$/.test(transactionId))
@@ -361,13 +398,13 @@ export async function finalizeMonthly(
   if (
     intent.frequency !== "monthly" ||
     intent.cancelled_at ||
-    new Date(intent.created_at).getTime() < Date.now() - 3600000
+    new Date(intent.created_at).getTime() <=
+      Date.now() - monthlyAuthorizationMinutes * 60_000
   )
     throw new PaymentError("expired_intent", 400);
+  const email = donationEmail(intent.email ?? body.email);
   if (
-    typeof body.email !== "string" ||
-    body.email.length > 254 ||
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email) ||
+    !email ||
     body.agreeMonthly !== true ||
     body.agreePolicy !== true ||
     body.agreePersonal !== true ||
@@ -391,8 +428,9 @@ export async function finalizeMonthly(
     throw new PaymentError("consent_required", 400);
   const sql = database();
   const lock =
-    await sql`UPDATE donation_intents SET source_state='creating',email=${body.email},consent=${JSON.stringify(
+    await sql`UPDATE donation_intents SET source_state='creating',email=${email},consent=${JSON.stringify(
       {
+        ...intent.consent,
         policyToken: body.policyToken,
         personalToken: body.personalToken,
         policy: intent.consent.policy,
@@ -403,13 +441,14 @@ export async function finalizeMonthly(
         acceptedAt: new Date().toISOString(),
         version: "sandbox-2026-10-06",
       },
-    )}::jsonb WHERE id=${intent.id} AND source_state='new' AND cancelled_at IS NULL RETURNING id`;
+    )}::jsonb WHERE id=${intent.id} AND source_state='new' AND cancelled_at IS NULL
+      AND created_at>now()-(${monthlyAuthorizationMinutes}::int * interval '1 minute') RETURNING id`;
   if (!lock.length) throw new PaymentError("already_processing", 409);
   try {
     const source = await provider("/payment_sources", {
       type: body.paymentType,
       token: body.paymentToken,
-      customer_email: body.email,
+      customer_email: email,
       acceptance_token: body.policyToken,
       accept_personal_auth: body.personalToken,
     });
@@ -417,7 +456,7 @@ export async function finalizeMonthly(
       source.status !== "AVAILABLE" ||
       !Number.isSafeInteger(source.id) ||
       source.id <= 0 ||
-      source.customer_email !== body.email ||
+      source.customer_email !== email ||
       source.type !== body.paymentType
     )
       throw new PaymentError("invalid_payment_source", 400);
@@ -468,8 +507,20 @@ export async function intentStatus(
     await reconcile(attempt.transaction_id);
   }
   const fresh = (
-    await sql`SELECT d.*,a.status FROM donation_intents d JOIN donation_attempts a ON a.intent_id=d.id WHERE d.id=${intent.id} ORDER BY a.cycle DESC LIMIT 1`
+    await sql`SELECT d.*,a.reference,a.status,a.transaction_id,a.due_at FROM donation_intents d JOIN donation_attempts a ON a.intent_id=d.id WHERE d.id=${intent.id} ORDER BY a.cycle DESC LIMIT 1`
   )[0];
+  if (
+    fresh.consent?.emailCapturedAt &&
+    fresh.transaction_id &&
+    wompiTransactionStatuses.includes(fresh.status) &&
+    fresh.status !== "PENDING"
+  )
+    await queueWompiNotice(
+      fresh,
+      fresh.reference,
+      fresh.status,
+      new Date(fresh.due_at).toISOString(),
+    );
   return {
     id: intent.id,
     amount: intent.amount,

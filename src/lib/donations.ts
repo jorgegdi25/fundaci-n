@@ -1,4 +1,14 @@
 export type Frequency = "monthly" | "once";
+export const monthlyAuthorizationMinutes = 60;
+
+export function donationEmail(value: unknown) {
+  if (typeof value !== "string") return null;
+  const email = value.trim();
+  return email.length <= 254 && /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(email)
+    ? email
+    : null;
+}
+
 export const donationAmounts = {
   monthly: [9900, 29900],
   once: [49900, 99900],

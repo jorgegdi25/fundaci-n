@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Heart, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { donationRequest } from "./donation-checkout";
-import { href, type Lang } from "@/lib/i18n";
+import { href, projectHref, type Lang } from "@/lib/i18n";
 import {
   ApprovedGiftFollowUp,
   GiftSupport,
@@ -223,13 +223,28 @@ export function DonationResult({
                   : "Your monthly gift is paused and needs review. No further charge will be scheduled while it is paused."}
               </p>
             )}
-            {managementUrl && (
+            {managementUrl && manage && (
               <PersonalManagementLink
                 lang={lang}
                 url={managementUrl}
                 manage={manage}
                 testMode={gift.environment !== "production"}
               />
+            )}
+            {managementUrl && !manage && (
+              <details className="gift-extra-options">
+                <summary>
+                  {es
+                    ? "Consultar mi enlace de gestión"
+                    : "View my gift management link"}
+                </summary>
+                <PersonalManagementLink
+                  lang={lang}
+                  url={managementUrl}
+                  manage={false}
+                  testMode={gift.environment !== "production"}
+                />
+              </details>
             )}
             {cancelReview ? (
               <div className="cancel-review">
@@ -304,11 +319,23 @@ export function DonationResult({
           </>
         )}
       </div>
-      {showRegistration && (
+      {showRegistration && gift && (
         <ApprovedGiftFollowUp
           lang={lang}
           provider="wompi"
-          testMode={gift?.environment !== "production"}
+          testMode={gift.environment !== "production"}
+          project={{
+            name:
+              gift.cause === "general"
+                ? es
+                  ? "Fondo General"
+                  : "General Fund"
+                : labels[gift.cause],
+            href:
+              gift.cause === "general"
+                ? href(lang, "impact")
+                : projectHref(lang, gift.cause),
+          }}
         />
       )}
     </main>
