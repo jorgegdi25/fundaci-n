@@ -110,57 +110,23 @@
   padding: 0;
 }
 .full-photo-hero {
-  --home-hero-min-height: 500px;
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: end;
-  min-height: clamp(
-    var(--home-hero-min-height),
-    calc(100svh - var(--home-header-height, 147px)),
-    780px
-  );
   overflow: hidden;
   background: #26352d;
-  isolation: isolate;
-}
-body:has(> .donation-review-banner) .full-photo-hero {
-  --home-header-height: 202px;
 }
 .full-photo-hero > .photo {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
+  height: auto;
+  min-height: 19rem;
+  aspect-ratio: 15 / 4;
   object-fit: cover;
-  object-position: center 20%;
-  z-index: -2;
-}
-.full-photo-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    0deg,
-    rgba(15, 24, 19, 0.85),
-    rgba(15, 24, 19, 0.05) 75%
-  );
-  z-index: -1;
+  object-position: center 15%;
 }
 .full-photo-message {
-  width: 100%;
-  padding-block: 36px;
+  padding-block: 18px;
   color: #fff;
-}
-.full-photo-message .eyebrow {
-  color: #fff;
-  letter-spacing: 0.12em;
-  margin-bottom: 20px;
-  display: block;
 }
 .full-photo-message h1 {
-  font-size: clamp(2.75rem, 1.5rem + 4.25vw, 5.75rem);
-  max-width: 650px;
+  font-size: clamp(2.75rem, 4.75vw, 5.25rem);
   font-weight: 700;
   text-wrap: balance;
   line-height: 1.08;
@@ -169,7 +135,7 @@ body:has(> .donation-review-banner) .full-photo-hero {
   font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
   line-height: 1.5;
   max-width: 520px;
-  margin-top: 18px;
+  margin-top: 8px;
   color: white;
 }
 .full-photo-identity {
@@ -531,9 +497,6 @@ body:has(> .donation-review-banner) .full-photo-hero {
   .purpose-grid {
     grid-template-columns: 1fr;
   }
-  .full-photo-hero {
-    --home-hero-min-height: 570px;
-  }
   .hero-purpose {
     gap: 32px;
   }
@@ -542,45 +505,16 @@ body:has(> .donation-review-banner) .full-photo-hero {
   }
 }
 @media (max-width: 700px) {
-  .full-photo-hero {
-    min-height: 0;
-  }
   .full-photo-hero > .photo {
-    position: relative;
-    z-index: 0;
-    height: auto;
-    object-fit: contain;
-    aspect-ratio: 3/2;
-    grid-area: 1 / 1;
-  }
-  .full-photo-hero::after {
-    position: relative;
-    display: block;
-    grid-area: 1 / 1;
-    z-index: 0;
-    background: linear-gradient(0deg, rgba(15, 24, 19, 0.88), transparent 80%);
+    min-height: 0;
+    max-height: 19rem;
+    aspect-ratio: 3 / 2;
   }
   .full-photo-message {
-    position: relative;
-    background: transparent;
-    padding: 22px;
-    margin: 0;
-    grid-area: 1 / 1;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    padding-inline: 16px;
   }
   .full-photo-message h1 {
-    font-size: clamp(2.25rem, 1rem + 5.5vw, 3.375rem);
-    margin: 0;
-  }
-  .full-photo-message .hero-subtitle {
-    margin-top: 10px;
-  }
-  .full-photo-message .eyebrow {
-    font-size: 1rem;
-    display: none;
+    font-size: clamp(1.5rem, 6.75vw, 3.375rem);
   }
   .full-photo-identity {
     text-align: left;

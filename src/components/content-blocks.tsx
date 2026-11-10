@@ -235,11 +235,7 @@ export function Home({ lang, projects }: { lang: Lang; projects: Project[] }) {
             priority
           />
           <div className="full-photo-message section">
-            <h1 id="home-title">
-              Fundación
-              <br />
-              Alma Arcoíris
-            </h1>
+            <h1 id="home-title">Fundación Alma Arcoíris</h1>
             <p className="hero-subtitle">
               {es
                 ? "Reconecta con los saberes ancestrales."
