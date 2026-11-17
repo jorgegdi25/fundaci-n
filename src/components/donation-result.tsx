@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Heart, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { donationRequest } from "./donation-checkout";
 import { href, projectHref, type Lang } from "@/lib/i18n";
+import { trackCompletedDonation } from "@/lib/measurement";
 import {
   ApprovedGiftFollowUp,
   GiftSupport,
@@ -115,6 +116,14 @@ export function DonationResult({
   const approved = gift?.status === "APPROVED";
   const showRegistration = !manage && approved && !gift?.cancelled && !error;
   const failed = ["DECLINED", "ERROR", "VOIDED"].includes(gift?.status ?? "");
+  useEffect(() => {
+    if (!showRegistration || !gift) return;
+    const measure = () =>
+      trackCompletedDonation({ ...gift, currency: "COP", provider: "wompi" });
+    measure();
+    window.addEventListener("alma-consent-updated", measure);
+    return () => window.removeEventListener("alma-consent-updated", measure);
+  }, [gift, showRegistration]);
   const title = gift?.cancelled
     ? es
       ? "Tu aporte mensual está cancelado."

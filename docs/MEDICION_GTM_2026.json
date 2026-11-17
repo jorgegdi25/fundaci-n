@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-17",
+  "container": "GTM-KBQZZQ26",
+  "account": "Fundación Alma Arcoiris",
+  "access": "Acceso confirmado con webmaster@fundacionalmaarcoiris.org tras autorización del usuario para aceptar la invitación.",
+  "containerInspection": "Versión 1 Empty Container publicada el 16/11/2026. La interfaz indica 0 etiquetas, 0 activadores y 0 variables. No se modificó ni publicó el contenedor.",
+  "releaseStatus": "Implementación de la web preparada para revisión. Requiere publicación y validación en el dominio oficial antes de confirmar la instalación a Sembox.",
+  "environments": {
+    "enabledHosts": [
+      "fundacionalmaarcoiris.org",
+      "www.fundacionalmaarcoiris.org"
+    ],
+    "excluded": "Localhost, enlaces Vercel y pagos Sandbox no generan conversiones reales."
+  },
+  "consent": {
+    "mode": "Básico. GTM se carga después de autorizar al menos una categoría opcional.",
+    "defaults": "analytics_storage, ad_storage, ad_user_data y ad_personalization denegados antes de cargar GTM.",
+    "analytics": "Controla analytics_storage.",
+    "marketing": "Controla ad_storage, ad_user_data y ad_personalization.",
+    "change": "La interfaz existente permite revisar o retirar las preferencias desde el pie. Se notifica a GTM y se detienen los nuevos eventos propios si se rechazan ambas categorías.",
+    "tagSetup": "Cada etiqueta debe exigir su categoría. Configurar comprobaciones adicionales de consentimiento donde sean necesarias, incluidas etiquetas ajenas a Google."
+  },
+  "pageViews": {
+    "dataLayerEvent": "alma_page_view",
+    "trigger": "Evento personalizado con nombre exacto alma_page_view.",
+    "ga4Event": "page_view",
+    "parameters": ["page_location", "page_path", "language"],
+    "deduplication": "Desactivar send_page_view en la etiqueta de configuración de Google y la medición automática de cambios del historial. No añadir otro activador History Change para vistas.",
+    "privacy": "Usar las variables saneadas del dataLayer. No sustituirlas por Page URL o Referrer completos. No habilitar recogida automática de formularios, clics salientes, datos facilitados por usuarios ni medición mejorada sin revisar su contenido."
+  },
+  "events": [
+    {
+      "event": "donation_started",
+      "trigger": "Clic en el enlace real de Wompi checkout.wompi.co/l/bfXo9h.",
+      "parameters": ["payment_provider", "donation_frequency", "placement"],
+      "agencyProposedAdsPriority": "primary",
+      "status": "Preparado. Describe la salida al pago, no una donación aprobada."
+    },
+    {
+      "event": "donation_completed",
+      "trigger": "Resultado de pago aprobado obtenido por la API privada y con entorno production.",
+      "parameters": [
+        "transaction_id",
+        "value",
+        "currency",
+        "payment_provider",
+        "donation_frequency",
+        "project"
+      ],
+      "agencyProposedAdsPriority": "primary",
+      "status": "Pendiente para donaciones reales. El Wompi alojado actualmente activo no devuelve una aprobación verificable a esta web. Los resultados integrados siguen siendo Sandbox y se excluyen.",
+      "deduplication": "Una emisión por aporte y sesión del navegador. Usar transaction_id para deduplicar en el destino. No configurar la página de gracias ni el registro SARLAFT como prueba de pago."
+    },
+    {
+      "event": "whatsapp_click",
+      "trigger": "Clic en un enlace directo o de comunidad de WhatsApp.",
+      "parameters": ["link_context", "placement"],
+      "agencyProposedAdsPriority": "primary",
+      "status": "Preparado. Los botones semánticos de información de voluntariado emiten volunteer_information para evitar doble conversión."
+    },
+    {
+      "event": "volunteer_application",
+      "trigger": "Clic en Postularme como voluntario, en español o inglés.",
+      "parameters": ["placement"],
+      "agencyProposedAdsPriority": "primary",
+      "status": "Preparado. Mide intención de abrir el correo, no acredita envío de una solicitud."
+    },
+    {
+      "event": "volunteer_information",
+      "trigger": "Clic en Consultar fechas por WhatsApp o Consultar próximos encuentros.",
+      "parameters": ["placement"],
+      "agencyProposedAdsPriority": "secondary",
+      "status": "Preparado. El botón de fechas usa el WhatsApp de la fundación sin anunciar un calendario no suministrado."
+    },
+    {
+      "event": "phone_click",
+      "trigger": "Clic en un enlace tel:.",
+      "parameters": ["placement"],
+      "agencyProposedAdsPriority": "secondary",
+      "status": "Preparado. No envía el número."
+    },
+    {
+      "event": "email_click",
+      "trigger": "Clic en mailto: sin otra acción semántica.",
+      "parameters": ["placement"],
+      "agencyProposedAdsPriority": "secondary",
+      "status": "Preparado. No envía dirección, asunto ni cuerpo del mensaje."
+    },
+    {
+      "event": "newsletter_signup",
+      "trigger": "El servidor responde correctamente con ok:true al registro de comunidad.",
+      "parameters": ["signup_source"],
+      "agencyProposedAdsPriority": "secondary",
+      "status": "Pendiente de conectar el receptor. /api/community indica configured:false. La interfaz no permite registros mientras no esté configurado."
+    }
+  ],
+  "sharedEventParameters": ["page_path", "page_location", "language"],
+  "excludedWebsitePayload": [
+    "nombres",
+    "correos de donantes",
+    "teléfonos",
+    "contenido de formularios",
+    "datos de tarjeta",
+    "URLs de destino",
+    "consultas y fragmentos de la URL",
+    "tokens privados de pago y gestión"
+  ],
+  "agencyHandoff": [
+    "Confirmar o facilitar el ID de medición GA4 G-..., los identificadores y las etiquetas de conversión de Ads. No aparecen configurados en el contenedor inspeccionado.",
+    "Crear variables de capa de datos para los parámetros indicados y activadores de evento personalizado para cada nombre exacto.",
+    "Configurar consentimiento por categoría y comprobar en Tag Assistant antes de publicar etiquetas.",
+    "No activar todavía donation_completed ni newsletter_signup como conversiones operativas. Requieren completar los recorridos pendientes.",
+    "La prioridad primaria o secundaria es la propuesta de Sembox, no una configuración aplicada en Ads por este cambio.",
+    "La conexión del MCC, Analytics y YouTube no se realizó. Requiere comprobar cuentas y autorización específica del administrador."
+  ],
+  "verification": [
+    "Pruebas unitarias de consentimiento, exclusión de vistas previas, deduplicación y ausencia de datos de contacto.",
+    "Typecheck de TypeScript sin compilación local de Next.",
+    "Pendiente validar descarga de GTM y eventos con consentimiento en el dominio oficial después de publicar."
+  ],
+  "references": [
+    "https://developers.google.com/tag-platform/security/guides/consent?consentmode=basic",
+    "https://developers.google.com/tag-platform/security/concepts/consent-mode",
+    "https://support.google.com/google-ads/answer/11461796?hl=es"
+  ]
+}

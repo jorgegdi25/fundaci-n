@@ -197,6 +197,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
             <a
               className="button gold"
               href={`${contact}?subject=Voluntariado%20y%20misiones`}
+              data-measure-event="volunteer_application"
             >
               {es ? "Postularme como voluntario" : "Enquire about volunteering"}
               <ArrowUpRight size={18} />
@@ -264,11 +265,18 @@ export function JoinPage({ lang }: { lang: Lang }) {
             </p>
             <a
               className="button outline"
-              href={`${contact}?subject=Pr%C3%B3ximas%20caminatas`}
+              href={`${whatsapp}?text=${encodeURIComponent(
+                es
+                  ? "Hola, quiero consultar las próximas fechas de las caminatas conscientes."
+                  : "Hello, I would like to ask about upcoming mindful walk dates.",
+              )}`}
+              target="_blank"
+              rel="noreferrer"
+              data-measure-event="volunteer_information"
             >
               {es
-                ? "Consultar próximas fechas de caminatas"
-                : "Ask about upcoming walk dates"}
+                ? "Consultar fechas por WhatsApp"
+                : "Ask for dates on WhatsApp"}
               <ArrowUpRight size={18} />
             </a>
             <p className="source-note">
@@ -388,6 +396,7 @@ export function JoinPage({ lang }: { lang: Lang }) {
             <a
               className="button outline"
               href={`${whatsapp}?text=${encodeURIComponent("Hola! Quiero saber sobre los próximos encuentros con sabedores ancestrales")}`}
+              data-measure-event="volunteer_information"
               target="_blank"
               rel="noreferrer"
             >

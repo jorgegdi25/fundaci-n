@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CheckCircle2, Heart, RefreshCw } from "lucide-react";
 import { paypalRequest } from "@/lib/paypal-client";
 import { href, type Lang } from "@/lib/i18n";
+import { trackCompletedDonation } from "@/lib/measurement";
 import {
   ApprovedGiftFollowUp,
   GiftSupport,
@@ -102,6 +103,18 @@ export function PayPalResult({
   }
   const paid = gift?.status === "COMPLETED";
   const showRegistration = !manage && paid && !gift?.cancelled && !error;
+  useEffect(() => {
+    if (!showRegistration || !gift) return;
+    const measure = () =>
+      trackCompletedDonation({
+        ...gift,
+        amount: gift.amount / 100,
+        provider: "paypal",
+      });
+    measure();
+    window.addEventListener("alma-consent-updated", measure);
+    return () => window.removeEventListener("alma-consent-updated", measure);
+  }, [gift, showRegistration]);
   const labels: Record<string, string> = {
     general: es ? "Donde más se necesite" : "Where it is needed most",
     "el-cairo": "El Cairo",

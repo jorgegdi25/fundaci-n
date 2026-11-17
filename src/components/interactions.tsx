@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Play, X, ArrowUpRight, Check, ShieldCheck } from "lucide-react";
 import type { Lang } from "@/lib/i18n";
+import { consentStorageKey } from "@/lib/measurement";
 export function VideoCard({
   id,
   image,
@@ -163,7 +164,7 @@ export function Consent({ lang }: { lang: Lang }) {
   useEffect(() => {
     let exists = false;
     try {
-      const saved = localStorage.getItem("alma-consent-v1");
+      const saved = localStorage.getItem(consentStorageKey);
       if (saved) {
         const v = JSON.parse(saved);
         if (
@@ -187,7 +188,7 @@ export function Consent({ lang }: { lang: Lang }) {
   const save = (a: boolean, m: boolean) => {
     const state = { analytics: a, marketing: m };
     try {
-      localStorage.setItem("alma-consent-v1", JSON.stringify(state));
+      localStorage.setItem(consentStorageKey, JSON.stringify(state));
     } catch {}
     window.dispatchEvent(
       new CustomEvent("alma-consent-updated", { detail: state }),
@@ -207,8 +208,8 @@ export function Consent({ lang }: { lang: Lang }) {
       </div>
       <p>
         {es
-          ? "Usamos almacenamiento esencial para recordar tus preferencias. Puedes elegir si permites analítica y publicidad cuando estos servicios se habiliten."
-          : "We use essential storage to remember your preferences. Choose whether to allow analytics and advertising when these services are enabled."}
+          ? "Usamos almacenamiento esencial para recordar tus preferencias. Si lo autorizas, Google Tag Manager permite medir las visitas y acciones en la web mediante las etiquetas de analítica o publicidad configuradas por la fundación."
+          : "We use essential storage to remember your preferences. With your permission, Google Tag Manager enables measurement of visits and actions through the analytics or advertising tags configured by the foundation."}
       </p>
       {config && (
         <div className="consent-options">

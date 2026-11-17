@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import { validateCommunitySignup } from "@/lib/community";
+import { trackEvent } from "@/lib/measurement";
 import styles from "./community-signup.module.css";
 
 export function CommunitySignup({
@@ -55,6 +56,9 @@ export function CommunitySignup({
       });
       const data = await r.json();
       if (!r.ok || data.ok !== true) throw new Error("signup_unavailable");
+      trackEvent("newsletter_signup", {
+        signup_source: withName ? "donate" : "footer",
+      });
       setState("done");
       setContact("");
       setName("");

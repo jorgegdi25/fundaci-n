@@ -163,8 +163,8 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
         <p>
           {cookies
             ? es
-              ? "Guardamos tus preferencias en el almacenamiento local del navegador. En esta versión no se cargan servicios de analítica ni publicidad. Puedes cambiar o retirar tu elección desde “Cookies” en el pie de página."
-              : "We save your preferences in your browser’s local storage. This version loads no analytics or advertising services. Change or withdraw your choices through “Cookies” in the footer."
+              ? "Guardamos tus preferencias en el almacenamiento local del navegador. Google Tag Manager se carga en el dominio oficial cuando autorizas analítica o publicidad. Puedes cambiar o retirar tu elección desde «Preferencias de cookies» en el pie de página."
+              : "We save your preferences in your browser’s local storage. Google Tag Manager loads on the official domain when you allow analytics or advertising. Change or withdraw your choices through “Cookie preferences” in the footer."
             : privacy
               ? es
                 ? "Los enlaces de correo y WhatsApp abren un servicio externo. Si decides comunicarte por esos canales, la información se enviará a través del proveedor elegido. Puedes consultar el tratamiento de tus datos con la fundación."
@@ -173,6 +173,39 @@ export function LegalPage({ lang, kind }: { lang: Lang; kind: PageKey }) {
                 ? "Los indicadores, documentos institucionales y políticas definitivas requieren validación de la fundación antes de la publicación. Las experiencias se coordinan directamente con el equipo; esta página no realiza reservas."
                 : "The foundation must validate indicators, institutional records and final policies before publication. Experiences are coordinated directly with the team; this website does not take bookings."}
         </p>
+        {(cookies || privacy) && (
+          <>
+            <h2>
+              {es
+                ? "Medición de visitas y acciones"
+                : "Measuring visits and actions"}
+            </h2>
+            <p>
+              {es
+                ? "Con tu autorización, la fundación usa Google Tag Manager para gestionar las etiquetas de medición configuradas con su agencia. Las categorías de analítica y publicidad se controlan por separado."
+                : "With your permission, the foundation uses Google Tag Manager to manage measurement tags configured with its agency. Analytics and advertising choices are controlled separately."}
+            </p>
+            <p>
+              {es
+                ? "Los eventos preparados por la web describen la página visitada y acciones como abrir Wompi, WhatsApp, correo o teléfono, consultar voluntariado o completar el registro de comunidad. Los eventos de la web excluyen el contenido de los formularios, el correo del aportante, los números de teléfono, los datos de pago y los enlaces privados de gestión."
+                : "The website’s events describe the page visited and actions such as opening Wompi, WhatsApp, email or phone links, enquiring about volunteering or completing community sign-up. Website events exclude form contents, donor email addresses, telephone numbers, payment details and private management links."}
+            </p>
+            <p>
+              {es
+                ? "Puedes consultar las condiciones de privacidad de Google y administrar tus preferencias en cualquier momento."
+                : "You can read Google’s privacy policy and manage your preferences at any time."}{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {es
+                  ? "Política de privacidad de Google"
+                  : "Google privacy policy"}
+              </a>
+            </p>
+          </>
+        )}
         <h2>{es ? "Contenido externo" : "External content"}</h2>
         <p>
           {es
