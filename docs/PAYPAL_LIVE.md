@@ -18,7 +18,9 @@ Los planes base son de 1,00 en cada moneda, mensuales e indefinidos, sin cuota d
 
 La preparación de planes no crea órdenes ni suscripciones de prueba en Live y no captura pagos.
 
-Para usar las credenciales ya almacenadas en Vercel sin extraerlas, existe un receptor temporal de operador en `/api/paypal/live/setup`. Reutiliza el mismo provisionador, exige un token de 256 bits, origen coincidente y el hostname inmutable de Production; rechaza Preview y dominios públicos. Caduca el 19 de noviembre de 2026 a las 22:30 UTC, incluso en un despliegue antiguo. Solo admite la operación fija `plans`. Utilizar únicamente en un despliegue staged con Vercel Authentication y sin asignar dominios; retirar el token al terminar. El receptor devuelve identificadores de catálogo, nunca las credenciales.
+Para usar las credenciales ya almacenadas en Vercel sin extraerlas, existe un receptor temporal de operador en `/api/paypal/live/setup`. Reutiliza los mismos provisionadores, exige un token de 256 bits, origen coincidente y el hostname inmutable de Production; rechaza Preview y dominios públicos. Caduca el 19 de noviembre de 2026 a las 22:30 UTC, incluso en un despliegue antiguo. Solo admite `plans`, `schema` y `webhook`, con recursos y destinos fijos. El alta del webhook exige comprobar antes que el receptor público existe y rechaza un evento sin firma. Utilizar únicamente en un despliegue staged con Vercel Authentication y sin asignar dominios; retirar el token al terminar. El receptor devuelve resultados de configuración, nunca credenciales.
+
+La base Live usa un proyecto independiente de Neon Free, sin copiar registros ni contraseñas de Sandbox. La migración exige un hostname diferente al de Sandbox, conexión directa y una base vacía o con el marcador Live correcto. Usa el SQL versionado y revierte las filas ficticias de verificación. La integración de Vercel se conecta solo a Production con prefijo `PAYPAL_LIVE`.
 
 ## Notificaciones y correos
 
