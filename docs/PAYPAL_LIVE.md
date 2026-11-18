@@ -18,6 +18,8 @@ Los planes base son de 1,00 en cada moneda, mensuales e indefinidos, sin cuota d
 
 La preparación de planes no crea órdenes ni suscripciones de prueba en Live y no captura pagos.
 
+Para usar las credenciales ya almacenadas en Vercel sin extraerlas, existe un receptor temporal de operador en `/api/paypal/live/setup`. Reutiliza el mismo provisionador, exige un token de 256 bits, origen coincidente y el hostname inmutable de Production; rechaza Preview y dominios públicos. Caduca el 19 de noviembre de 2026 a las 22:30 UTC, incluso en un despliegue antiguo. Solo admite la operación fija `plans`. Utilizar únicamente en un despliegue staged con Vercel Authentication y sin asignar dominios; retirar el token al terminar. El receptor devuelve identificadores de catálogo, nunca las credenciales.
+
 ## Notificaciones y correos
 
 El webhook Live se registra en `https://fundacionalmaarcoiris.org/api/paypal/live/events`. Solo verifica eventos mediante PayPal Live y su propio webhook ID. El payload y el retorno del navegador no son prueba de pago: se vuelve a consultar el recurso canónico y se deduplican eventos y transacciones. Una suscripción ACTIVE no equivale a un pago COMPLETED.
