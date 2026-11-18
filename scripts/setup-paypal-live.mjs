@@ -14,6 +14,8 @@ const base = "https://api-m.paypal.com";
 const webhookUrl = "https://fundacionalmaarcoiris.org/api/paypal/live/events";
 const productName = "Fundación Alma Arcoíris — aporte mensual";
 const eventTypes = [
+  "CHECKOUT.ORDER.APPROVED",
+  "CHECKOUT.ORDER.COMPLETED",
   "PAYMENT.CAPTURE.COMPLETED",
   "PAYMENT.CAPTURE.PENDING",
   "PAYMENT.CAPTURE.DENIED",

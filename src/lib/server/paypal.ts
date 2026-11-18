@@ -294,7 +294,7 @@ export function createPayPalService(environment: PayPalEnvironment) {
     )
       throw new PaymentError("invalid_provider_contract", 502);
     const stored =
-      await database()`INSERT INTO paypal_payments(id,gift_id,amount,currency,status,paid_at,updated_at) VALUES(${p.id},${gift.id},${gift.amount},${gift.currency},${p.status},${paid},${updated}) ON CONFLICT(id) DO UPDATE SET status=EXCLUDED.status,updated_at=EXCLUDED.updated_at WHERE paypal_payments.gift_id=EXCLUDED.gift_id AND paypal_payments.updated_at<=EXCLUDED.updated_at RETURNING status`;
+      await database()`INSERT INTO paypal_payments(id,gift_id,amount,currency,status,paid_at,updated_at) VALUES(${p.id},${gift.id},${gift.amount},${gift.currency},${p.status},${paid},${updated}) ON CONFLICT(id) DO UPDATE SET status=EXCLUDED.status,updated_at=EXCLUDED.updated_at WHERE paypal_payments.gift_id=EXCLUDED.gift_id AND paypal_payments.updated_at<=EXCLUDED.updated_at AND paypal_payments.status<>'REVIEW' RETURNING status`;
     if (stored[0]?.status === "COMPLETED") {
       await queueDonationNotice(
         {
@@ -398,6 +398,24 @@ export function createPayPalService(environment: PayPalEnvironment) {
     if (gift.subscription_id) await syncSubscription(gift);
     return publicStatus(gift.id);
   }
+  async function captureApprovedOrder(gift: Gift) {
+    const order = await syncOrder(gift);
+    if (order.status === "APPROVED") {
+      try {
+        await api(
+          `/v2/checkout/orders/${gift.order_id}/capture`,
+          {},
+          `${gift.id}-capture`,
+        );
+      } catch {
+        /* A timeout does not prove failure; look up the canonical order. */
+      }
+      const confirmed = await syncOrder(gift);
+      if (confirmed.status !== "COMPLETED")
+        throw new PaymentError("confirmation_pending", 409);
+    } else if (order.status !== "COMPLETED")
+      throw new PaymentError("confirmation_pending", 409);
+  }
   async function confirm(request: Request, body: Record<string, unknown>) {
     const gift = await owned(request, body);
     if (gift.frequency === "monthly") {
@@ -407,20 +425,7 @@ export function createPayPalService(environment: PayPalEnvironment) {
     } else {
       if (body.orderId !== gift.order_id)
         throw new PaymentError("invalid_request", 400);
-      const order = await syncOrder(gift);
-      if (order.status === "APPROVED") {
-        try {
-          await api(
-            `/v2/checkout/orders/${gift.order_id}/capture`,
-            {},
-            `${gift.id}-capture`,
-          );
-        } catch {
-          /* A timeout does not prove failure; look up the canonical order. */
-        }
-        await syncOrder(gift);
-      } else if (order.status !== "COMPLETED")
-        throw new PaymentError("confirmation_pending", 409);
+      await captureApprovedOrder(gift);
     }
     return publicStatus(gift.id);
   }
@@ -461,6 +466,14 @@ export function createPayPalService(environment: PayPalEnvironment) {
     const resource = event.resource;
     let gifts: Record<string, any>[] = [];
     if (
+      ["CHECKOUT.ORDER.APPROVED", "CHECKOUT.ORDER.COMPLETED"].includes(
+        event.event_type,
+      ) &&
+      safePayPalId(resource?.id)
+    )
+      gifts =
+        await sql`SELECT * FROM paypal_gifts WHERE order_id=${resource.id}`;
+    else if (
       event.event_type.startsWith("BILLING.SUBSCRIPTION.") &&
       safePayPalId(resource?.id, true)
     )
@@ -483,7 +496,11 @@ export function createPayPalService(environment: PayPalEnvironment) {
       gifts =
         await sql`SELECT g.* FROM paypal_gifts g JOIN paypal_payments p ON p.gift_id=g.id WHERE p.id=${paymentId}`;
     for (const gift of gifts) {
-      if (gift.order_id) await syncOrder(gift as Gift);
+      if (gift.order_id) {
+        if (event.event_type === "CHECKOUT.ORDER.APPROVED")
+          await captureApprovedOrder(gift as Gift);
+        else await syncOrder(gift as Gift);
+      }
       if (gift.subscription_id) await syncSubscription(gift as Gift);
     }
     if (
