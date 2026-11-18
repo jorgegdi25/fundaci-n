@@ -119,8 +119,8 @@ export function PayPalCheckout({
         typeof health.clientId !== "string"
       )
         throw new Error("paypal_unavailable");
-      const { loadScript } = await import("@paypal/paypal-js");
-      const sdk = await loadScript({
+      const { loadPayPalSdk } = await import("@/lib/paypal-sdk");
+      const sdk = await loadPayPalSdk({
         clientId: health.clientId,
         environment: testMode ? "sandbox" : "production",
         components: "buttons",
@@ -128,7 +128,6 @@ export function PayPalCheckout({
         locale: es ? "es_CO" : "en_US",
         intent: monthly ? "subscription" : "capture",
         vault: monthly,
-        dataNamespace: `almaPayPal${environment}${currency}${monthly ? "Monthly" : "Once"}${lang}`,
       });
       if (!active || !container.current) return;
       if (!sdk?.Buttons) throw new Error("paypal_unavailable");
