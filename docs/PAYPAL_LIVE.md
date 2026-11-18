@@ -33,3 +33,12 @@ El aviso se guarda en la base antes de programar un Workflow duradero. Sus reint
 ## Validación pendiente de servicios
 
 El código y las pruebas automatizadas no acreditan que los planes, webhook, base Live o correo estén conectados. Registrar evidencia de cada conexión. Antes de publicar: comprobar USD y EUR, pago único y mensual, importe elegido, aprobación y rechazo, eventos repetidos, página de gracias y registro, cancelación y correos. El pago de validación Live debe autorizarlo personalmente el titular del medio de pago; nunca se presentan tarjetas Sandbox como válidas para Live.
+
+## Conexiones verificadas · 18 de noviembre de 2026
+
+- API Live autenticada y permiso de suscripciones confirmado. Producto `PROD-13J08517NH669333G`; planes canónicos mensuales `P-7RG48290YW7276707NL7C2QQ` (USD) y `P-5HD16607KF7031356NL7C2QY` (EUR). Identificadores guardados solo en Production.
+- Neon Free: recurso `alma-arcoiris-paypal-live`, proyecto independiente `sweet-mud-91428611`, rama `br-young-recipe-bb86o4uq`. Enlace de Vercel solo a Production con prefijo propio. Migración realizada; marcador Production y restricción comprobados; filas ficticias revertidas. No se copió la base Sandbox.
+- Receptor publicado en el dominio con checkout Live desactivado. Un POST sin firma devuelve HTTP 401. Webhook Live `7E535728141573414` creado y consultado en PayPal para los 16 tipos de eventos definidos. Su ID está guardado en Production; requiere un despliegue posterior para cargar esa variable nueva.
+- No se han creado órdenes ni suscripciones de donantes, capturado pagos o enviado correos de esta preparación. El botón público mantiene el enlace alojado de Wompi.
+
+Pendientes: Merchant ID de la cuenta receptora (la pantalla de información comercial aparece en blanco); aprobación y creación de una clave Resend separada para Live, con revisión restringida a webmaster; cargar la configuración final en un despliegue privado y validar un pago autorizado, su evento firmado, registro, página de gracias, correos y cancelación antes del lanzamiento. La creación del webhook y la respuesta 401 no equivalen a haber verificado un pago real.
