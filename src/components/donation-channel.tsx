@@ -9,14 +9,33 @@ const Channel = createContext<DonationChannel>("external");
 export function DonationChannelProvider({
   mode,
   lang,
+  liveReview = false,
   children,
 }: {
   mode: DonationChannel;
   lang: Lang;
+  liveReview?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <Channel.Provider value={mode}>
+      {mode === "paypal-live" && liveReview && (
+        <aside
+          className="donation-review-banner"
+          aria-label={
+            lang === "es" ? "Revisión PayPal Live" : "PayPal Live review"
+          }
+        >
+          <strong>
+            {lang === "es" ? "REVISIÓN PAYPAL LIVE" : "PAYPAL LIVE REVIEW"}
+          </strong>
+          <span>
+            {lang === "es"
+              ? "Esta vista utiliza pagos reales. Cada aporte requiere tu autorización en PayPal."
+              : "This view uses real payments. Every gift requires your authorization in PayPal."}
+          </span>
+        </aside>
+      )}
       {mode === "sandbox" && (
         <aside
           className="donation-review-banner"
@@ -53,9 +72,13 @@ export function CurrentDonationScope({ lang }: { lang: Lang }) {
         ? lang === "es"
           ? "Esta versión permite consultar los proyectos y probar aportes únicos y mensuales con Wompi y PayPal Sandbox. No mueve dinero real. Guarda el aporte de prueba, su autorización y su estado en una base de datos de pruebas. Los datos del medio de pago se introducen en la plataforma de pagos correspondiente."
           : "This version lets you explore projects and test one-time and monthly gifts with Wompi and PayPal Sandbox. No real money moves. The test gift, authorization and status are stored in a test database. Payment method details are entered through the relevant payment platform."
-        : lang === "es"
-          ? "Las donaciones únicas se realizan directamente en la plataforma externa de Wompi de la fundación. El valor y los datos de pago se introducen en Wompi. Esta web no procesa esos pagos ni los registra en su base de pruebas. El registro de aportantes se completa por separado en el formulario de Google de la fundación."
-          : "One-time donations are made directly on the foundation’s external Wompi payment page. The amount and payment details are entered in Wompi. This website does not process those payments or record them in its test database. Contributor registration is completed separately using the foundation’s Google form."}
+        : mode === "paypal-live"
+          ? lang === "es"
+            ? "Los aportes en USD y EUR se procesan en PayPal. Esta web guarda el importe, la moneda, el proyecto, la autorización y el estado confirmado del aporte en una base separada de las pruebas. Los datos del medio de pago se introducen en PayPal. El registro de aportantes se completa por separado en el formulario de la fundación."
+            : "Gifts in USD and EUR are processed in PayPal. This website stores the amount, currency, project, authorization and confirmed gift status in a database separate from tests. Payment method details are entered in PayPal. Contributor registration is completed separately using the foundation’s form."
+          : lang === "es"
+            ? "Las donaciones únicas se realizan directamente en la plataforma externa de Wompi de la fundación. El valor y los datos de pago se introducen en Wompi. Esta web no procesa esos pagos ni los registra en su base de pruebas. El registro de aportantes se completa por separado en el formulario de Google de la fundación."
+            : "One-time donations are made directly on the foundation’s external Wompi payment page. The amount and payment details are entered in Wompi. This website does not process those payments or record them in its test database. Contributor registration is completed separately using the foundation’s Google form."}
     </p>
   );
 }

@@ -55,7 +55,11 @@ window.gtag('set','ads_data_redaction',true);`}
           </Script>
         )}
         <SiteMeasurement enabled={measure} />
-        <DonationChannelProvider mode={mode} lang={lang}>
+        <DonationChannelProvider
+          mode={mode}
+          lang={lang}
+          liveReview={process.env.PAYPAL_LIVE_CHECKOUT_STAGE === "review"}
+        >
           <RoutePosition />
           {children}
         </DonationChannelProvider>

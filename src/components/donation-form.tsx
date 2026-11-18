@@ -53,6 +53,7 @@ export function DonationForm({
 }) {
   const es = lang === "es";
   const channel = useDonationChannel();
+  const livePayPal = channel === "paypal-live";
   const id = useId();
   const dialog = useRef<HTMLDialogElement>(null);
   const [frequency, setFrequency] = useState<Frequency>("monthly");
@@ -66,35 +67,44 @@ export function DonationForm({
   const destination = selectedCause ?? internalDestination;
   const [reviewed, setReviewed] = useState(false);
   const [sandbox, setSandbox] = useState(false);
-  const [currency, setCurrency] = useState<"COP" | PayPalCurrency>("COP");
+  const [currency, setCurrency] = useState<"COP" | PayPalCurrency>(
+    livePayPal ? "USD" : "COP",
+  );
   const [international, setInternational] = useState("");
   const [internationalIndex, setInternationalIndex] = useState<number | null>(
     0,
   );
   const [euroRate, setEuroRate] = useState<EuroReferenceRate | null>(null);
   const [euroRateUnavailable, setEuroRateUnavailable] = useState(false);
-  const [paypalSandbox, setPaypalSandbox] = useState(false);
+  const [paypalReady, setPaypalReady] = useState(false);
   useEffect(() => {
-    if (channel !== "sandbox") return;
+    if (channel === "external") return;
     const controller = new AbortController();
-    fetch("/api/donations", { signal: controller.signal, cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) =>
-        setSandbox(data.configured === true && data.environment === "sandbox"),
-      )
-      .catch(() => {});
-    fetch("/api/paypal", { signal: controller.signal, cache: "no-store" })
+    if (channel === "sandbox")
+      fetch("/api/donations", { signal: controller.signal, cache: "no-store" })
+        .then((res) => res.json())
+        .then((data) =>
+          setSandbox(
+            data.configured === true && data.environment === "sandbox",
+          ),
+        )
+        .catch(() => {});
+    fetch(livePayPal ? "/api/paypal/live" : "/api/paypal", {
+      signal: controller.signal,
+      cache: "no-store",
+    })
       .then((r) => r.json())
       .then((data) =>
-        setPaypalSandbox(
-          data.configured === true && data.environment === "sandbox",
+        setPaypalReady(
+          data.configured === true &&
+            data.environment === (livePayPal ? "production" : "sandbox"),
         ),
       )
       .catch(() => {});
     return () => controller.abort();
-  }, [channel]);
+  }, [channel, livePayPal]);
   useEffect(() => {
-    if (channel !== "sandbox" || currency !== "EUR" || euroRate) return;
+    if (channel === "external" || currency !== "EUR" || euroRate) return;
     const controller = new AbortController();
     setEuroRateUnavailable(false);
     fetch("/api/exchange-rates", { signal: controller.signal })
@@ -110,7 +120,7 @@ export function DonationForm({
     return () => controller.abort();
   }, [channel, currency, euroRate]);
   useEffect(() => {
-    if (channel !== "sandbox" || cause !== "el-cairo") return;
+    if (channel === "external" || cause !== "el-cairo") return;
     const selectMonthly = (event: Event) => {
       if ((event as CustomEvent).detail !== cause) return;
       setFrequency("monthly");
@@ -121,9 +131,10 @@ export function DonationForm({
       setError("");
     };
     window.addEventListener("alma:monthly-sponsorship", selectMonthly);
-    return () => window.removeEventListener("alma:monthly-sponsorship", selectMonthly);
+    return () =>
+      window.removeEventListener("alma:monthly-sponsorship", selectMonthly);
   }, [channel, cause]);
-  if (channel !== "sandbox")
+  if (channel === "external")
     return <LegacyDonationCard lang={lang} compact={compact} />;
   const fmt = (v: number) =>
     new Intl.NumberFormat(es ? "es-CO" : "en-US").format(v);
@@ -282,9 +293,13 @@ export function DonationForm({
         </div>
       </div>
       <p className="donation-entry-note">
-        {es
-          ? "Puedes apoyar desde $9.900 COP mensuales."
-          : "You can contribute from COP $9,900 per month."}
+        {livePayPal
+          ? es
+            ? "Puedes apoyar desde 3,33 USD mensuales."
+            : "You can contribute from USD 3.33 per month."
+          : es
+            ? "Puedes apoyar desde $9.900 COP mensuales."
+            : "You can contribute from COP $9,900 per month."}
       </p>
       <form onSubmit={review}>
         <fieldset className="frequency">
@@ -334,7 +349,7 @@ export function DonationForm({
               setError("");
             }}
           >
-            <option value="COP">COP · Wompi</option>
+            {!livePayPal && <option value="COP">COP · Wompi</option>}
             <option value="USD">USD · PayPal</option>
             <option value="EUR">EUR · PayPal</option>
           </select>
@@ -560,13 +575,17 @@ export function DonationForm({
         </button>
         <p className="payment-notice">
           <LockKeyhole size={14} />
-          {(currency === "COP" ? sandbox : paypalSandbox)
+          {livePayPal && paypalReady
             ? es
-              ? `${currency === "COP" ? "Wompi" : "PayPal"} en modo de pruebas · Sin dinero real`
-              : `${currency === "COP" ? "Wompi" : "PayPal"} test mode · No real money`
-            : es
-              ? "Pagos en línea disponibles próximamente"
-              : "Online payments coming soon"}
+              ? "PayPal · Pagos reales en USD o EUR"
+              : "PayPal · Real payments in USD or EUR"
+            : (currency === "COP" ? sandbox : paypalReady)
+              ? es
+                ? `${currency === "COP" ? "Wompi" : "PayPal"} en modo de pruebas · Sin dinero real`
+                : `${currency === "COP" ? "Wompi" : "PayPal"} test mode · No real money`
+              : es
+                ? "Pagos en línea disponibles próximamente"
+                : "Online payments coming soon"}
         </p>
         <p className="donation-disclaimer">
           {es
@@ -636,6 +655,7 @@ export function DonationForm({
             <PayPalCheckout
               key={`${currency}-${frequency}-${total}-${destination}`}
               lang={lang}
+              environment={livePayPal ? "production" : "sandbox"}
               amount={decimalAmount(Math.round(total * 100))}
               currency={currency}
               frequency={frequency}

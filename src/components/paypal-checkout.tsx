@@ -5,6 +5,7 @@ import type { PayPalButtonsComponent, OnInitActions } from "@paypal/paypal-js";
 import { LockKeyhole } from "lucide-react";
 import { href, type Lang } from "@/lib/i18n";
 import { paypalRequest } from "@/lib/paypal-client";
+import type { PayPalEnvironment } from "@/lib/paypal-live";
 import type { Frequency } from "@/lib/donations";
 import type { PayPalCurrency } from "@/lib/paypal-security";
 type Intent = {
@@ -16,6 +17,7 @@ type Intent = {
 };
 export function PayPalCheckout({
   lang,
+  environment = "sandbox",
   amount,
   currency,
   frequency,
@@ -24,6 +26,7 @@ export function PayPalCheckout({
   reopen,
 }: {
   lang: Lang;
+  environment?: PayPalEnvironment;
   amount: string;
   currency: PayPalCurrency;
   frequency: Frequency;
@@ -31,6 +34,7 @@ export function PayPalCheckout({
   close: () => void;
   reopen: () => void;
 }) {
+  const testMode = environment === "sandbox";
   const es = lang === "es",
     monthly = frequency === "monthly";
   const [foundation, setFoundation] = useState(false),
@@ -75,15 +79,18 @@ export function PayPalCheckout({
       if (!agreed.foundation || (monthly && !agreed.authorization))
         throw new Error("consent_required");
       if (!intent.current) {
-        intent.current = paypalRequest({
-          amount,
-          currency,
-          frequency,
-          cause,
-          lang,
-          agreeFoundation: true,
-          agreeMonthly: monthly,
-        }).then((created: Intent) => {
+        intent.current = paypalRequest(
+          {
+            amount,
+            currency,
+            frequency,
+            cause,
+            lang,
+            agreeFoundation: true,
+            agreeMonthly: monthly,
+          },
+          environment,
+        ).then((created: Intent) => {
           // The HttpOnly cookie remains a fallback if browser storage is unavailable.
           try {
             sessionStorage.setItem(`alma-paypal-${created.id}`, created.access);
@@ -97,28 +104,31 @@ export function PayPalCheckout({
       return intent.current;
     }
     async function load() {
-      const response = await fetch("/api/paypal", {
-        cache: "no-store",
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        testMode ? "/api/paypal" : "/api/paypal/live",
+        {
+          cache: "no-store",
+          signal: controller.signal,
+        },
+      );
       const health = await response.json();
       if (
         !response.ok ||
         !health.configured ||
-        health.environment !== "sandbox" ||
+        health.environment !== environment ||
         typeof health.clientId !== "string"
       )
         throw new Error("paypal_unavailable");
       const { loadScript } = await import("@paypal/paypal-js");
       const sdk = await loadScript({
         clientId: health.clientId,
-        environment: "sandbox",
+        environment: testMode ? "sandbox" : "production",
         components: "buttons",
         currency,
         locale: es ? "es_CO" : "en_US",
         intent: monthly ? "subscription" : "capture",
         vault: monthly,
-        dataNamespace: `almaPayPal${currency}${monthly ? "Monthly" : "Once"}${lang}`,
+        dataNamespace: `almaPayPal${environment}${currency}${monthly ? "Monthly" : "Once"}${lang}`,
       });
       if (!active || !container.current) return;
       if (!sdk?.Buttons) throw new Error("paypal_unavailable");
@@ -152,13 +162,16 @@ export function PayPalCheckout({
             if (!intent.current) throw new Error("missing_intent");
             const created = await intent.current;
             try {
-              await paypalRequest({
-                action: "confirm",
-                id: created.id,
-                access: created.access,
-                orderId: data.orderID,
-                subscriptionId: data.subscriptionID,
-              });
+              await paypalRequest(
+                {
+                  action: "confirm",
+                  id: created.id,
+                  access: created.access,
+                  orderId: data.orderID,
+                  subscriptionId: data.subscriptionID,
+                },
+                environment,
+              );
             } catch {
               /* The result page queries PayPal without assuming payment success. */
             }
@@ -199,14 +212,28 @@ export function PayPalCheckout({
       controls.current = null;
       void button?.close().catch(() => {});
     };
-  }, [amount, currency, frequency, cause, lang, es, monthly]);
+  }, [
+    amount,
+    currency,
+    frequency,
+    cause,
+    lang,
+    es,
+    monthly,
+    environment,
+    testMode,
+  ]);
   return (
     <div className="checkout-content">
       <p className="sandbox-notice">
         <LockKeyhole size={18} />
-        {es
-          ? "PayPal Sandbox · Pruebas sin dinero real"
-          : "PayPal Sandbox · Testing without real money"}
+        {testMode
+          ? es
+            ? "PayPal Sandbox · Pruebas sin dinero real"
+            : "PayPal Sandbox · Testing without real money"
+          : es
+            ? "PayPal · Este aporte utiliza dinero real"
+            : "PayPal · This gift uses real money"}
       </p>
       <label className="checkout-consent">
         <input
@@ -233,17 +260,25 @@ export function PayPalCheckout({
             onChange={(e) => setAuthorization(e.target.checked)}
           />
           <span>
-            {es
-              ? `Autorizo un aporte de prueba de ${amount} ${currency} cada mes, hasta que lo cancele en PayPal o desde mi enlace personal de gestión.`
-              : `I authorize a test gift of ${amount} ${currency} each month until I cancel it in PayPal or through my personal management link.`}
+            {testMode
+              ? es
+                ? `Autorizo un aporte de prueba de ${amount} ${currency} cada mes, hasta que lo cancele en PayPal o desde mi enlace personal de gestión.`
+                : `I authorize a test gift of ${amount} ${currency} each month until I cancel it in PayPal or through my personal management link.`
+              : es
+                ? `Autorizo un aporte de ${amount} ${currency} cada mes, hasta que lo cancele en PayPal o desde mi enlace personal de gestión.`
+                : `I authorize a gift of ${amount} ${currency} each month until I cancel it in PayPal or through my personal management link.`}
           </span>
         </label>
       )}
-      {monthly && <MonthlyCancellationNotice lang={lang} testMode />}
+      {monthly && <MonthlyCancellationNotice lang={lang} testMode={testMode} />}
       <p>
-        {es
-          ? "Continúa con una cuenta personal de PayPal Sandbox."
-          : "Continue with a personal PayPal Sandbox account."}
+        {testMode
+          ? es
+            ? "Continúa con una cuenta personal de PayPal Sandbox."
+            : "Continue with a personal PayPal Sandbox account."
+          : es
+            ? "Continúa en PayPal para autorizar tu aporte."
+            : "Continue in PayPal to authorize your gift."}
       </p>
       <div ref={container} className="paypal-buttons" />
       <p role="status">

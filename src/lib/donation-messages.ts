@@ -21,14 +21,14 @@ export type DonationNotice = {
   frequency: "once" | "monthly";
   cause: "general" | "el-cairo" | "sierra-nevada" | "amazonas" | "mhuysqa";
   lang: "es" | "en";
-  environment: "sandbox";
+  environment: "sandbox" | "production";
   email: string | null;
   occurredAt: string;
   status?: NoticeStatus;
 };
 
 export function donationNoticeKey(gift: DonationNotice) {
-  const reference = `${gift.provider}/${gift.reference}`;
+  const reference = `${gift.provider}/${gift.environment === "production" ? "production/" : ""}${gift.reference}`;
   return !gift.status || gift.status === "APPROVED"
     ? reference
     : `${reference}/${gift.status.toLowerCase()}`;
@@ -56,7 +56,8 @@ export function validNotice(input: unknown): DonationNotice | null {
       String(v.cause),
     ) ||
     !["es", "en"].includes(String(v.lang)) ||
-    v.environment !== "sandbox" ||
+    !["sandbox", "production"].includes(String(v.environment)) ||
+    (v.environment === "production" && v.provider !== "paypal") ||
     typeof v.occurredAt !== "string" ||
     !Number.isFinite(Date.parse(v.occurredAt)) ||
     (v.email !== null && donationEmail(v.email) !== v.email) ||
@@ -77,7 +78,7 @@ export function validNotice(input: unknown): DonationNotice | null {
     frequency: v.frequency,
     cause: v.cause,
     lang: v.lang,
-    environment: "sandbox",
+    environment: v.environment,
     email: v.email,
     occurredAt: new Date(v.occurredAt).toISOString(),
     ...(v.status !== undefined ? { status: v.status } : {}),
@@ -95,6 +96,7 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
   const gift = validNotice(input);
   if (!gift) throw new Error("invalid_donation_notice");
   const es = gift.lang === "es";
+  const test = gift.environment === "sandbox";
   const status = gift.status ?? "APPROVED";
   const names = {
     general: es ? "Fondo General" : "General Fund",
@@ -107,7 +109,7 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
     style: "currency",
     currency: gift.currency,
   }).format(gift.amountMinor / 100);
-  const approvedTitle =
+  const sandboxApprovedTitle =
     audience === "foundation"
       ? es
         ? "Aporte de prueba confirmado"
@@ -162,10 +164,23 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
           "The time to authorize this gift expired. The attempt was recorded without starting a charge.",
         ],
   };
+  const approvedTitle = test
+    ? sandboxApprovedTitle
+    : audience === "foundation"
+      ? es
+        ? "Aporte confirmado"
+        : "Gift confirmed"
+      : es
+        ? "¡Gracias de corazón! Tu aporte fue aprobado."
+        : "Thank you from the heart! Your gift was approved.";
   const title = status === "APPROVED" ? approvedTitle : statusCopy[status][0];
-  const warning = es
-    ? "PRUEBA SANDBOX: no se ha movido dinero real. Este mensaje no es un certificado tributario."
-    : "SANDBOX TEST: no real money has moved. This message is not a tax certificate.";
+  const warning = !test
+    ? es
+      ? "Este mensaje confirma un pago. No es un certificado tributario ni acredita que el registro SARLAFT esté completado."
+      : "This message confirms a payment. It is not a tax certificate and does not confirm completion of SARLAFT registration."
+    : es
+      ? "PRUEBA SANDBOX: no se ha movido dinero real. Este mensaje no es un certificado tributario."
+      : "SANDBOX TEST: no real money has moved. This message is not a tax certificate.";
   const fields = [
     [es ? "Proyecto" : "Project", names[gift.cause]],
     [es ? "Aporte" : "Gift", `${amount} ${gift.currency}`],
@@ -185,8 +200,15 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
     ],
     [es ? "Referencia" : "Reference", gift.reference],
   ];
-  const explanation =
-    status !== "APPROVED"
+  const explanation = !test
+    ? audience === "foundation"
+      ? es
+        ? "PayPal confirmó este aporte. El pago y el registro SARLAFT se verifican por separado."
+        : "PayPal confirmed this gift. Payment and SARLAFT registration are verified separately."
+      : es
+        ? "Para registrar tu aporte, completa el formulario de participantes y declaración de origen de fondos (SARLAFT) de la fundación. Si solicitaste certificado, este registro permite tramitarlo."
+        : "To register your gift, complete the foundation’s participant registration and declaration of source of funds form (SARLAFT). If you requested a certificate, this registration is needed to process it. The current form is in Spanish."
+    : status !== "APPROVED"
       ? statusCopy[status][1]
       : audience === "foundation"
         ? es
@@ -197,7 +219,13 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
           : "To register a real gift and process a certificate, if requested, the foundation requires the participant registration and declaration of source of funds form (SARLAFT). For this test, review the form without submitting fictitious or personal information to the real register. The current form is in Spanish.";
   const approvedLinks = [
     [
-      es ? "Revisar formulario SARLAFT" : "Review the SARLAFT form",
+      test
+        ? es
+          ? "Revisar formulario SARLAFT"
+          : "Review the SARLAFT form"
+        : es
+          ? "Completar registro SARLAFT"
+          : "Complete SARLAFT registration",
       "https://forms.gle/7DTsXPsm93ZMJby17",
     ],
     [
@@ -215,7 +243,7 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
   const contact = es
     ? "Soporte: contacto@fundacionalmaarcoiris.org · Certificados: certificados@fundacionalmaarcoiris.org"
     : "Support: contacto@fundacionalmaarcoiris.org · Certificates: certificados@fundacionalmaarcoiris.org";
-  const subject = `[Sandbox · ${audience}] ${title}`;
+  const subject = `${test ? `[Sandbox · ${audience}] ` : ""}${title}`;
   const text = [
     title,
     warning,
@@ -228,11 +256,36 @@ export function donationMessage(input: DonationNotice, audience: Audience) {
   return { subject, text, html };
 }
 
-export function donationEmailSettings(env: Record<string, string | undefined>) {
+export function donationEmailSettings(
+  env: Record<string, string | undefined>,
+  environment: "sandbox" | "production" = "sandbox",
+) {
   // Separate opt-in from payment credentials. A configured API key alone never
   // enables mail. This implementation only permits a sandbox test recipient.
   const email = (v: string | undefined): v is string =>
     typeof v === "string" && donationEmail(v) === v;
+  if (environment === "production") {
+    const stage = env.PAYPAL_LIVE_EMAILS_ENABLED;
+    const testRecipient =
+      stage === "review" ? env.PAYPAL_LIVE_TEST_RECIPIENT : null;
+    const start = Date.parse(env.PAYPAL_LIVE_EMAIL_START_AT ?? "");
+    if (
+      env.VERCEL_ENV !== "production" ||
+      !["review", "public"].includes(stage ?? "") ||
+      !env.PAYPAL_LIVE_RESEND_API_KEY ||
+      !email(env.PAYPAL_LIVE_EMAIL_FROM) ||
+      !Number.isFinite(start) ||
+      (stage === "review" &&
+        testRecipient !== "webmaster@fundacionalmaarcoiris.org")
+    )
+      return null;
+    return {
+      key: env.PAYPAL_LIVE_RESEND_API_KEY,
+      from: env.PAYPAL_LIVE_EMAIL_FROM,
+      testRecipient: testRecipient ?? null,
+      start,
+    };
+  }
   if (
     env.DONATION_EMAILS_ENABLED !== "sandbox" ||
     !env.RESEND_API_KEY ||
@@ -256,8 +309,8 @@ export async function deliverDonationEmail(
   env: Record<string, string | undefined>,
   fetcher: typeof fetch = fetch,
 ) {
-  const c = donationEmailSettings(env),
-    valid = validNotice(gift);
+  const valid = validNotice(gift),
+    c = valid ? donationEmailSettings(env, valid.environment) : null;
   if (!c || !valid || Date.parse(valid.occurredAt) < c.start)
     return { status: "disabled" as const };
   if (
@@ -276,7 +329,12 @@ export async function deliverDonationEmail(
     },
     body: JSON.stringify({
       from: `Fundación Alma Arcoíris <${c.from}>`,
-      to: [c.testRecipient],
+      to: [
+        c.testRecipient ??
+          (audience === "foundation"
+            ? "misiones@fundacionalmaarcoiris.org"
+            : valid.email!),
+      ],
       reply_to: "contacto@fundacionalmaarcoiris.org",
       ...donationMessage(valid, audience),
     }),

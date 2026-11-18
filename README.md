@@ -218,3 +218,7 @@ Por instrucción de Jorge, el dominio público ofrece temporalmente el botón or
 El retorno que ya tiene configurado el enlace original, `/gracias-por-tu-aporte`, redirige temporalmente a `/es/registro-aporte`. Conserva el acceso al formulario oficial de aportantes, bajo la indicación de completarlo si Wompi confirmó la aprobación. No interpreta el retorno, un `id` de URL ni el formulario como comprobante de pago, y no emite certificados automáticamente. La misma página está disponible en inglés.
 
 Las mensualidades y PayPal de la integración nueva permanecen pendientes de publicación real. Antes de habilitarlos, completar la validación de aprobación, rechazo, eventos, segundo ciclo, cancelación, recuperación y notificaciones por correo; validar las capacidades de la cuenta y conectar la base y credenciales reales separadas. El botón externo actual no acredita que esos flujos nuevos estén listos.
+
+### Preparación de PayPal Live · noviembre de 2026
+
+La separación de entornos, los planes USD/EUR, el receptor de eventos y los correos se documentan en [PAYPAL_LIVE.md](docs/PAYPAL_LIVE.md). El código permite una revisión en un despliegue de Production sin asignar el dominio público. Guardar claves o crear planes no activa cobros. La conexión de servicios y el pago de validación se verifican por separado antes del lanzamiento.

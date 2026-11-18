@@ -102,7 +102,7 @@ export function DonatePage({ lang }: { lang: Lang }) {
   const [cause, setCause] = useState("general");
   const widget = useRef<HTMLDivElement>(null);
   const channel = useDonationChannel();
-  if (channel !== "sandbox") return <LegacyDonationPage lang={lang} />;
+  if (channel === "external") return <LegacyDonationPage lang={lang} />;
   const chooseCause = (value: string) => {
     setCause(value);
     widget.current?.scrollIntoView({

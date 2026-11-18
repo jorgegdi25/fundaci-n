@@ -1,4 +1,4 @@
-export type DonationChannel = "external" | "sandbox";
+export type DonationChannel = "external" | "sandbox" | "paypal-live";
 
 // Existing WordPress donation button, verified against Wompi's public link API.
 export const legacyDonationUrl = "https://checkout.wompi.co/l/bfXo9h";

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { CheckCircle2, Heart, RefreshCw } from "lucide-react";
+import { useDonationChannel } from "./donation-channel";
 import { paypalRequest } from "@/lib/paypal-client";
 import { href, type Lang } from "@/lib/i18n";
 import { trackCompletedDonation } from "@/lib/measurement";
@@ -31,6 +32,9 @@ export function PayPalResult({
   manage?: boolean;
 }) {
   const es = lang === "es";
+  const channel = useDonationChannel();
+  const environment = channel === "sandbox" ? "sandbox" : "production";
+  const testMode = environment === "sandbox";
   const [identity, setIdentity] = useState<{
       id: string;
       access?: string;
@@ -70,7 +74,9 @@ export function PayPalResult({
     setBusy(true);
     setError("");
     try {
-      setGift(await paypalRequest({ action: "status", ...identity }));
+      setGift(
+        await paypalRequest({ action: "status", ...identity }, environment),
+      );
     } catch {
       setError(
         es
@@ -80,7 +86,7 @@ export function PayPalResult({
     } finally {
       setBusy(false);
     }
-  }, [identity, es]);
+  }, [identity, es, environment]);
   useEffect(() => {
     if (identity) void refresh();
   }, [identity, refresh]);
@@ -89,7 +95,9 @@ export function PayPalResult({
     setBusy(true);
     setError("");
     try {
-      setGift(await paypalRequest({ action: "cancel", ...identity }));
+      setGift(
+        await paypalRequest({ action: "cancel", ...identity }, environment),
+      );
       setCancelReview(false);
     } catch {
       setError(
@@ -140,8 +148,12 @@ export function PayPalResult({
                 : "Manage your monthly gift"
               : paid
                 ? es
-                  ? "¡Gracias de corazón! Tu aporte de prueba fue confirmado."
-                  : "Thank you from the heart! Your test gift was confirmed."
+                  ? testMode
+                    ? "¡Gracias de corazón! Tu aporte de prueba fue confirmado."
+                    : "¡Gracias de corazón! Tu aporte fue confirmado."
+                  : testMode
+                    ? "Thank you from the heart! Your test gift was confirmed."
+                    : "Thank you from the heart! Your gift was confirmed."
                 : gift?.subscriptionState === "ACTIVE"
                   ? es
                     ? "Tu aporte mensual está autorizado."
@@ -150,11 +162,13 @@ export function PayPalResult({
                     ? "Revisemos el estado de tu aporte."
                     : "Check your gift status."}
         </h1>
-        <p className="sandbox-notice">
-          {es
-            ? "Modo de pruebas. No se ha movido dinero real."
-            : "Test mode. No real money has moved."}
-        </p>
+        {testMode && (
+          <p className="sandbox-notice">
+            {es
+              ? "Modo de pruebas. No se ha movido dinero real."
+              : "Test mode. No real money has moved."}
+          </p>
+        )}
         {gift && (
           <>
             <dl className="gift-summary">
@@ -201,8 +215,12 @@ export function PayPalResult({
                 {gift.subscriptionState === "ACTIVE" && gift.nextCharge && (
                   <p>
                     {es
-                      ? "Próximo aporte mensual de prueba: "
-                      : "Next test monthly gift: "}
+                      ? testMode
+                        ? "Próximo aporte mensual de prueba: "
+                        : "Próximo aporte mensual: "
+                      : testMode
+                        ? "Next test monthly gift: "
+                        : "Next monthly gift: "}
                     {new Intl.DateTimeFormat(es ? "es-CO" : "en-US", {
                       dateStyle: "long",
                       timeZone: "America/Bogota",
@@ -213,8 +231,12 @@ export function PayPalResult({
                 {gift.subscriptionState === "SUSPENDED" && (
                   <p>
                     {es
-                      ? "PayPal suspendió el aporte mensual. Revisa tu cuenta de Sandbox."
-                      : "PayPal suspended the monthly gift. Check your Sandbox account."}
+                      ? testMode
+                        ? "PayPal suspendió el aporte mensual. Revisa tu cuenta de Sandbox."
+                        : "PayPal suspendió el aporte mensual. Revisa tu cuenta de PayPal."
+                      : testMode
+                        ? "PayPal suspended the monthly gift. Check your Sandbox account."
+                        : "PayPal suspended the monthly gift. Check your PayPal account."}
                   </p>
                 )}
                 {link && (
