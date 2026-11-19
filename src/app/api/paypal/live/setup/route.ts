@@ -1,6 +1,7 @@
 import { paypalSetupAllowed } from "@/lib/paypal-setup-access";
 import { setupPayPalLive } from "@/lib/paypal-provisioning";
 import { migratePayPalLive } from "@/lib/paypal-migration";
+import { sendPayPalMailCheck } from "@/lib/paypal-mail-check";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -19,6 +20,7 @@ export async function POST(request: Request) {
       '{"action":"plans"}',
       '{"action":"schema"}',
       '{"action":"webhook"}',
+      '{"action":"mail-test"}',
     ].includes(text)
   )
     return Response.json(
@@ -26,6 +28,8 @@ export async function POST(request: Request) {
       { status: 400, headers },
     );
   try {
+    if (text === '{"action":"mail-test"}')
+      return Response.json(await sendPayPalMailCheck(process.env), { headers });
     if (text === '{"action":"schema"}') {
       const schema = await readFile(
         join(process.cwd(), "scripts/paypal-live-schema.sql"),
