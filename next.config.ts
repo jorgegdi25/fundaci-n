@@ -2,9 +2,6 @@ import type { NextConfig } from "next";
 import { withWorkflow } from "workflow/next";
 const config: NextConfig = {
   poweredByHeader: false,
-  outputFileTracingIncludes: {
-    "/api/paypal/live/setup": ["./scripts/paypal-live-schema.sql"],
-  },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
