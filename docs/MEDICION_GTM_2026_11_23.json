@@ -3,7 +3,7 @@
   "container": "GTM-5WPWPG67",
   "replaces": "GTM-KBQZZQ26",
   "authorization": "El usuario confirmó expresamente sustituir el contenedor anterior por GTM-5WPWPG67.",
-  "status": "Preparado; pendiente de despliegue y comprobación en el dominio oficial.",
+  "status": "Publicado y comprobado en el dominio oficial.",
   "implementation": {
     "singleLoader": "SiteMeasurement conserva un único next/script con id alma-google-tag-manager; el ID cambia en src/lib/measurement.ts. No se instala un segundo gtm.js ni un gtag.js independiente.",
     "scope": "Todas las páginas servidas por el layout compartido en español e inglés del dominio oficial y www. Preview y localhost siguen excluidos.",
@@ -41,14 +41,20 @@
   "checks": {
     "typecheck": "passed",
     "unitTests": 53,
-    "productionSingleContainer": "pending",
-    "rejectedConsentNoDownload": "pending",
-    "esEnNavigationNoDuplicate": "pending"
+    "productionSingleContainer": "passed: GTM-5WPWPG67 una sola vez, GTM-KBQZZQ26 ausente",
+    "rejectedConsentNoDownload": "passed: ningún gtm.js antes de aceptar ni tras rechazar y recargar",
+    "esEnNavigationNoDuplicate": "passed: inicio ES, inicio EN y Donar EN mantienen un único contenedor",
+    "bootstrap": "Una inicialización local; consentimiento denegado por defecto y user_data vacío",
+    "browserErrors": 0
   },
   "references": [
     "https://support.google.com/tagmanager/answer/14847097?hl=es",
     "https://support.google.com/tagmanager/answer/17070049?hl=es",
     "https://developers.google.com/tag-platform/security/concepts/consent-mode",
     "https://support.google.com/google-ads/answer/13262500?hl=en-419"
-  ]
+  ],
+  "implementationCommit": "e5379a3d61c4ae97c47732caeee4c1d59f0bca7e",
+  "verifiedDeployment": "dpl_9v4CzC88ZeGrbLZYJFnwJfNGCrof",
+  "verificationEvidence": "output/medicion-gtm-2026-11-23/verificacion.json; capturas en la misma carpeta local.",
+  "externalConfigurationLimit": "No se editaron ni se publicaron acciones de conversión en Google Ads/Tag Manager; se verificó la instalación de la etiqueta suministrada."
 }
