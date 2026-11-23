@@ -1,6 +1,6 @@
 import { routeNames } from "./i18n.ts";
 
-export const tagManagerId = "GTM-KBQZZQ26";
+export const tagManagerId = "GTM-5WPWPG67";
 export const consentStorageKey = "alma-consent-v1";
 export type MeasurementConsent = { analytics: boolean; marketing: boolean };
 export type MeasurementEvent =
@@ -82,7 +82,9 @@ export function consentCommand(consent: MeasurementConsent) {
   return {
     analytics_storage: consent.analytics ? "granted" : "denied",
     ad_storage: consent.marketing ? "granted" : "denied",
-    ad_user_data: consent.marketing ? "granted" : "denied",
+    // The new Ads container enables automatic user-provided-data detection.
+    // Cookie consent does not authorize uploading form contacts or their hashes.
+    ad_user_data: "denied",
     ad_personalization: consent.marketing ? "granted" : "denied",
   };
 }

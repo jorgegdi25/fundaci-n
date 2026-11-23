@@ -24,7 +24,11 @@
     "dataLayerEvent": "alma_page_view",
     "trigger": "Evento personalizado con nombre exacto alma_page_view.",
     "ga4Event": "page_view",
-    "parameters": ["page_location", "page_path", "language"],
+    "parameters": [
+      "page_location",
+      "page_path",
+      "language"
+    ],
     "deduplication": "Desactivar send_page_view en la etiqueta de configuración de Google y la medición automática de cambios del historial. No añadir otro activador History Change para vistas.",
     "privacy": "Usar las variables saneadas del dataLayer. No sustituirlas por Page URL o Referrer completos. No habilitar recogida automática de formularios, clics salientes, datos facilitados por usuarios ni medición mejorada sin revisar su contenido."
   },
@@ -32,7 +36,11 @@
     {
       "event": "donation_started",
       "trigger": "Clic en el enlace real de Wompi checkout.wompi.co/l/bfXo9h.",
-      "parameters": ["payment_provider", "donation_frequency", "placement"],
+      "parameters": [
+        "payment_provider",
+        "donation_frequency",
+        "placement"
+      ],
       "agencyProposedAdsPriority": "primary",
       "status": "Preparado. Describe la salida al pago, no una donación aprobada."
     },
@@ -54,47 +62,64 @@
     {
       "event": "whatsapp_click",
       "trigger": "Clic en un enlace directo o de comunidad de WhatsApp.",
-      "parameters": ["link_context", "placement"],
+      "parameters": [
+        "link_context",
+        "placement"
+      ],
       "agencyProposedAdsPriority": "primary",
       "status": "Preparado. Los botones semánticos de información de voluntariado emiten volunteer_information para evitar doble conversión."
     },
     {
       "event": "volunteer_application",
       "trigger": "Clic en Postularme como voluntario, en español o inglés.",
-      "parameters": ["placement"],
+      "parameters": [
+        "placement"
+      ],
       "agencyProposedAdsPriority": "primary",
       "status": "Preparado. Mide intención de abrir el correo, no acredita envío de una solicitud."
     },
     {
       "event": "volunteer_information",
       "trigger": "Clic en Consultar fechas por WhatsApp o Consultar próximos encuentros.",
-      "parameters": ["placement"],
+      "parameters": [
+        "placement"
+      ],
       "agencyProposedAdsPriority": "secondary",
       "status": "Preparado. El botón de fechas usa el WhatsApp de la fundación sin anunciar un calendario no suministrado."
     },
     {
       "event": "phone_click",
       "trigger": "Clic en un enlace tel:.",
-      "parameters": ["placement"],
+      "parameters": [
+        "placement"
+      ],
       "agencyProposedAdsPriority": "secondary",
       "status": "Preparado. No envía el número."
     },
     {
       "event": "email_click",
       "trigger": "Clic en mailto: sin otra acción semántica.",
-      "parameters": ["placement"],
+      "parameters": [
+        "placement"
+      ],
       "agencyProposedAdsPriority": "secondary",
       "status": "Preparado. No envía dirección, asunto ni cuerpo del mensaje."
     },
     {
       "event": "newsletter_signup",
       "trigger": "El servidor responde correctamente con ok:true al registro de comunidad.",
-      "parameters": ["signup_source"],
+      "parameters": [
+        "signup_source"
+      ],
       "agencyProposedAdsPriority": "secondary",
       "status": "Pendiente de conectar el receptor. /api/community indica configured:false. La interfaz no permite registros mientras no esté configurado."
     }
   ],
-  "sharedEventParameters": ["page_path", "page_location", "language"],
+  "sharedEventParameters": [
+    "page_path",
+    "page_location",
+    "language"
+  ],
   "excludedWebsitePayload": [
     "nombres",
     "correos de donantes",
@@ -122,5 +147,7 @@
     "https://developers.google.com/tag-platform/security/guides/consent?consentmode=basic",
     "https://developers.google.com/tag-platform/security/concepts/consent-mode",
     "https://support.google.com/google-ads/answer/11461796?hl=es"
-  ]
+  ],
+  "historicalSnapshot": true,
+  "supersededBy": "MEDICION_GTM_2026_11_23.json"
 }

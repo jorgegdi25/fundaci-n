@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-23",
+  "container": "GTM-5WPWPG67",
+  "replaces": "GTM-KBQZZQ26",
+  "authorization": "El usuario confirmó expresamente sustituir el contenedor anterior por GTM-5WPWPG67.",
+  "status": "Preparado; pendiente de despliegue y comprobación en el dominio oficial.",
+  "implementation": {
+    "singleLoader": "SiteMeasurement conserva un único next/script con id alma-google-tag-manager; el ID cambia en src/lib/measurement.ts. No se instala un segundo gtm.js ni un gtag.js independiente.",
+    "scope": "Todas las páginas servidas por el layout compartido en español e inglés del dominio oficial y www. Preview y localhost siguen excluidos.",
+    "consent": "Se conserva el modo básico: no se descarga el contenedor hasta aceptar analítica o publicidad. Consentimiento denegado por defecto antes de inicializar Google; actualizaciones respetan las categorías del visitante.",
+    "bootstrap": "Inicialización gtag js única en el layout; user_data vacío antes de cargar el contenedor."
+  },
+  "publicContainerInspection": {
+    "httpStatus": 200,
+    "tagCount": 6,
+    "destination": "AW-18573355247",
+    "customHtmlTags": 0,
+    "explicitConversionLabelsFound": false,
+    "automaticEvents": [
+      "outbound clicks",
+      "scroll",
+      "downloads",
+      "history",
+      "forms",
+      "video"
+    ],
+    "automaticUserDataConfiguredAtProvider": {
+      "email": true,
+      "phone": true,
+      "address": true
+    }
+  },
+  "personalDataProtection": {
+    "ad_user_data": "denied incluso al aceptar publicidad; no se habilitan conversiones mejoradas con datos personales.",
+    "user_data": "Objeto vacío establecido antes del contenedor.",
+    "websiteEvents": "Se mantiene la lista explícita de parámetros de los eventos propios; no se incorporan correos, teléfonos, valores de formularios, URL de destino ni tokens.",
+    "agencyFollowup": "Sembox debe revisar la detección automática de datos y eventos en los ajustes de la etiqueta. No se modificó la cuenta de Ads ni se aceptaron condiciones adicionales de recogida de datos."
+  },
+  "conversionScope": "Instalación de la etiqueta base. Los seis tipos de etiquetas publicados no contienen acciones de conversión con sus etiquetas de conversión específicas. La configuración de objetivos, activadores, deduplicación y prioridades de Ads sigue correspondiendo a Sembox. Un clic o visita a la página de gracias no acredita un pago aprobado.",
+  "existingEventContract": "MEDICION_GTM_2026.json conserva los nombres y parámetros de eventos propios; su fotografía del estado de servicios es histórica.",
+  "checks": {
+    "typecheck": "passed",
+    "unitTests": 53,
+    "productionSingleContainer": "pending",
+    "rejectedConsentNoDownload": "pending",
+    "esEnNavigationNoDuplicate": "pending"
+  },
+  "references": [
+    "https://support.google.com/tagmanager/answer/14847097?hl=es",
+    "https://support.google.com/tagmanager/answer/17070049?hl=es",
+    "https://developers.google.com/tag-platform/security/concepts/consent-mode",
+    "https://support.google.com/google-ads/answer/13262500?hl=en-419"
+  ]
+}

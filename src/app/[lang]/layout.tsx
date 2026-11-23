@@ -51,7 +51,9 @@ export default async function Layout({
             {`window.dataLayer=window.dataLayer||[];
 window.gtag=function(){window.dataLayer.push(arguments);};
 window.gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-window.gtag('set','ads_data_redaction',true);`}
+window.gtag('set','ads_data_redaction',true);
+window.gtag('set','user_data',{});
+window.gtag('js',new Date());`}
           </Script>
         )}
         <SiteMeasurement enabled={measure} />

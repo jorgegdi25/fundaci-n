@@ -32,6 +32,12 @@ test("measurement excludes previews and private route and query data", () => {
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+  assert.deepEqual(consentCommand({ analytics: true, marketing: true }), {
+    analytics_storage: "granted",
+    ad_storage: "granted",
+    ad_user_data: "denied",
+    ad_personalization: "granted",
+  });
 });
 
 test("contact events describe actions without retaining contact or message values", () => {
